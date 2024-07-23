@@ -2,8 +2,6 @@ package com.example.nugo
 
 /* [ 김은택 파트 ]
 스티커에 대한 data class 입니다*/
-
-
 data class StickerData(var name: String, var icon: Int, var isDelete: Boolean) {
     var contactSize = 0 // 등록된 연락처 수
 
