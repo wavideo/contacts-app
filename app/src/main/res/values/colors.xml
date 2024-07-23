@@ -5,4 +5,7 @@
     <color name="background_basic">#F0F0F0</color>
     <color name="gray_a">#5D5D5D</color>
     <color name="gray_b">#EAEAEA</color>
+    <color name="red">#FF0000</color>
+    <color name="background_main">#EAEAEA</color>
+
 </resources>

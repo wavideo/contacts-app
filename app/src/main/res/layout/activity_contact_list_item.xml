@@ -3,20 +3,13 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
+    android:background="@drawable/round_border_white"
+    app:layout_constraintTop_toBottomOf="parent"
+    app:layout_constraintStart_toStartOf="parent"
     android:layout_height="100dp">
 
-<!--    <ImageView-->
-<!--        android:id="@+id/imageView09"-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="match_parent"-->
-<!--        android:layout_marginStart="4dp"-->
-<!--        android:layout_marginTop="4dp"-->
-<!--        android:src="@drawable/img_1"-->
-<!--        app:layout_constraintStart_toStartOf="parent"-->
-<!--        app:layout_constraintTop_toTopOf="parent" />-->
-
     <TextView
-        android:id="@+id/tvName"
+        android:id="@+id/tv_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="11.5dp"
@@ -25,7 +18,7 @@
         android:text="정호정 팀원"
         android:textColor="@color/black"
         android:textSize="16dp"
-        app:layout_constraintStart_toEndOf="@+id/ivProfill"
+        app:layout_constraintStart_toEndOf="@+id/iv_pro_fill"
         app:layout_constraintTop_toTopOf="parent" />
 
 
@@ -33,132 +26,139 @@
 
 
     <ImageView
-        android:id="@+id/ivProfill"
+        android:id="@+id/iv_pro_fill"
         android:layout_width="60dp"
         android:layout_height="60dp"
         android:layout_marginStart="18dp"
         android:layout_marginTop="22dp"
         android:src="@drawable/gang"
+        android:background="@drawable/shape_circle_background"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView
-        android:id="@+id/ivSticker0"
+        android:id="@+id/iv_sticker0"
         android:layout_width="20dp"
         android:layout_height="20dp"
         android:layout_marginStart="11dp"
-        android:src="@drawable/gang"
-        app:layout_constraintStart_toEndOf="@+id/ivProfill"
-        app:layout_constraintTop_toBottomOf="@+id/tvName" />
+        android:src="@drawable/imoge33_policecarlight"
+        android:background="@drawable/shape_circle_background"
+        app:layout_constraintStart_toEndOf="@+id/iv_pro_fill"
+        app:layout_constraintTop_toBottomOf="@+id/tv_name" />
 
     <TextView
-        android:id="@+id/tvSticker0"
+        android:id="@+id/tv_sticker0"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="4dp"
         android:layout_marginTop="3dp"
         android:text="99"
         android:textSize="10dp"
-        app:layout_constraintStart_toEndOf="@+id/ivSticker0"
-        app:layout_constraintTop_toTopOf="@+id/ivSticker0"
+        app:layout_constraintStart_toEndOf="@+id/iv_sticker0"
+        app:layout_constraintTop_toTopOf="@+id/iv_sticker0"
         tools:ignore="TextSizeCheck" />
 
     <ImageView
-        android:id="@+id/ivSticker1"
+        android:id="@+id/iv_sticker1"
         android:layout_width="20dp"
         android:layout_height="20dp"
         android:layout_marginStart="28dp"
-        android:src="@drawable/gang"
-        app:layout_constraintStart_toEndOf="@+id/ivSticker0"
-        app:layout_constraintTop_toTopOf="@+id/ivSticker0" />
+        android:src="@drawable/imoge16_cookedrice"
+        android:background="@drawable/shape_circle_background"
+        app:layout_constraintStart_toEndOf="@+id/iv_sticker0"
+        app:layout_constraintTop_toTopOf="@+id/iv_sticker0" />
 
     <TextView
-        android:id="@+id/tvSticker1"
+        android:id="@+id/tv_sticker1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="4dp"
         android:layout_marginTop="3dp"
         android:text="99"
         android:textSize="10dp"
-        app:layout_constraintStart_toEndOf="@+id/ivSticker1"
-        app:layout_constraintTop_toTopOf="@+id/ivSticker1"
+        app:layout_constraintStart_toEndOf="@+id/iv_sticker1"
+        app:layout_constraintTop_toTopOf="@+id/iv_sticker1"
         tools:ignore="TextSizeCheck" />
 
     <ImageView
-        android:id="@+id/ivSticker2"
+        android:id="@+id/iv_sticker2"
         android:layout_width="20dp"
         android:layout_height="20dp"
         android:layout_marginStart="28dp"
-        android:src="@drawable/gang"
-        app:layout_constraintStart_toEndOf="@+id/ivSticker1"
-        app:layout_constraintTop_toTopOf="@+id/ivSticker1" />
+        android:src="@drawable/imoge13_alarmclock"
+        android:background="@drawable/shape_circle_background"
+        app:layout_constraintStart_toEndOf="@+id/iv_sticker1"
+        app:layout_constraintTop_toTopOf="@+id/iv_sticker1" />
 
     <TextView
-        android:id="@+id/tvSticker2"
+        android:id="@+id/tv_sticker2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="4dp"
         android:layout_marginTop="3dp"
         android:text="99"
         android:textSize="10dp"
-        app:layout_constraintStart_toEndOf="@+id/ivSticker2"
-        app:layout_constraintTop_toTopOf="@+id/ivSticker2"
+        app:layout_constraintStart_toEndOf="@+id/iv_sticker2"
+        app:layout_constraintTop_toTopOf="@+id/iv_sticker2"
         tools:ignore="TextSizeCheck" />
 
     <ImageView
-        android:id="@+id/ivSticker3"
+        android:id="@+id/iv_sticker3"
         android:layout_width="20dp"
         android:layout_height="20dp"
         android:layout_marginStart="28dp"
-        android:src="@drawable/gang"
-        app:layout_constraintStart_toEndOf="@+id/ivSticker2"
-        app:layout_constraintTop_toTopOf="@+id/ivSticker2" />
+        android:src="@drawable/imoge19_partypopper"
+        android:background="@drawable/shape_circle_background"
+        app:layout_constraintStart_toEndOf="@+id/iv_sticker2"
+        app:layout_constraintTop_toTopOf="@+id/iv_sticker2" />
 
     <TextView
-        android:id="@+id/tvSticker3"
+        android:id="@+id/tv_sticker3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="4dp"
         android:layout_marginTop="3dp"
         android:text="99"
         android:textSize="10dp"
-        app:layout_constraintStart_toEndOf="@+id/ivSticker3"
-        app:layout_constraintTop_toTopOf="@+id/ivSticker3"
+        app:layout_constraintStart_toEndOf="@+id/iv_sticker3"
+        app:layout_constraintTop_toTopOf="@+id/iv_sticker3"
         tools:ignore="TextSizeCheck" />
 
     <ImageView
-        android:id="@+id/ivStickerRecently"
+        android:id="@+id/iv_sticker_recently"
         android:layout_width="45dp"
         android:layout_height="45dp"
         android:layout_marginTop="-5dp"
         android:layout_marginEnd="60dp"
-        android:src="@drawable/gang"
+        android:src="@drawable/imoge01_thumbsup"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/ivProfill" />
+        app:layout_constraintTop_toTopOf="@+id/iv_pro_fill" />
 
     <ImageView
-        android:id="@+id/ivCall"
+        android:id="@+id/iv_call"
         android:layout_width="45dp"
         android:layout_height="45dp"
         android:layout_marginStart="5dp"
-        android:src="@drawable/gang"
-        app:layout_constraintStart_toEndOf="@+id/ivStickerRecently"
-        app:layout_constraintTop_toTopOf="@+id/ivStickerRecently" />
+        android:src="@drawable/call"
+        android:backgroundTint="@color/white"
+        android:background="@drawable/shape_circle_background"
+        app:layout_constraintStart_toEndOf="@+id/iv_sticker_recently"
+        app:layout_constraintTop_toTopOf="@+id/iv_sticker_recently" />
 
     <TextView
-        android:id="@+id/tvStickerRecently"
+        android:id="@+id/tv_sticker_recently"
         android:layout_width="16dp"
         android:layout_height="16dp"
         android:layout_marginTop="2dp"
         android:layout_marginEnd="-5dp"
         android:background="@drawable/shape_circle_background"
+        android:backgroundTint="@color/red"
         android:paddingStart="5dp"
         android:paddingTop="1dp"
         android:textColor="@color/white"
         android:text="4"
         android:textSize="10dp"
-        app:layout_constraintEnd_toEndOf="@+id/ivStickerRecently"
-        app:layout_constraintTop_toTopOf="@+id/ivStickerRecently"
-        tools:ignore="TextSizeCheck" />
+        app:layout_constraintEnd_toEndOf="@+id/iv_sticker_recently"
+        app:layout_constraintTop_toTopOf="@+id/iv_sticker_recently" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
