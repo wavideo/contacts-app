@@ -31,6 +31,8 @@ class MainActivity : AppCompatActivity() {
         }
         setFragment(ContactListFragment())
         StickerManager.loading()
+
+        ContactManager.loading()
     }
 
     private fun setFragment(frag : Fragment) {
