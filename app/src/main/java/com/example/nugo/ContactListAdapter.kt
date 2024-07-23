@@ -1,6 +1,9 @@
 package com.example.nugo
 
+import android.content.ContentValues.TAG
 import android.os.Bundle
+import android.provider.ContactsContract.Contacts
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,12 +15,12 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.nugo.databinding.ActivityContactListItemBinding
 import com.example.nugo.databinding.FragmentContactListBinding
 
-class ContactListAdapter(val mItems: MutableList<ContactData>) : RecyclerView.Adapter<ContactListAdapter.Holder>() {
+class ContactListAdapter(
+    private val mItems:MutableList<ContactData>,
+    ) : RecyclerView.Adapter<ContactListAdapter.Holder>() {
 
         inner class Holder(private val binding: ActivityContactListItemBinding): RecyclerView.ViewHolder(binding.root){
-            fun bind(item: ContactData){
-                binding.tvName.text = item.name
-        }
+        val tvName = binding.tvName
         }
 
     interface ItemClick{
@@ -32,20 +35,17 @@ class ContactListAdapter(val mItems: MutableList<ContactData>) : RecyclerView.Ad
     }
 
     override fun onBindViewHolder(holder: Holder, position: Int) {
-        holder.bind(mItems[position])
-        holder.itemView.setOnClickListener{
-            itemClick?.onClick(it, position)
-        }
+    holder.tvName.text = ContactManager.Contacts[position].name
+    holder.itemView.setOnClickListener{
+        itemClick?.onClick(it, position)
+    }
     }
 
     override fun getItemCount(): Int {
         return mItems.size
-
     }
 
     override fun getItemId(position: Int): Long {
         return position.toLong()
     }
-
-
 }

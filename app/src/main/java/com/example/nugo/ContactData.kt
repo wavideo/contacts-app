@@ -1,5 +1,7 @@
 package com.example.nugo
 
+import android.util.Log
+
 /* [ 정호정 파트 ]
 연락처에 대한 data class 입니다*/
 
@@ -56,6 +58,7 @@ object ContactManager {
     /*앱에 넣어둘 더미데이터입니다.
     MainActivity 상단에 ContactManager.loading()으로 더미데이터를 등록해주세요 */
     fun loading() {
+        Log.i ("바인드뷰홀더", "로딩성공")
         Contacts.add(ContactData("나 (본인)", "", ""))
         Contacts.add(ContactData("김은택", "010-1111-1111", "aaa@naver.com"))
         Contacts.add(ContactData("정호정", "010-1111-1111", "aaa@naver.com"))

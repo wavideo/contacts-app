@@ -9,6 +9,8 @@ package com.example.nugo
 
 import android.content.Intent
 import android.os.Bundle
+import android.provider.ContactsContract.Contacts
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -30,7 +32,6 @@ private const val ARG_PARAM2 = "param2"
 class ContactListFragment : Fragment() {
     // TODO: Rename and change types of parameters
     private val binding by lazy { FragmentContactListBinding.inflate(layoutInflater) }
-//    private val adapter by lazy { ContactListAdapter(ContactManager.Contacts) }
 //    private var _binding: FragmentContactListBinding? = null
 //    private val binding get() = _binding!!
     private var param1: String? = null
@@ -56,23 +57,9 @@ class ContactListFragment : Fragment() {
 
         super.onViewCreated(view, savedInstanceState)
 
-        ContactManager.loading()
-//
-//        val dataList = mutableListOf<ContactListItem>()
-//        dataList.add(ContactListItem("김은택", "010-1111-1111", "aaa@naver.com"))
-//        dataList.add(ContactListItem("정호정", "010-1111-1111", "aaa@naver.com"))
-//        dataList.add(ContactListItem("허민", "010-1111-1111", "aaa@naver.com"))
-//        dataList.add(ContactListItem("전은혜", "010-1111-1111", "aaa@naver.com"))
-//        dataList.add(ContactListItem("한혜림", "010-1111-1111", "aaa@naver.com"))
-//        dataList.add(ContactListItem("이태우", "010-1111-1111", "aaa@naver.com"))
-//        dataList.add(ContactListItem("유건희", "010-1111-1111", "aaa@naver.com"))
-//        dataList.add(ContactListItem("문지혜", "010-1111-1111", "aaa@naver.com"))
-//        dataList.add(ContactListItem("최어진", "010-1111-1111", "aaa@naver.com"))
-//        dataList.add(ContactListItem("박혜민", "010-1111-1111", "aaa@naver.com"))
+        val adapter = ContactListAdapter(ContactManager.Contacts) // dataList 생성
 
-        val dataList = ContactManager.Contacts
 
-        val adapter = ContactListAdapter(dataList)
         binding.recycleListView.adapter = adapter
         binding.recycleListView.layoutManager = LinearLayoutManager(this.requireContext())
 
