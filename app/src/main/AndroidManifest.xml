@@ -13,6 +13,15 @@
         android:theme="@style/Theme.Nugo"
         tools:targetApi="31">
         <activity
+            android:name=".ContactListItem"
+            android:exported="false" />
+        <activity
+            android:name=".fragment_contact_list_item"
+            android:exported="false" />
+        <activity
+            android:name=".ContactListAdapter"
+            android:exported="false" />
+        <activity
             android:name=".MainActivity"
             android:exported="true">
             <intent-filter>

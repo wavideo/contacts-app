@@ -36,11 +36,11 @@ object StickerManager{
     /* MainActivity 상단에 StrickerManager.loading()을 입력해주세요
     기본 스티커 4종과 빈 스티커 자리 1종, 총 5개의 슬롯이 추가됩니다 */
     fun loading(){
-        stickers.add("고마워",0, false)
-        stickers.add("경고",0, false)
-        stickers.add("밥 사주신 분들",0, false)
-        stickers.add("지각한 사람",0, false)
-        stickers.add("",0, true)
+        stickers.add(StickerData("고마워",0, false))
+        stickers.add(StickerData("경고",0, false))
+        stickers.add(StickerData("밥 사주신 분들",0, false))
+        stickers.add(StickerData("지각한 사람",0, false))
+        stickers.add(StickerData("",0, true))
     }
 
     // icon 이미지를 IntArray로 관리합니다

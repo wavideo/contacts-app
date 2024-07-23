@@ -7,11 +7,15 @@ package com.example.nugo
 1. 데이터 클래스 ContactData를 통해 연락처 정보를 읽고 씁니다
 2. 연락처 상세정보 (ContactDetailFragment)로 선택한 연락처를 넘겨줍니다*/
 
+import android.content.Intent
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
+import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.nugo.databinding.FragmentContactListBinding
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -25,6 +29,9 @@ private const val ARG_PARAM2 = "param2"
  */
 class ContactListFragment : Fragment() {
     // TODO: Rename and change types of parameters
+    private val binding by lazy { FragmentContactListBinding.inflate(layoutInflater) }
+//    private var _binding: FragmentContactListBinding? = null
+//    private val binding get() = _binding!!
     private var param1: String? = null
     private var param2: String? = null
 
@@ -40,9 +47,43 @@ class ContactListFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_contact_list, container, false)
+//        _binding = FragmentContactListBinding.inflate(inflater, container, false)
+        return binding.root
     }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+
+        super.onViewCreated(view, savedInstanceState)
+        val dataList = mutableListOf<ContactListItem>()
+        dataList.add(ContactListItem("김은택", "010-1111-1111", "aaa@naver.com"))
+        dataList.add(ContactListItem("정호정", "010-1111-1111", "aaa@naver.com"))
+        dataList.add(ContactListItem("허민", "010-1111-1111", "aaa@naver.com"))
+        dataList.add(ContactListItem("전은혜", "010-1111-1111", "aaa@naver.com"))
+        dataList.add(ContactListItem("한혜림", "010-1111-1111", "aaa@naver.com"))
+        dataList.add(ContactListItem("이태우", "010-1111-1111", "aaa@naver.com"))
+        dataList.add(ContactListItem("유건희", "010-1111-1111", "aaa@naver.com"))
+        dataList.add(ContactListItem("문지혜", "010-1111-1111", "aaa@naver.com"))
+        dataList.add(ContactListItem("최어진", "010-1111-1111", "aaa@naver.com"))
+        dataList.add(ContactListItem("박혜민", "010-1111-1111", "aaa@naver.com"))
+
+        val adapter = ContactListAdapter(dataList, // dataList 생성
+            itemClickListener = { item, position ->
+                Toast.makeText(this.requireContext(), "${item.tvName} clicked", Toast.LENGTH_SHORT)
+                    .show()
+                var nameIntent = Intent(this.requireContext(), StickerListFragment::class.java)
+                nameIntent.putExtra("name", item.tvName)
+                startActivity(nameIntent)
+            })
+        binding.recycleListView.adapter = adapter
+        binding.recycleListView.layoutManager = LinearLayoutManager(this.requireContext())
+
+    }
+
+
+//    override fun onDestroyView() {
+//        super.onDestroyView()
+//        _binding = null
+//    }
 
     companion object {
         /**
@@ -57,10 +98,51 @@ class ContactListFragment : Fragment() {
         @JvmStatic
         fun newInstance(param1: String, param2: String) =
             ContactListFragment().apply {
-                arguments = Bundle().apply {
+                var arguments = Bundle().apply {
                     putString(ARG_PARAM1, param1)
                     putString(ARG_PARAM2, param2)
                 }
             }
+
+//        class ContactListFragment : AppCompatActivity() {
+//
+//            private lateinit var binding: FragmentContactListBinding
+//
+//
+//            override fun onCreate(savedInstanceState: Bundle?) {
+//                super.onCreate(savedInstanceState)
+//
+//                enableEdgeToEdge()
+//
+//                binding = FragmentContactListBinding.inflate(layoutInflater)
+//
+//                setContentView(binding.root)
+//
+//                ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
+//                    val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
+//                    v.setPadding(
+//                        systemBars.left,
+//                        systemBars.top,
+//                        systemBars.right,
+//                        systemBars.bottom
+//                    )
+//                    insets
+//                }
+//                //데이터 원본 준비
+//                val dataList = mutableListOf<ContactListItem>()
+//                dataList.add(ContactListItem("김은택", "010-1111-1111", "aaa@naver.com"))
+//
+//                val adapter = ContactListAdapter(dataList, // dataList 생성
+//                    itemClickListener = { item, position ->
+//                        Toast.makeText(this, "${item.tvName} clicked", Toast.LENGTH_SHORT).show()
+//                        var nameIntent = Intent(this@ContactListFragment, StickerListFragment::class.java)
+//                        nameIntent.putExtra("name", item.tvName)
+//                        startActivity(nameIntent)
+//                    })
+//                binding.recycleListView.adapter = adapter
+//                binding.recycleListView.layoutManager = LinearLayoutManager(this@ContactListFragment)
+//
+//            }
+//        }
     }
 }
