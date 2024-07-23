@@ -34,12 +34,9 @@ class ContactListAdapter(
 
     override fun getItemCount(): Int {
         return mItems.size
-
     }
 
     override fun getItemId(position: Int): Long {
         return position.toLong()
     }
-
-
 }
