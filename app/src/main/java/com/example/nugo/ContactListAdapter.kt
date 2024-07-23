@@ -37,5 +37,9 @@ class ContactListAdapter(
 
     }
 
+    override fun getItemId(position: Int): Long {
+        return position.toLong()
+    }
+
 
 }

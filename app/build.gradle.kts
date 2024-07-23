@@ -38,8 +38,6 @@ android {
     }
 }
 
-
-
 dependencies {
 
     implementation(libs.androidx.core.ktx)
@@ -47,7 +45,6 @@ dependencies {
     implementation(libs.material)
     implementation(libs.androidx.activity)
     implementation(libs.androidx.constraintlayout)
-//    implementation("androidx.fragment:fragment:1.5.1")
     implementation("androidx.fragment:fragment-ktx:1.8.1")
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
