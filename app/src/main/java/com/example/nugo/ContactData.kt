@@ -1,5 +1,6 @@
 package com.example.nugo
 
+import android.graphics.Bitmap
 import android.util.Log
 
 /* [ 정호정 파트 ]
@@ -83,6 +84,10 @@ object ContactManager {
         Contacts.add(ContactData("박근혜", "010-1111-1111", "aaa@naver.com"))
         Contacts.add(ContactData("문재인", "010-1111-1111", "aaa@naver.com"))
         Contacts.add(ContactData("윤석열", "010-1111-1111", "aaa@naver.com"))
+    }
+
+    fun delete(name_: String){
+        Contacts.remove(Contacts.find { it.name == name_})
     }
 
 }
