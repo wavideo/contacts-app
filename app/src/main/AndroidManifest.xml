@@ -16,13 +16,7 @@
             android:name=".ContactListItem"
             android:exported="false" />
         <activity
-            android:name=".fragment_contact_list_item"
-            android:exported="false" />
-        <activity
             android:name=".ContactListAdapter"
-            android:exported="false" />
-        <activity
-            android:name=".StickerRecyclerView"
             android:exported="false" />
         <activity
             android:name=".MainActivity"
