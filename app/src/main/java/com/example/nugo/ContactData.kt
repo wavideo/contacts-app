@@ -1,10 +1,26 @@
 package com.example.nugo
 
 import android.graphics.Bitmap
+import android.graphics.Canvas
+import android.graphics.Color
+import android.graphics.Paint
 import android.util.Log
 
 /* [ 정호정 파트 ]
 연락처에 대한 data class 입니다*/
+
+// 예시 bitmap 이미지 생성
+fun createSampleBitmap(): Bitmap {
+    val bitmap = Bitmap.createBitmap(100, 100, Bitmap.Config.ARGB_8888)
+    val canvas = Canvas(bitmap)
+    val paint = Paint()
+    canvas.drawColor(Color.WHITE)
+    paint.color = Color.WHITE
+    canvas.drawCircle(50f, 50f, 30f, paint)
+    return bitmap
+}
+
+val sampleBitmap = createSampleBitmap()
 
 data class ContactData(
     var name: String,
@@ -15,7 +31,7 @@ data class ContactData(
     var sticker2: Int,
     var sticker3: Int,
     var sticker4: Int,
-    var photo: Int
+    var photo: Bitmap
 ) {
     constructor(name: String, number: String, email: String) : this(
         name,
@@ -26,7 +42,7 @@ data class ContactData(
         0,
         0,
         0,
-        R.drawable.basic_profile
+        sampleBitmap
     )
 
     // 연락처 인스턴스에 .stickerUp(3) 하면 스티커 등록 갯수가 1개 늘어납니다
@@ -52,6 +68,8 @@ data class ContactData(
 }
 
 object ContactManager {
+
+    val sampleBitmap = createSampleBitmap()
 
     // 데이터 리스트입니다. ContactManager.Contacts[0] 으로 n번째 연락처를 호출할 수 있습니다
     var Contacts = mutableListOf<ContactData>()
