@@ -11,7 +11,8 @@ data class ContactData(
     var sticker1: Int,
     var sticker2: Int,
     var sticker3: Int,
-    var sticker4: Int
+    var sticker4: Int,
+    var photo: Int
 ) {
     constructor(name: String, number: String, email: String) : this(
         name,
@@ -21,10 +22,11 @@ data class ContactData(
         0,
         0,
         0,
-        0
+        0,
+        R.drawable.basic_profile
     )
 
-    // 연락처 인스턴스에 .sickerUp(3) 하면 스티커 등록 갯수가 1개 늘어납니다
+    // 연락처 인스턴스에 .stickerUp(3) 하면 스티커 등록 갯수가 1개 늘어납니다
     fun stickerUp(index: Int) {
         when (index) {
             0 -> sticker0++
@@ -49,7 +51,7 @@ data class ContactData(
 object ContactManager {
 
     // 데이터 리스트입니다. ContactManager.Contacts[0] 으로 n번째 연락처를 호출할 수 있습니다
-    val Contacts = mutableListOf<ContactData>()
+    var Contacts = mutableListOf<ContactData>()
 
     /*앱에 넣어둘 더미데이터입니다.
     MainActivity 상단에 ContactManager.loading()으로 더미데이터를 등록해주세요 */

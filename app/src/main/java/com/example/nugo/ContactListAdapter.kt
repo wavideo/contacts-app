@@ -2,6 +2,7 @@ package com.example.nugo
 
 import android.os.Bundle
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
@@ -11,16 +12,19 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.nugo.databinding.ActivityContactListItemBinding
 import com.example.nugo.databinding.FragmentContactListBinding
 
-class ContactListAdapter(
-    private val mItems:List<ContactListItem>,
-    private val itemClickListener: (ContactListItem, Int) -> Unit
-    ) : RecyclerView.Adapter<ContactListAdapter.Holder>() {
+class ContactListAdapter(val mItems: MutableList<ContactData>) : RecyclerView.Adapter<ContactListAdapter.Holder>() {
 
         inner class Holder(private val binding: ActivityContactListItemBinding): RecyclerView.ViewHolder(binding.root){
-            fun bind(item: ContactListItem){
-                binding.tvName.text = item.tvName
+            fun bind(item: ContactData){
+                binding.tvName.text = item.name
         }
         }
+
+    interface ItemClick{
+        fun onClick(view: View, position: Int)
+    }
+
+    var itemClick: ItemClick? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): Holder {
         val binding = ActivityContactListItemBinding.inflate(LayoutInflater.from(parent.context), parent,false)
@@ -29,7 +33,9 @@ class ContactListAdapter(
 
     override fun onBindViewHolder(holder: Holder, position: Int) {
         holder.bind(mItems[position])
-
+        holder.itemView.setOnClickListener{
+            itemClick?.onClick(it, position)
+        }
     }
 
     override fun getItemCount(): Int {
