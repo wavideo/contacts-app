@@ -30,6 +30,7 @@ class MainActivity : AppCompatActivity() {
             }
         }
         setFragment(ContactListFragment())
+        StickerManager.loading()
     }
 
     private fun setFragment(frag : Fragment) {
