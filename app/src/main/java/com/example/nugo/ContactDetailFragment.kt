@@ -7,11 +7,15 @@ package com.example.nugo
 1. 데이터 클래스 ContactData를 통해 연락처 정보를 읽고 씁니다
 2. 연락처 리스트 (ContactListFragment)와 스티커 디테일 (StickerDetailFragment)에서 선택한 연락처를 넘겨받습니다*/
 
+import android.net.Uri
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.appcompat.app.AlertDialog
 import com.example.nugo.databinding.FragmentContactDetailBinding
 
 private const val ARG_PARAM1 = "param1"
@@ -23,6 +27,13 @@ class ContactDetailFragment : Fragment() {
 
     private var _binding: FragmentContactDetailBinding? = null
     private val binding get() = _binding!!
+
+    private val getImageFromGallery = registerForActivityResult(ActivityResultContracts.GetContent()) {
+        uri: Uri? -> uri?.let {
+            // 선택한 이미지를 ImageView에 저장
+            binding?.ivDetailProfile?.setImageURI(it)
+    }
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -61,6 +72,77 @@ class ContactDetailFragment : Fragment() {
         binding?.ivDetailSticker5?.setImageResource(ContactManager.Contacts[position].sticker4)
         binding?.ivDetailProfile?.setImageResource(ContactManager.Contacts[position].photo)
 
+        // 뒤로가기 버튼
+        binding?.ivDetailBack?.setOnClickListener{
+            requireActivity().supportFragmentManager.beginTransaction()
+                .replace(R.id.frameLayout, ContactListFragment())
+                .addToBackStack(null)
+                .commit()
+        }
+
+        var isEditClicked = false
+
+        // 수정 버튼 누르면 저장 버튼, EditText 활성화
+        binding?.ivDetailEdit?.setOnClickListener{
+            isEditClicked = true
+            binding?.ivDetailSave?.visibility = View.VISIBLE
+            binding?.ivDetailEdit?.visibility = View.GONE
+            binding?.ivDetailAddSticker?.visibility = View.VISIBLE
+
+            binding?.etDetailName?.isEnabled = true
+            binding?.etDetailNumber?.isEnabled = true
+            binding?.etDetailEmail?.isEnabled = true
+
+            // 사진 추가 버튼
+            binding?.ivDetailAddSticker?.setOnClickListener{
+                Toast.makeText(this.requireContext(), "갤러리에서 사진을 선택해주세요.", Toast.LENGTH_SHORT).show()
+                getImageFromGallery.launch("image/*")
+            }
+
+            binding?.ivDetailSave?.setOnClickListener{
+                ContactManager.Contacts[position].name = binding.etDetailName.text.toString()
+                ContactManager.Contacts[position].number = binding.etDetailNumber.text.toString()
+                ContactManager.Contacts[position].email = binding.etDetailEmail.text.toString()
+//                ContactManager.Contacts[position].photo = binding.ivDetailProfile.imageAlpha
+
+                Toast.makeText(this.requireContext(), "수정사항이 저장되었습니다.", Toast.LENGTH_SHORT).show()
+
+                isEditClicked = false
+                binding?.ivDetailSave?.visibility = View.GONE
+                binding?.ivDetailEdit?.visibility = View.VISIBLE
+                binding?.ivDetailAddSticker?.visibility = View.GONE
+
+                binding?.etDetailName?.isEnabled = false
+                binding?.etDetailNumber?.isEnabled = false
+                binding?.etDetailEmail?.isEnabled = false
+            }
+        }
+
+        // 삭제하기 버튼
+        binding?.btnDetailDelete?.setOnClickListener{
+            AlertDialog.Builder(this.requireContext())
+                .setMessage("연락처를 삭제하시겠습니까?")
+                .setPositiveButton("확인") { dialog, which ->
+                    ContactManager.delete(ContactManager.Contacts[position].name.toString())
+                    requireActivity().supportFragmentManager.beginTransaction()
+                        .replace(R.id.frameLayout, ContactListFragment())
+                        .addToBackStack(null)
+                        .commit()
+                }
+                .setNegativeButton("취소") { dialog, which ->
+                }
+                .show()
+        }
+
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
     }
 
 }
