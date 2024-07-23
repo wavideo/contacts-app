@@ -9,6 +9,8 @@ package com.example.nugo
 
 import android.content.Intent
 import android.os.Bundle
+import android.provider.ContactsContract.Contacts
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -54,28 +56,35 @@ class ContactListFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 
         super.onViewCreated(view, savedInstanceState)
-        val dataList = mutableListOf<ContactListItem>()
-        dataList.add(ContactListItem("김은택", "010-1111-1111", "aaa@naver.com"))
-        dataList.add(ContactListItem("정호정", "010-1111-1111", "aaa@naver.com"))
-        dataList.add(ContactListItem("허민", "010-1111-1111", "aaa@naver.com"))
-        dataList.add(ContactListItem("전은혜", "010-1111-1111", "aaa@naver.com"))
-        dataList.add(ContactListItem("한혜림", "010-1111-1111", "aaa@naver.com"))
-        dataList.add(ContactListItem("이태우", "010-1111-1111", "aaa@naver.com"))
-        dataList.add(ContactListItem("유건희", "010-1111-1111", "aaa@naver.com"))
-        dataList.add(ContactListItem("문지혜", "010-1111-1111", "aaa@naver.com"))
-        dataList.add(ContactListItem("최어진", "010-1111-1111", "aaa@naver.com"))
-        dataList.add(ContactListItem("박혜민", "010-1111-1111", "aaa@naver.com"))
 
-        val adapter = ContactListAdapter(dataList, // dataList 생성
-            itemClickListener = { item, position ->
-                Toast.makeText(this.requireContext(), "${item.tvName} clicked", Toast.LENGTH_SHORT)
-                    .show()
-                var nameIntent = Intent(this.requireContext(), StickerListFragment::class.java)
-                nameIntent.putExtra("name", item.tvName)
-                startActivity(nameIntent)
-            })
+        val adapter = ContactListAdapter(ContactManager.Contacts) // dataList 생성
+
+
         binding.recycleListView.adapter = adapter
         binding.recycleListView.layoutManager = LinearLayoutManager(this.requireContext())
+
+        adapter.itemClick = object : ContactListAdapter.ItemClick {
+            override fun onClick(view: View, position: Int) {
+                val dataToSend = position
+                val fragmentContactDetail = ContactDetailFragment.newInstance(dataToSend.toString())
+                requireActivity().supportFragmentManager.beginTransaction()
+                    .replace(R.id.frameLayout, fragmentContactDetail)
+                    .addToBackStack(null)
+                    .commit()
+            }
+        }
+
+//        val adapter = ContactListAdapter(dataList, // dataList 생성
+//            itemClickListener = { item, position ->
+//                Toast.makeText(this.requireContext(), "${item.tvName}이 클릭되었습니다.", Toast.LENGTH_SHORT).show()
+//                val dataToSend = position
+//                val fragmentContactDetail = ContactDetailFragment.newInstance(dataToSend.toString())
+//                requireActivity().supportFragmentManager.beginTransaction()
+//                    .replace(R.id.listView, fragmentContactDetail)
+//                    .addToBackStack(null)
+//                    .commit()
+//            })
+
 
     }
 
