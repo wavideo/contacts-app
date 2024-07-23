@@ -13,7 +13,7 @@
         android:layout_marginVertical="4dp"
         android:background="@drawable/shape_rectangle_radius_12"
         android:backgroundTint="@color/white"
-
+        android:elevation="3dp"
         android:padding="12dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -25,7 +25,7 @@
             android:layout_width="60dp"
             android:layout_height="60dp"
             android:src="@drawable/shape_circle_background"
-            android:tint="@color/gray_b"
+            android:tint="@color/background_basic"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -61,7 +61,7 @@
             android:layout_height="wrap_content"
             android:layout_marginEnd="20dp"
             android:background="@drawable/shape_rectangle_radius_999"
-            android:backgroundTint="@color/gray_b"
+            android:backgroundTint="@color/background_basic"
             android:padding="8dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/iv_ic_arraow"

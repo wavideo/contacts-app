@@ -22,6 +22,8 @@ class MainActivity : AppCompatActivity() {
             insets
         }
 
+        StickerManager.loading()
+
 
     }
 
