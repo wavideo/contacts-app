@@ -65,12 +65,10 @@ class ContactListFragment : Fragment() {
 
         adapter.itemClick = object : ContactListAdapter.ItemClick {
             override fun onClick(view: View, position: Int) {
-//                Toast.makeText(this.requireContext(), "${view.tvName}이 클릭되었습니다.", Toast.LENGTH_SHORT)
-//                    .show()
                 val dataToSend = position
                 val fragmentContactDetail = ContactDetailFragment.newInstance(dataToSend.toString())
                 requireActivity().supportFragmentManager.beginTransaction()
-                    .replace(R.id.topView, fragmentContactDetail)
+                    .replace(R.id.frameLayout, fragmentContactDetail)
                     .addToBackStack(null)
                     .commit()
             }
