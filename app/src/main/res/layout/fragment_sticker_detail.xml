@@ -75,6 +75,25 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@+id/tv_title" />
 
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:paddingHorizontal="20dp"
+        android:layout_marginTop="14dp"
+        android:background="@drawable/shape_rectangle_radius_999"
+        app:layout_constraintTop_toBottomOf="@+id/tv_title"
+        app:layout_constraintBottom_toTopOf="@+id/tv_btn_delete"
+        >
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_sticker_list"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        tools:itemCount="10"
+        tools:listitem="@layout/item_contact_with_sticker" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
     <TextView
         android:id="@+id/tv_btn_delete"
         android:layout_width="match_parent"
