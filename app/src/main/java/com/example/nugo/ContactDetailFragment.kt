@@ -7,8 +7,12 @@ package com.example.nugo
 1. 데이터 클래스 ContactData를 통해 연락처 정보를 읽고 씁니다
 2. 연락처 리스트 (ContactListFragment)와 스티커 디테일 (StickerDetailFragment)에서 선택한 연락처를 넘겨받습니다*/
 
+import android.graphics.Bitmap
+import android.graphics.ImageDecoder
 import android.net.Uri
+import android.os.Build
 import android.os.Bundle
+import android.provider.MediaStore
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -33,8 +37,11 @@ class ContactDetailFragment : Fragment() {
     private val getImageFromGallery = registerForActivityResult(ActivityResultContracts.GetContent()) {
         uri: Uri? -> uri?.let {
             // 선택한 이미지를 ImageView에 저장
-            binding.ivDetailProfile.setImageURI(it)
-    }
+
+            val bitmap = uriToBitmap(it)
+            binding?.ivDetailProfile?.setImageBitmap(bitmap)
+            ContactManager.Contacts[param1!!.toInt()].photo = bitmap
+        }
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -62,10 +69,16 @@ class ContactDetailFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         var position = param1?.toInt()!!
-        binding.ivDetailProfile.setImageResource(ContactManager.Contacts[position].photo)
         binding.etDetailName.setText(ContactManager.Contacts[position].name)
         binding.etDetailNumber.setText(ContactManager.Contacts[position].number)
         binding.etDetailEmail.setText(ContactManager.Contacts[position].email)
+        binding.ivDetailProfile.setImageBitmap(ContactManager.Contacts[position].photo)
+
+        if (ContactManager.Contacts[position].photo == sampleBitmap) {
+            binding.ivDetailAvatar.visibility = View.VISIBLE
+        } else {
+            binding.ivDetailAvatar.visibility = View.GONE
+        }
 
         binding.ivDetailSticker1.setImageResource(StickerManager.stickers[0].findDrawable())
         binding.ivDetailSticker2.setImageResource(StickerManager.stickers[1].findDrawable())
@@ -124,10 +137,10 @@ class ContactDetailFragment : Fragment() {
             binding.ivDetailSticker5Count.isVisible = true
         }
 
-        binding.ivDetailProfile.setImageResource(ContactManager.Contacts[position].photo)
+        binding.ivDetailProfile.setImageBitmap(ContactManager.Contacts[position].photo)
 
         // 뒤로가기 버튼
-        binding.ivDetailBack.setOnClickListener{
+        binding?.ivDetailBack?.setOnClickListener{
             requireActivity().supportFragmentManager.beginTransaction()
                 .replace(R.id.frameLayout, ContactListFragment())
                 .addToBackStack(null)
@@ -136,19 +149,38 @@ class ContactDetailFragment : Fragment() {
 
         var isEditClicked = false
 
-        // 수정 버튼 누르면 저장 버튼, EditText 활성화
+
+        // 수정 버튼 누르면 저장 버튼, 사진 추가 버튼, 사진 삭제 버튼, 각 EditText 활성화
         binding.ivDetailEdit.setOnClickListener{
             isEditClicked = true
-            binding.ivDetailSave.visibility = View.VISIBLE
+
             binding.ivDetailEdit.visibility = View.GONE
-            binding.ivDetailAddSticker.visibility = View.VISIBLE
+            binding.ivDetailSave.visibility = View.VISIBLE
+
+            binding.ivDetailPhotoDelete.visibility = View.VISIBLE
+            binding.ivDetailPhotoEdit.visibility = View.VISIBLE
 
             binding.etDetailName.isEnabled = true
             binding.etDetailNumber.isEnabled = true
             binding.etDetailEmail.isEnabled = true
 
+            // 사진 삭제 버튼
+            binding.ivDetailPhotoDelete.setOnClickListener{
+                AlertDialog.Builder(this.requireContext())
+                    .setMessage("사진을 삭제하시겠습니까?")
+                    .setPositiveButton("확인") { dialog, which ->
+                        binding.ivDetailProfile.setImageBitmap(sampleBitmap)
+                        ContactManager.Contacts[position].photo = sampleBitmap
+                        binding.ivDetailAvatar.visibility = View.VISIBLE
+                    }
+                    .setNegativeButton("취소") { dialog, which ->
+                    }
+                    .show()
+            }
+
             // 사진 추가 버튼
-            binding.ivDetailAddSticker.setOnClickListener{
+            binding.ivDetailPhotoEdit.setOnClickListener{
+                binding.ivDetailAvatar.visibility = View.GONE
                 Toast.makeText(this.requireContext(), "갤러리에서 사진을 선택해주세요.", Toast.LENGTH_SHORT).show()
                 getImageFromGallery.launch("image/*")
             }
@@ -162,9 +194,11 @@ class ContactDetailFragment : Fragment() {
                 Toast.makeText(this.requireContext(), "수정사항이 저장되었습니다.", Toast.LENGTH_SHORT).show()
 
                 isEditClicked = false
-                binding.ivDetailSave.visibility = View.GONE
                 binding.ivDetailEdit.visibility = View.VISIBLE
-                binding.ivDetailAddSticker.visibility = View.GONE
+                binding.ivDetailSave.visibility = View.GONE
+
+                binding.ivDetailPhotoDelete.visibility = View.GONE
+                binding.ivDetailPhotoEdit.visibility = View.GONE
 
                 binding.etDetailName.isEnabled = false
                 binding.etDetailNumber.isEnabled = false
@@ -172,6 +206,7 @@ class ContactDetailFragment : Fragment() {
             }
         }
 
+        // 스티커 클릭 시 +1, 롱클릭 시 -1
         // 삭제하기 버튼
         binding.btnDetailDelete.setOnClickListener{
             AlertDialog.Builder(this.requireContext())
@@ -190,12 +225,17 @@ class ContactDetailFragment : Fragment() {
 
     }
 
-    override fun onDestroyView() {
-        super.onDestroyView()
-    }
-
     override fun onDestroy() {
         super.onDestroy()
+    }
+
+    private fun uriToBitmap(uri: Uri): Bitmap {
+        return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
+            val source = ImageDecoder.createSource(requireActivity().contentResolver, uri)
+            ImageDecoder.decodeBitmap(source)
+        } else {
+            MediaStore.Images.Media.getBitmap(requireActivity().contentResolver, uri)
+        }
     }
 
 }
