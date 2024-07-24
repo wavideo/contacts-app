@@ -8,6 +8,7 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
+
     <FrameLayout
         android:id="@+id/frameLayout"
         android:layout_width="0dp"
@@ -18,13 +19,18 @@
         app:layout_constraintTop_toTopOf="parent">
     </FrameLayout>
 
+
+
     <Button
         android:id="@+id/fragment1_btn"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
-        android:text="Frag1"
+        android:text="목록"
+        android:textSize="20dp"
         android:textAllCaps="false"
+        android:fontFamily="@font/notosanskr_medium"
+        android:background="@android:color/transparent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/fragment2_btn"
         app:layout_constraintStart_toStartOf="parent"
@@ -35,11 +41,15 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
-        android:text="Frag2"
+        android:text="스티커"
+        android:textSize="20dp"
         android:textAllCaps="false"
+        android:fontFamily="@font/notosanskr_medium"
+        android:background="@android:color/transparent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/fragment1_btn"
         app:layout_constraintTop_toBottomOf="@+id/frameLayout" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

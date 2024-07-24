@@ -5,6 +5,9 @@ import android.graphics.Canvas
 import android.graphics.Color
 import android.graphics.Paint
 import android.util.Log
+import android.content.Intent // 안드로이드 Intent 임포트
+import android.net.Uri
+import android.content.Context
 
 /* [ 정호정 파트 ]
 연락처에 대한 data class 입니다*/
@@ -130,5 +133,22 @@ object ContactManager {
     fun delete(name_: String) {
         Contacts.remove(Contacts.find { it.name == name_ })
     }
+    fun makeCall(context: Context, name: String) {
+        //앱의 현재 상태를 불러옴 Context, name은 전화할 사람
+        val contact = Contacts.find { it.name == name }
+        //Contacts에서 name과 일치하는 연락처를 찾음, find는 name을 반환.
+        contact?.let {
+            val number = it.number
+            //연락처가 ? = null이 아닐 경우, 연락처의 number를 가져옴
+            val intent = Intent(Intent.ACTION_DIAL).apply {
+                //Intent를 생성 ACTION_DIAL로 다이얼을 열게함,apply를 사용해 가독성을 높임.
+                data = Uri.parse("tel:$number")
+            }
+            context.startActivity(intent)
+            //context를 통해 다이얼 시작
 
+        }
+
+
+    }
 }
