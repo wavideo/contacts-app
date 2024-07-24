@@ -29,6 +29,8 @@
         android:layout_marginStart="18dp"
         android:background="@drawable/shape_circle_background"
         android:src="@drawable/basic_profile"
+        android:clipToOutline="true"
+        android:scaleType="centerCrop"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
