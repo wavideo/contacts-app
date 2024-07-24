@@ -136,15 +136,12 @@ class StickerDetailFragment : Fragment() {
                             it.sticker4 = 0
                         }
                     }
+                    StickerManager.stickers[stickerIndex].delete()
                     requireActivity().onBackPressed()
                 }
                 .setNegativeButton("취소") { dialog, which ->
                 }
                 .show()
-
-
-            StickerManager.stickers[stickerIndex].delete()
-
         }
 
         StickerManager.detailPicker = stickerIndex

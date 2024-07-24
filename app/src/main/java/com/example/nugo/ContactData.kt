@@ -116,13 +116,13 @@ object ContactManager {
     /*앱에 넣어둘 더미데이터입니다.
     MainActivity 상단에 ContactManager.loading()으로 더미데이터를 등록해주세요 */
     fun loading() {
-        Contacts.add(ContactData("김은택", "010-1111-1111", "aaa@naver.com", 0, 1, 0, 0, 0, 1))
-        Contacts.add(ContactData("정호정", "010-1111-1111", "aaa@naver.com", 0, 0, 1, 1, 0, 3))
-        Contacts.add(ContactData("허민", "010-1111-1111", "aaa@naver.com", 1, 0, 0, 3, 4, 4))
+        Contacts.add(ContactData("김은택", "010-1111-1111", "aaa@naver.com", 0, 0, 0, 0, 0, 0))
+        Contacts.add(ContactData("정호정", "010-1111-1111", "aaa@naver.com", 0, 0, 0, 0, 0, 0))
+        Contacts.add(ContactData("허민", "010-1111-1111", "aaa@naver.com", 0, 0, 0, 0, 0, 0))
         Contacts.add(ContactData("전은혜", "010-1111-1111", "aaa@naver.com", 0, 0, 0, 0, 0, 0))
-        Contacts.add(ContactData("한혜림", "010-1111-1111", "aaa@naver.com", 2, 3, 0, 1, 0, 0))
-        Contacts.add(ContactData("이태우", "010-1111-1111", "aaa@naver.com", 0, 0, 1, 0, 5, 4))
-        Contacts.add(ContactData("유건희", "010-1111-1111", "aaa@naver.com", 0, 0, 1, 0, 0, 2))
+        Contacts.add(ContactData("한혜림", "010-1111-1111", "aaa@naver.com", 0, 0, 0, 0, 0, 0))
+        Contacts.add(ContactData("이태우", "010-1111-1111", "aaa@naver.com", 0, 0, 0, 0, 0, 0))
+        Contacts.add(ContactData("유건희", "010-1111-1111", "aaa@naver.com", 0, 0, 0, 0, 0, 0))
         Contacts.add(ContactData("문지혜", "010-1111-1111", "aaa@naver.com", 0, 0, 0, 0, 0, 0))
         Contacts.add(ContactData("최어진", "010-1111-1111", "aaa@naver.com", 0, 0, 0, 0, 0, 0))
         Contacts.add(ContactData("박혜민", "010-1111-1111", "aaa@naver.com", 0, 0, 0, 0, 0, 0))

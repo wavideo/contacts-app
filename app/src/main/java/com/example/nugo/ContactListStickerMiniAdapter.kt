@@ -2,7 +2,10 @@ package com.example.nugo
 
 import android.icu.text.Transliterator.Position
 import android.view.LayoutInflater
+import android.view.View.GONE
+import android.view.View.VISIBLE
 import android.view.ViewGroup
+import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
 import com.example.nugo.databinding.ItemContactWithStickerBinding
 import com.example.nugo.databinding.ItemStickerForContactListMiniBinding
@@ -11,7 +14,7 @@ class ContactListStickerMiniAdapter(val items: MutableList<StickerData>, val par
     inner class Holder (val binding : ItemStickerForContactListMiniBinding, parentPosition :Int):RecyclerView.ViewHolder(binding.root){
         val img = binding.ivSticker
         val text = binding.tvSticker
-        val parentPosition = parentPosition
+        val box = binding.clBox
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): Holder {
@@ -32,6 +35,7 @@ class ContactListStickerMiniAdapter(val items: MutableList<StickerData>, val par
         holder.img.setImageResource(StickerManager.stickers[position].findDrawable())
 
         val myContact = ContactManager.Contacts[parentPosition]
+        val mySticker = StickerManager.stickers[position]
         val myStickerNum = when (position){
             0 -> myContact.sticker0
             1 -> myContact.sticker1
@@ -40,17 +44,18 @@ class ContactListStickerMiniAdapter(val items: MutableList<StickerData>, val par
             else -> myContact.sticker4
         }
 
+        fun checkStickerNum(){
+            if (myStickerNum != 0 && mySticker.isDelete == false && position != myContact.recentSticker) {
+                holder.itemView.visibility = VISIBLE
+                holder.box.maxWidth = 10000
+            } else {
+                holder.itemView.visibility = GONE
+                holder.box.maxWidth = 0
+            }
+        }
+
+        checkStickerNum()
         holder.text.text = myStickerNum.toString()
 
-        //        myStickers = StickerManager.stickers.map { it.copy() }.toMutableList()
-//        val myContact = ContactManager.Contacts[position]
-//        val stickerCount = intArrayOf(myContact.sticker0, myContact.sticker1, myContact.sticker2, myContact.sticker3, myContact.sticker4)
-//        for (i in stickerCount.indices){
-//            if (stickerCount[i] == 0){
-//                myStickers.removeAt(i)
-//                notifyDataSetChanged()
-//            }
-//        }
-//        myStickers.removeAt(myContact.recentSticker)
     }
 }

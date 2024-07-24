@@ -29,6 +29,8 @@ class ContactListAdapter(
         val tvName = binding.tvName
         val rvStickerMini = binding.rvStickerMini
         val ivProfile = binding.ivProFill
+        val ivStickerRecently = binding.ivStickerRecently
+        val tvStickerRecently = binding.tvStickerRecently
 
         val ivCall: ImageView = itemView.findViewById(R.id.iv_call)
 
@@ -69,7 +71,22 @@ class ContactListAdapter(
         }
         holder.ivProfile.setImageBitmap(contacts[position].photo)
 
-        val adapter = ContactListStickerMiniAdapter(StickerManager.stickers, position)
+        var recentIndex = contacts[position].recentSticker
+        var recentSticker = StickerManager.stickers[recentIndex]
+
+        var recentStickerNum = when (recentIndex){
+            0 -> contacts[position].sticker0
+            1 -> contacts[position].sticker1
+            2 -> contacts[position].sticker2
+            3 -> contacts[position].sticker3
+            else -> contacts[position].sticker4
+        }
+
+        holder.ivStickerRecently.setImageResource(recentSticker.findDrawable())
+        holder.tvStickerRecently.text = recentStickerNum.toString()
+
+        val copyStickers = StickerManager.stickers.toMutableList()
+        val adapter = ContactListStickerMiniAdapter(copyStickers, position)
         holder.rvStickerMini.adapter = adapter
         holder.rvStickerMini.layoutManager = LinearLayoutManager(holder.rvStickerMini.context, LinearLayoutManager.HORIZONTAL, false)
     }

@@ -1,4 +1,4 @@
-//package com.example.nugo
+package com.example.nugo//package com.example.nugo
 //
 //import android.view.LayoutInflater
 //import android.view.View

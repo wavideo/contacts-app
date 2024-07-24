@@ -34,15 +34,16 @@ class ContactDetailFragment : Fragment() {
 
     private val binding by lazy { FragmentContactDetailBinding.inflate(layoutInflater) }
 
-    private val getImageFromGallery = registerForActivityResult(ActivityResultContracts.GetContent()) {
-        uri: Uri? -> uri?.let {
-            // 선택한 이미지를 ImageView에 저장
+    private val getImageFromGallery =
+        registerForActivityResult(ActivityResultContracts.GetContent()) { uri: Uri? ->
+            uri?.let {
+                // 선택한 이미지를 ImageView에 저장
 
-            val bitmap = uriToBitmap(it)
-            binding?.ivDetailProfile?.setImageBitmap(bitmap)
-            ContactManager.Contacts[param1!!.toInt()].photo = bitmap
+                val bitmap = uriToBitmap(it)
+                binding?.ivDetailProfile?.setImageBitmap(bitmap)
+                ContactManager.Contacts[param1!!.toInt()].photo = bitmap
+            }
         }
-    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -66,6 +67,7 @@ class ContactDetailFragment : Fragment() {
                 }
             }
     }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         var position = param1?.toInt()!!
@@ -79,45 +81,59 @@ class ContactDetailFragment : Fragment() {
 
 
 
-        fun updateStickerNum (index:Int){
+        fun updateStickerNum(index: Int) {
 
             when (index) {
-                0->{ binding.ivDetailSticker1.setImageResource(StickerManager.stickers[0].findDrawable())
-                    binding.tvDetailSticker1Name.setText(StickerManager.stickers[0].name) }
-                1->{ binding.ivDetailSticker2.setImageResource(StickerManager.stickers[1].findDrawable())
-                    binding.tvDetailSticker2Name.setText(StickerManager.stickers[1].name) }
-                2->{ binding.ivDetailSticker3.setImageResource(StickerManager.stickers[2].findDrawable())
-                    binding.tvDetailSticker3Name.setText(StickerManager.stickers[2].name) }
-                3->{ binding.ivDetailSticker4.setImageResource(StickerManager.stickers[3].findDrawable())
-                    binding.tvDetailSticker4Name.setText(StickerManager.stickers[3].name) }
-                else->{ binding.ivDetailSticker5.setImageResource(StickerManager.stickers[4].findDrawable())
-                    binding.tvDetailSticker5Name.setText(StickerManager.stickers[4].name) }
+                0 -> {
+                    binding.ivDetailSticker1.setImageResource(StickerManager.stickers[0].findDrawable())
+                    binding.tvDetailSticker1Name.setText(StickerManager.stickers[0].name)
+                }
+
+                1 -> {
+                    binding.ivDetailSticker2.setImageResource(StickerManager.stickers[1].findDrawable())
+                    binding.tvDetailSticker2Name.setText(StickerManager.stickers[1].name)
+                }
+
+                2 -> {
+                    binding.ivDetailSticker3.setImageResource(StickerManager.stickers[2].findDrawable())
+                    binding.tvDetailSticker3Name.setText(StickerManager.stickers[2].name)
+                }
+
+                3 -> {
+                    binding.ivDetailSticker4.setImageResource(StickerManager.stickers[3].findDrawable())
+                    binding.tvDetailSticker4Name.setText(StickerManager.stickers[3].name)
+                }
+
+                else -> {
+                    binding.ivDetailSticker5.setImageResource(StickerManager.stickers[4].findDrawable())
+                    binding.tvDetailSticker5Name.setText(StickerManager.stickers[4].name)
+                }
             }
 
-            val count = when (index){
-                0->binding.ivDetailSticker1Count
-                1->binding.ivDetailSticker2Count
-                2->binding.ivDetailSticker3Count
-                3->binding.ivDetailSticker4Count
-                else->binding.ivDetailSticker5Count
+            val count = when (index) {
+                0 -> binding.ivDetailSticker1Count
+                1 -> binding.ivDetailSticker2Count
+                2 -> binding.ivDetailSticker3Count
+                3 -> binding.ivDetailSticker4Count
+                else -> binding.ivDetailSticker5Count
             }
-            val num:Int = when (index){
-                0->myContact.sticker0
-                1->myContact.sticker1
-                2->myContact.sticker2
-                3->myContact.sticker3
-                else->myContact.sticker4
+            val num: Int = when (index) {
+                0 -> myContact.sticker0
+                1 -> myContact.sticker1
+                2 -> myContact.sticker2
+                3 -> myContact.sticker3
+                else -> myContact.sticker4
             }
-            val sticker = when (index){
-                0->binding.ivDetailSticker1
-                1->binding.ivDetailSticker2
-                2->binding.ivDetailSticker3
-                3->binding.ivDetailSticker4
-                else->binding.ivDetailSticker5
+            val sticker = when (index) {
+                0 -> binding.ivDetailSticker1
+                1 -> binding.ivDetailSticker2
+                2 -> binding.ivDetailSticker3
+                3 -> binding.ivDetailSticker4
+                else -> binding.ivDetailSticker5
             }
 
             count.setText(num.toString())
-            if (num == 0){
+            if (num == 0) {
                 sticker.alpha = 0.2F
                 count.isVisible = false
             } else {
@@ -126,76 +142,86 @@ class ContactDetailFragment : Fragment() {
             }
         }
 
-        for (i in 0..4){
+        for (i in 0..4) {
             updateStickerNum(i)
         }
 
-        binding.ivDetailSticker1.setOnClickListener{
+        binding.ivDetailSticker1.setOnClickListener {
             val mySticker = StickerManager.stickers[0]
-            if (mySticker.isDelete == true){
+            if (mySticker.isDelete == true) {
                 mySticker.name = "수정테스트"
                 mySticker.icon = 3
                 mySticker.isDelete = false
                 myContact.sticker0++
+                myContact.recentSticker = 0
                 updateStickerNum(0)
             } else {
                 myContact.sticker0++
+                myContact.recentSticker = 0
                 updateStickerNum(0)
             }
         }
 
-        binding.ivDetailSticker2.setOnClickListener{
+        binding.ivDetailSticker2.setOnClickListener {
             val mySticker = StickerManager.stickers[1]
-            if (mySticker.isDelete == true){
+            if (mySticker.isDelete == true) {
                 mySticker.name = "수정테스트"
                 mySticker.icon = 33
                 mySticker.isDelete = false
                 myContact.sticker1++
+                myContact.recentSticker = 1
                 updateStickerNum(1)
             } else {
                 myContact.sticker1++
+                myContact.recentSticker = 1
                 updateStickerNum(1)
             }
         }
 
-        binding.ivDetailSticker3.setOnClickListener{
+        binding.ivDetailSticker3.setOnClickListener {
             val mySticker = StickerManager.stickers[2]
-            if (mySticker.isDelete == true){
+            if (mySticker.isDelete == true) {
                 mySticker.name = "수정테스트"
                 mySticker.icon = 33
                 mySticker.isDelete = false
                 myContact.sticker2++
+                myContact.recentSticker = 2
                 updateStickerNum(2)
             } else {
                 myContact.sticker2++
+                myContact.recentSticker = 2
                 updateStickerNum(2)
             }
         }
 
-        binding.ivDetailSticker4.setOnClickListener{
+        binding.ivDetailSticker4.setOnClickListener {
             val mySticker = StickerManager.stickers[3]
-            if (mySticker.isDelete == true){
+            if (mySticker.isDelete == true) {
                 mySticker.name = "수정테스트"
                 mySticker.icon = 33
                 mySticker.isDelete = false
                 myContact.sticker3++
+                myContact.recentSticker = 3
                 updateStickerNum(3)
             } else {
                 myContact.sticker3++
+                myContact.recentSticker = 3
                 updateStickerNum(3)
             }
         }
 
-        binding.ivDetailSticker5.setOnClickListener{
+        binding.ivDetailSticker5.setOnClickListener {
             val mySticker = StickerManager.stickers[4]
-            if (mySticker.isDelete == true){
+            if (mySticker.isDelete == true) {
                 mySticker.name = "수정테스트"
                 mySticker.icon = 33
                 mySticker.isDelete = false
                 myContact.sticker4++
+                myContact.recentSticker = 4
                 updateStickerNum(4)
             } else {
                 myContact.sticker4++
+                myContact.recentSticker = 4
                 updateStickerNum(4)
             }
         }
@@ -203,17 +229,17 @@ class ContactDetailFragment : Fragment() {
         binding.ivDetailProfile.setImageBitmap(ContactManager.Contacts[position].photo)
 
         // 통화 버튼
-        binding.btnDetailCall.setOnClickListener{
+        binding.btnDetailCall.setOnClickListener {
             ContactManager.makeCall(this.requireContext(), ContactManager.Contacts[position].name)
         }
 
         // 메시지 버튼
-        binding.btnDetailMessage.setOnClickListener{
+        binding.btnDetailMessage.setOnClickListener {
             ContactManager.makeSMS(this.requireContext(), ContactManager.Contacts[position].name)
         }
 
         // 뒤로가기 버튼
-        binding?.ivDetailBack?.setOnClickListener{
+        binding?.ivDetailBack?.setOnClickListener {
             requireActivity().supportFragmentManager.beginTransaction()
                 .replace(R.id.frameLayout, ContactListFragment())
                 .addToBackStack(null)
@@ -224,7 +250,7 @@ class ContactDetailFragment : Fragment() {
 
 
         // 수정 버튼 누르면 저장 버튼, 사진 추가 버튼, 사진 삭제 버튼, 각 EditText 활성화
-        binding.ivDetailEdit.setOnClickListener{
+        binding.ivDetailEdit.setOnClickListener {
             isEditClicked = true
 
             binding.ivDetailEdit.visibility = View.GONE
@@ -238,7 +264,7 @@ class ContactDetailFragment : Fragment() {
             binding.etDetailEmail.isEnabled = true
 
             // 사진 삭제 버튼
-            binding.ivDetailPhotoDelete.setOnClickListener{
+            binding.ivDetailPhotoDelete.setOnClickListener {
                 AlertDialog.Builder(this.requireContext())
                     .setMessage("사진을 삭제하시겠습니까?")
                     .setPositiveButton("확인") { dialog, which ->
@@ -252,13 +278,14 @@ class ContactDetailFragment : Fragment() {
             }
 
             // 사진 추가 버튼
-            binding.ivDetailPhotoEdit.setOnClickListener{
+            binding.ivDetailPhotoEdit.setOnClickListener {
                 binding.ivDetailAvatar.visibility = View.GONE
-                Toast.makeText(this.requireContext(), "갤러리에서 사진을 선택해주세요.", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this.requireContext(), "갤러리에서 사진을 선택해주세요.", Toast.LENGTH_SHORT)
+                    .show()
                 getImageFromGallery.launch("image/*")
             }
 
-            binding.ivDetailSave.setOnClickListener{
+            binding.ivDetailSave.setOnClickListener {
                 ContactManager.Contacts[position].name = binding.etDetailName.text.toString()
                 ContactManager.Contacts[position].number = binding.etDetailNumber.text.toString()
                 ContactManager.Contacts[position].email = binding.etDetailEmail.text.toString()
@@ -281,7 +308,7 @@ class ContactDetailFragment : Fragment() {
 
         // 스티커 클릭 시 +1, 롱클릭 시 -1
         // 삭제하기 버튼
-        binding.btnDetailDelete.setOnClickListener{
+        binding.btnDetailDelete.setOnClickListener {
             AlertDialog.Builder(this.requireContext())
                 .setMessage("연락처를 삭제하시겠습니까?")
                 .setPositiveButton("확인") { dialog, which ->

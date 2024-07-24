@@ -59,6 +59,8 @@ class ContactOfStickerAdapter(val items:MutableList<ContactData>):RecyclerView.A
             notifyDataSetChanged()
         }
 
+        val myContact = StickerDetailFragment.ContactOfStickers[position]
+
         holder.clStickerBackground.setOnClickListener{
             holder.tvStickerNum.text = when (StickerManager.detailPicker) {
                 0 -> (++StickerDetailFragment.ContactOfStickers[position].sticker0).toString()
@@ -67,10 +69,11 @@ class ContactOfStickerAdapter(val items:MutableList<ContactData>):RecyclerView.A
                 3 -> (++StickerDetailFragment.ContactOfStickers[position].sticker3).toString()
                 else -> (++StickerDetailFragment.ContactOfStickers[position].sticker4).toString()
             }
+            myContact.recentSticker = StickerManager.detailPicker
         }
 
 
-        val myContact = StickerDetailFragment.ContactOfStickers[position]
+
 
         holder.tvName.text = myContact.name
         holder.ivProfile.setImageBitmap(myContact.photo)
