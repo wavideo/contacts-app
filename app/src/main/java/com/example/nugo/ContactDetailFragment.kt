@@ -139,6 +139,16 @@ class ContactDetailFragment : Fragment() {
 
         binding.ivDetailProfile.setImageBitmap(ContactManager.Contacts[position].photo)
 
+        // 통화 버튼
+        binding.btnDetailCall.setOnClickListener{
+            ContactManager.makeCall(this.requireContext(), ContactManager.Contacts[position].name)
+        }
+
+        // 메시지 버튼
+        binding.btnDetailMessage.setOnClickListener{
+            ContactManager.makeSMS(this.requireContext(), ContactManager.Contacts[position].name)
+        }
+
         // 뒤로가기 버튼
         binding?.ivDetailBack?.setOnClickListener{
             requireActivity().supportFragmentManager.beginTransaction()

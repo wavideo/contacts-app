@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ContactDetailFragment">
+    tools:context=".ContactDetailFragment"
+    android:background="@color/gray_a">
 
     <ImageView
         android:id="@+id/iv_detail_back"
@@ -31,10 +32,10 @@
         android:focusable="true"
         android:padding="12dp"
         android:src="@drawable/ic_edit"
-        android:tint="@color/white"
         android:visibility="visible"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:tint="@color/white" />
 
     <ImageView
         android:id="@+id/iv_detail_save"
@@ -47,16 +48,16 @@
         android:focusable="true"
         android:padding="10dp"
         android:src="@drawable/ic_done"
-        android:tint="@color/white"
         android:visibility="gone"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:tint="@color/white" />
 
     <ImageView
         android:id="@+id/iv_detail_profile"
         android:layout_width="match_parent"
         android:layout_height="300dp"
-        android:background="#BDBDBD"
+        android:background="@color/gray_a"
         android:elevation="1dp"
         android:foregroundGravity="center"
         android:scaleType="centerCrop"
@@ -89,7 +90,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toBottomOf="@+id/iv_detail_profile"
         android:src="@drawable/gallery"
-        />
+        app:tint="@color/white" />
 
     <ImageView
         android:id="@+id/iv_detail_photo_delete"
@@ -101,6 +102,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintBottom_toBottomOf="@+id/iv_detail_profile"
         android:src="@drawable/bin"
+        app:tint="@color/white"
         />
 
     <ScrollView

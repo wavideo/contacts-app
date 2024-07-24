@@ -8,6 +8,10 @@ import android.util.Log
 import android.content.Intent // 안드로이드 Intent 임포트
 import android.net.Uri
 import android.content.Context
+import android.graphics.BitmapFactory
+import kotlinx.coroutines.currentCoroutineContext
+import java.io.File
+import kotlin.coroutines.coroutineContext
 
 /* [ 정호정 파트 ]
 연락처에 대한 data class 입니다*/
@@ -17,10 +21,18 @@ fun createSampleBitmap(): Bitmap {
     val bitmap = Bitmap.createBitmap(100, 100, Bitmap.Config.ARGB_8888)
     val canvas = Canvas(bitmap)
     val paint = Paint()
-    canvas.drawColor(Color.WHITE)
-    paint.color = Color.WHITE
+    canvas.drawColor(Color.LTGRAY)
+    paint.color = Color.LTGRAY
     canvas.drawCircle(50f, 50f, 30f, paint)
     return bitmap
+}
+fun getBitmapFromInternalStorage(context: Context, fileName: String): Bitmap? {
+    val file = File(context.filesDir, "basic_profile")
+    return if(file.exists()) {
+        BitmapFactory.decodeFile(file.absolutePath)
+    } else {
+        null
+    }
 }
 
 val sampleBitmap = createSampleBitmap()
@@ -146,9 +158,16 @@ object ContactManager {
             }
             context.startActivity(intent)
             //context를 통해 다이얼 시작
-
         }
-
-
+    }
+    fun makeSMS(context: Context, name: String) {
+        val contact = Contacts.find { it.name == name }
+        contact?.let {
+            val number = it.number
+            val intentMessage = Intent(Intent.ACTION_SENDTO).apply {
+                data = Uri.parse("smsto:$number")
+            }
+            context.startActivity(intentMessage)
+        }
     }
 }
