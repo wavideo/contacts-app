@@ -14,7 +14,7 @@
         android:layout_marginTop="32dp"
         android:text="스티커"
         android:textColor="@color/black"
-        android:textSize="28sp"
+        android:textSize="24sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -25,19 +25,21 @@
         android:layout_marginTop="40dp"
         android:text="스티커 이름"
         android:textColor="@color/black"
-        android:textSize="24sp"
+        android:textSize="20sp"
         app:layout_constraintStart_toStartOf="@id/txt_title"
         app:layout_constraintTop_toBottomOf="@id/txt_title" />
 
     <EditText
         android:id="@+id/txt_subtitle_name"
-        android:layout_width="500dp"
+        android:layout_width="match_parent"
         android:layout_height="50dp"
         android:layout_marginTop="20dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginEnd="32dp"
         android:background="#F0F0F0"
         android:gravity="center_vertical"
         android:text="스티커 이름"
-        android:textSize="24sp"
+        android:textSize="18sp"
         app:layout_constraintStart_toStartOf="@id/txt_subtitle"
         app:layout_constraintTop_toBottomOf="@id/txt_subtitle" />
 
@@ -45,11 +47,11 @@
         android:id="@+id/txt_icon_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="40dp"
+        android:layout_marginTop="32dp"
         android:text="아이콘"
         android:textColor="@color/black"
-        android:textSize="24sp"
-        app:layout_constraintStart_toStartOf="@id/txt_subtitle_name"
+        android:textSize="20sp"
+        app:layout_constraintStart_toStartOf="@id/txt_subtitle"
         app:layout_constraintTop_toBottomOf="@id/txt_subtitle_name" />
 
 
@@ -57,7 +59,7 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_sticker_list"
         android:layout_width="match_parent"
-        android:layout_height="250dp"
+        android:layout_height="150dp"
         android:layout_marginVertical="20dp"
         android:layout_marginStart="32dp"
         android:layout_marginEnd="32dp"
@@ -66,6 +68,20 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/txt_icon_title"
         app:spanCount="5" />
+
+    <Button
+        android:id="@+id/btn_edit"
+        android:backgroundTint="#658FFE"
+        android:text="수정 완료"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:textColor="@color/white"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/rv_sticker_list"
+        />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
