@@ -10,7 +10,11 @@
                 android:right="5dp"
                 android:bottom="5dp" />
             <corners
-                android:radius="12dp" />
+                android:topLeftRadius="16dp"
+                android:topRightRadius="16dp"
+                android:bottomLeftRadius="0dp"
+                android:bottomRightRadius="0dp" />
+
         </shape>
     </item>
 </layer-list>
