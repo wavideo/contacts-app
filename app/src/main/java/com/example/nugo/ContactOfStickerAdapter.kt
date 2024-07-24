@@ -73,7 +73,7 @@ class ContactOfStickerAdapter(val items:MutableList<ContactData>):RecyclerView.A
         val myContact = StickerDetailFragment.ContactOfStickers[position]
 
         holder.tvName.text = myContact.name
-        holder.ivProfile.setImageResource(myContact.photo)
+        holder.ivProfile.setImageBitmap(myContact.photo)
         holder.tvStickerNum.text = when (StickerManager.detailPicker){
             0 -> myContact.sticker0.toString()
             1 -> myContact.sticker1.toString()
