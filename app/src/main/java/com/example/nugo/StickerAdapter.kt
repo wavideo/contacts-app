@@ -46,8 +46,17 @@ class StickerAdapter (val items:MutableList<StickerData>) :RecyclerView.Adapter<
             itemClick?.onClick(it, position)
         }
 
+        val filterContact = when(position){
+            0 -> ContactManager.Contacts.filter {it.sticker0!=0}
+            1 -> ContactManager.Contacts.filter {it.sticker1!=0}
+            2 -> ContactManager.Contacts.filter {it.sticker2!=0}
+            3 -> ContactManager.Contacts.filter {it.sticker3!=0}
+            else -> ContactManager.Contacts.filter {it.sticker4!=0}
+        }
+
         holder.ivStickerIcon.setImageResource(mySticker.findDrawable())
         holder.tvStickerName.text = mySticker.name
+        holder.tvContactSizeNum.text = filterContact.size.toString()
 
         if (mySticker.isDelete == true) {
             holder.clContactSize.isVisible = false
@@ -56,8 +65,8 @@ class StickerAdapter (val items:MutableList<StickerData>) :RecyclerView.Adapter<
         } else {
             holder.clContactSize.isVisible = true
             holder.clStickerBackground.backgroundTintList = ContextCompat.getColorStateList(holder.itemView.getContext(), R.color.white);
-            holder.tvContactSizeNum.text = mySticker.contactSize.toString()
         }
+
     }
 
 }

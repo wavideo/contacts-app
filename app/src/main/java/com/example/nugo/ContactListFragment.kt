@@ -32,7 +32,8 @@ private const val ARG_PARAM2 = "param2"
 class ContactListFragment : Fragment() {
     // TODO: Rename and change types of parameters
     private val binding by lazy { FragmentContactListBinding.inflate(layoutInflater) }
-//    private var _binding: FragmentContactListBinding? = null
+    private lateinit var adapter : ContactListAdapter
+    //    private var _binding: FragmentContactListBinding? = null
 //    private val binding get() = _binding!!
     private var param1: String? = null
     private var param2: String? = null
@@ -57,7 +58,7 @@ class ContactListFragment : Fragment() {
 
         super.onViewCreated(view, savedInstanceState)
 
-        val adapter = ContactListAdapter(ContactManager.Contacts) // dataList 생성
+        adapter = ContactListAdapter(ContactManager.Contacts) // adapter 초기화
 
 
         binding.recycleListView.adapter = adapter
@@ -74,25 +75,20 @@ class ContactListFragment : Fragment() {
             }
         }
 
-//        val adapter = ContactListAdapter(dataList, // dataList 생성
-//            itemClickListener = { item, position ->
-//                Toast.makeText(this.requireContext(), "${item.tvName}이 클릭되었습니다.", Toast.LENGTH_SHORT).show()
-//                val dataToSend = position
-//                val fragmentContactDetail = ContactDetailFragment.newInstance(dataToSend.toString())
-//                requireActivity().supportFragmentManager.beginTransaction()
-//                    .replace(R.id.listView, fragmentContactDetail)
-//                    .addToBackStack(null)
-//                    .commit()
-//            })
-
+        // 연락처 추가 intent
+        binding.addFriend.setOnClickListener {
+            val intent_addFriend = Intent(requireContext(), AddFriendActivity::class.java)
+            startActivity(intent_addFriend)
+//            adapter.notifyDataSetChanged() // 전부 다 수정(대규모 데이터 처리 비추)
+        }
 
     }
 
+    override fun onResume() {
+        super.onResume()
+        adapter.updateData(ContactManager.Contacts)
+    }
 
-//    override fun onDestroyView() {
-//        super.onDestroyView()
-//        _binding = null
-//    }
 
     companion object {
         /**
@@ -112,46 +108,5 @@ class ContactListFragment : Fragment() {
                     putString(ARG_PARAM2, param2)
                 }
             }
-
-//        class ContactListFragment : AppCompatActivity() {
-//
-//            private lateinit var binding: FragmentContactListBinding
-//
-//
-//            override fun onCreate(savedInstanceState: Bundle?) {
-//                super.onCreate(savedInstanceState)
-//
-//                enableEdgeToEdge()
-//
-//                binding = FragmentContactListBinding.inflate(layoutInflater)
-//
-//                setContentView(binding.root)
-//
-//                ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
-//                    val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
-//                    v.setPadding(
-//                        systemBars.left,
-//                        systemBars.top,
-//                        systemBars.right,
-//                        systemBars.bottom
-//                    )
-//                    insets
-//                }
-//                //데이터 원본 준비
-//                val dataList = mutableListOf<ContactListItem>()
-//                dataList.add(ContactListItem("김은택", "010-1111-1111", "aaa@naver.com"))
-//
-//                val adapter = ContactListAdapter(dataList, // dataList 생성
-//                    itemClickListener = { item, position ->
-//                        Toast.makeText(this, "${item.tvName} clicked", Toast.LENGTH_SHORT).show()
-//                        var nameIntent = Intent(this@ContactListFragment, StickerListFragment::class.java)
-//                        nameIntent.putExtra("name", item.tvName)
-//                        startActivity(nameIntent)
-//                    })
-//                binding.recycleListView.adapter = adapter
-//                binding.recycleListView.layoutManager = LinearLayoutManager(this@ContactListFragment)
-//
-//            }
-//        }
     }
 }

@@ -19,8 +19,8 @@ import com.example.nugo.databinding.FragmentStickerListBinding
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
+//private const val ARG_PARAM1 = "param1"
+//private const val ARG_PARAM2 = "param2"
 
 /**
  * A simple [Fragment] subclass.
@@ -29,17 +29,17 @@ private const val ARG_PARAM2 = "param2"
  */
 class StickerListFragment : Fragment() {
 
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
+//    // TODO: Rename and change types of parameters
+//    private var param1: String? = null
+//    private var param2: String? = null
     private val binding by lazy { FragmentStickerListBinding.inflate(layoutInflater) }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
+//        arguments?.let {
+//            param1 = it.getString(ARG_PARAM1)
+//            param2 = it.getString(ARG_PARAM2)
+//        }
     }
 
     override fun onCreateView(
@@ -62,6 +62,18 @@ class StickerListFragment : Fragment() {
         stickerAdapter.itemClick = object : StickerAdapter.ItemClick {
             override fun onClick(view: View, position: Int) {
                 // StickerDetailFragment로 넘어가야합니다
+
+                if (StickerManager.stickers[position].isDelete==true){
+
+                } else {
+                    val fragment = StickerDetailFragment.newInstance(position)
+
+                    requireActivity().supportFragmentManager.beginTransaction()
+                        .replace(R.id.frameLayout, fragment)
+                        .addToBackStack(null)
+                        .commit()
+                }
+
             }
         }
 
@@ -77,13 +89,13 @@ class StickerListFragment : Fragment() {
          * @return A new instance of fragment StickerListFragment.
          */
         // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            StickerListFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
-                }
-            }
+//        @JvmStatic
+//        fun newInstance(param1: String, param2: String) =
+//            StickerListFragment().apply {
+//                arguments = Bundle().apply {
+//                    putString(ARG_PARAM1, param1)
+//                    putString(ARG_PARAM2, param2)
+//                }
+//            }
     }
 }

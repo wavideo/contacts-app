@@ -1,0 +1,267 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/round_border"
+    android:layout_gravity="center"
+    android:minHeight="580dp"
+    android:orientation="vertical"
+    android:padding="20dp"
+    >
+
+    <TextView
+        android:id="@+id/tv_dialog_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="10dp"
+        android:text="스티커"
+        android:textSize="28sp"
+        android:textColor="@color/black"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tv_dialog_content"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingLeft="10dp"
+        android:text="추가할 스티커를 선택하세요."
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="@+id/tv_dialog_title"
+        app:layout_constraintTop_toBottomOf="@+id/tv_dialog_title" />
+
+    <View
+        android:id="@+id/view_dialog_line"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#717171"
+        android:layout_marginTop="25dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_dialog_content" />
+
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerview_addsticker"
+        android:layout_width="360dp"
+        android:layout_height="500dp"
+        android:layout_marginTop="10dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/view_dialog_line">
+
+    </androidx.recyclerview.widget.RecyclerView>
+
+<!--    <View-->
+<!--        android:id="@+id/view_detail_addsticker2_box"-->
+<!--        android:layout_width="350dp"-->
+<!--        android:layout_height="75dp"-->
+<!--        android:background="@drawable/round_border"-->
+<!--        android:backgroundTint="#FDF0B1"-->
+<!--        android:clickable="true"-->
+<!--        android:focusable="true"-->
+<!--        app:layout_constraintBottom_toBottomOf="@+id/iv_detail_addsticker2_bg"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintTop_toTopOf="@+id/iv_detail_addsticker2_bg" />-->
+
+<!--    <ImageView-->
+<!--        android:id="@+id/iv_detail_addsticker2_bg"-->
+<!--        android:layout_width="60dp"-->
+<!--        android:layout_height="60dp"-->
+<!--        android:layout_marginStart="20dp"-->
+<!--        android:layout_marginTop="20dp"-->
+<!--        android:elevation="2dp"-->
+<!--        android:src="@drawable/shape_circle_background"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintTop_toBottomOf="@+id/iv_detail_addsticker1_bg"-->
+<!--        app:tint="@color/gray_b" />-->
+
+<!--    <ImageView-->
+<!--        android:id="@+id/iv_detail_addsticker2"-->
+<!--        android:layout_width="0dp"-->
+<!--        android:layout_height="0dp"-->
+<!--        android:clickable="true"-->
+<!--        android:focusable="true"-->
+<!--        android:gravity="center"-->
+<!--        android:padding="12dp"-->
+<!--        android:elevation="2dp"-->
+<!--        android:src="@drawable/gallery"-->
+<!--        app:layout_constraintBottom_toBottomOf="@+id/iv_detail_addsticker2_bg"-->
+<!--        app:layout_constraintEnd_toEndOf="@+id/iv_detail_addsticker2_bg"-->
+<!--        app:layout_constraintStart_toStartOf="@+id/iv_detail_addsticker2_bg"-->
+<!--        app:layout_constraintTop_toTopOf="@+id/iv_detail_addsticker2_bg" />-->
+
+<!--    <TextView-->
+<!--        android:id="@+id/tv_detail_addsticker2"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:text="설정된 스티커가 없습니다."-->
+<!--        android:textSize="20sp"-->
+<!--        android:textStyle="bold"-->
+<!--        android:layout_marginStart="30dp"-->
+<!--        app:layout_constraintBottom_toBottomOf="@+id/iv_detail_addsticker2_bg"-->
+<!--        app:layout_constraintStart_toEndOf="@+id/iv_detail_addsticker2_bg"-->
+<!--        app:layout_constraintTop_toTopOf="@+id/iv_detail_addsticker2_bg" />-->
+
+<!--    <View-->
+<!--        android:id="@+id/view_detail_addsticker3_box"-->
+<!--        android:layout_width="350dp"-->
+<!--        android:layout_height="75dp"-->
+<!--        android:background="@drawable/round_border"-->
+<!--        android:backgroundTint="#FDF0B1"-->
+<!--        android:clickable="true"-->
+<!--        android:focusable="true"-->
+<!--        app:layout_constraintBottom_toBottomOf="@+id/iv_detail_addsticker3_bg"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintTop_toTopOf="@+id/iv_detail_addsticker3_bg" />-->
+
+<!--    <ImageView-->
+<!--        android:id="@+id/iv_detail_addsticker3_bg"-->
+<!--        android:layout_width="60dp"-->
+<!--        android:layout_height="60dp"-->
+<!--        android:layout_marginTop="20dp"-->
+<!--        android:layout_marginStart="20dp"-->
+<!--        android:elevation="2dp"-->
+<!--        android:src="@drawable/shape_circle_background"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintTop_toBottomOf="@+id/iv_detail_addsticker2_bg"-->
+<!--        app:tint="@color/gray_b" />-->
+
+<!--    <ImageView-->
+<!--        android:id="@+id/iv_detail_addsticker3"-->
+<!--        android:layout_width="0dp"-->
+<!--        android:layout_height="0dp"-->
+<!--        android:clickable="true"-->
+<!--        android:focusable="true"-->
+<!--        android:gravity="center"-->
+<!--        android:padding="12dp"-->
+<!--        android:elevation="2dp"-->
+<!--        android:src="@drawable/gallery"-->
+<!--        app:layout_constraintBottom_toBottomOf="@+id/iv_detail_addsticker3_bg"-->
+<!--        app:layout_constraintEnd_toEndOf="@+id/iv_detail_addsticker3_bg"-->
+<!--        app:layout_constraintStart_toStartOf="@+id/iv_detail_addsticker3_bg"-->
+<!--        app:layout_constraintTop_toTopOf="@+id/iv_detail_addsticker3_bg" />-->
+
+<!--    <TextView-->
+<!--        android:id="@+id/tv_detail_addsticker3"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:text="설정된 스티커가 없습니다."-->
+<!--        android:textSize="20sp"-->
+<!--        android:textStyle="bold"-->
+<!--        android:layout_marginStart="30dp"-->
+<!--        app:layout_constraintBottom_toBottomOf="@+id/iv_detail_addsticker3_bg"-->
+<!--        app:layout_constraintStart_toEndOf="@+id/iv_detail_addsticker3_bg"-->
+<!--        app:layout_constraintTop_toTopOf="@+id/iv_detail_addsticker3_bg" />-->
+
+<!--    <View-->
+<!--        android:id="@+id/view_detail_addsticker4_box"-->
+<!--        android:layout_width="350dp"-->
+<!--        android:layout_height="75dp"-->
+<!--        android:background="@drawable/round_border"-->
+<!--        android:backgroundTint="#FDF0B1"-->
+<!--        android:clickable="true"-->
+<!--        android:focusable="true"-->
+<!--        app:layout_constraintBottom_toBottomOf="@+id/iv_detail_addsticker4_bg"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintTop_toTopOf="@+id/iv_detail_addsticker4_bg" />-->
+
+<!--    <ImageView-->
+<!--        android:id="@+id/iv_detail_addsticker4_bg"-->
+<!--        android:layout_width="60dp"-->
+<!--        android:layout_height="60dp"-->
+<!--        android:layout_marginTop="20dp"-->
+<!--        android:layout_marginStart="20dp"-->
+<!--        android:elevation="2dp"-->
+<!--        android:src="@drawable/shape_circle_background"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintTop_toBottomOf="@+id/iv_detail_addsticker3_bg"-->
+<!--        app:tint="@color/gray_b" />-->
+
+<!--    <ImageView-->
+<!--        android:id="@+id/iv_detail_addsticker4"-->
+<!--        android:layout_width="0dp"-->
+<!--        android:layout_height="0dp"-->
+<!--        android:clickable="true"-->
+<!--        android:focusable="true"-->
+<!--        android:gravity="center"-->
+<!--        android:padding="12dp"-->
+<!--        android:elevation="2dp"-->
+<!--        android:src="@drawable/gallery"-->
+<!--        app:layout_constraintBottom_toBottomOf="@+id/iv_detail_addsticker4_bg"-->
+<!--        app:layout_constraintEnd_toEndOf="@+id/iv_detail_addsticker4_bg"-->
+<!--        app:layout_constraintStart_toStartOf="@+id/iv_detail_addsticker4_bg"-->
+<!--        app:layout_constraintTop_toTopOf="@+id/iv_detail_addsticker4_bg" />-->
+
+<!--    <TextView-->
+<!--        android:id="@+id/tv_detail_addsticker4"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:text="설정된 스티커가 없습니다."-->
+<!--        android:textSize="20sp"-->
+<!--        android:textStyle="bold"-->
+<!--        android:layout_marginStart="30dp"-->
+<!--        app:layout_constraintBottom_toBottomOf="@+id/iv_detail_addsticker4_bg"-->
+<!--        app:layout_constraintStart_toEndOf="@+id/iv_detail_addsticker4_bg"-->
+<!--        app:layout_constraintTop_toTopOf="@+id/iv_detail_addsticker4_bg" />-->
+
+<!--    <View-->
+<!--        android:id="@+id/view_detail_addsticker5_box"-->
+<!--        android:layout_width="350dp"-->
+<!--        android:layout_height="75dp"-->
+<!--        android:background="@drawable/round_border"-->
+<!--        android:backgroundTint="#FDF0B1"-->
+<!--        android:clickable="true"-->
+<!--        android:focusable="true"-->
+<!--        app:layout_constraintBottom_toBottomOf="@+id/iv_detail_addsticker5_bg"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintTop_toTopOf="@+id/iv_detail_addsticker5_bg" />-->
+
+<!--    <ImageView-->
+<!--        android:id="@+id/iv_detail_addsticker5_bg"-->
+<!--        android:layout_width="60dp"-->
+<!--        android:layout_height="60dp"-->
+<!--        android:layout_marginTop="20dp"-->
+<!--        android:layout_marginStart="20dp"-->
+<!--        android:elevation="2dp"-->
+<!--        android:src="@drawable/shape_circle_background"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintTop_toBottomOf="@+id/iv_detail_addsticker4_bg"-->
+<!--        app:tint="@color/gray_b" />-->
+
+<!--    <ImageView-->
+<!--        android:id="@+id/iv_detail_addsticker5"-->
+<!--        android:layout_width="0dp"-->
+<!--        android:layout_height="0dp"-->
+<!--        android:clickable="true"-->
+<!--        android:focusable="true"-->
+<!--        android:gravity="center"-->
+<!--        android:padding="12dp"-->
+<!--        android:elevation="2dp"-->
+<!--        android:src="@drawable/gallery"-->
+<!--        app:layout_constraintBottom_toBottomOf="@+id/iv_detail_addsticker5_bg"-->
+<!--        app:layout_constraintEnd_toEndOf="@+id/iv_detail_addsticker5_bg"-->
+<!--        app:layout_constraintStart_toStartOf="@+id/iv_detail_addsticker5_bg"-->
+<!--        app:layout_constraintTop_toTopOf="@+id/iv_detail_addsticker5_bg" />-->
+
+<!--    <TextView-->
+<!--        android:id="@+id/tv_detail_addsticker5"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:text="설정된 스티커가 없습니다."-->
+<!--        android:textSize="20sp"-->
+<!--        android:textStyle="bold"-->
+<!--        android:layout_marginStart="30dp"-->
+<!--        app:layout_constraintBottom_toBottomOf="@+id/iv_detail_addsticker5_bg"-->
+<!--        app:layout_constraintStart_toEndOf="@+id/iv_detail_addsticker5_bg"-->
+<!--        app:layout_constraintTop_toTopOf="@+id/iv_detail_addsticker5_bg" />-->
+
+</androidx.constraintlayout.widget.ConstraintLayout>

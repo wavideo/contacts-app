@@ -20,8 +20,9 @@
             android:id="@+id/iv_profile"
             android:layout_width="60dp"
             android:layout_height="60dp"
-            android:src="@drawable/shape_circle_background"
-            android:tint="@color/background_basic"
+            android:src="@color/gray_a"
+            android:background="@drawable/shape_circle_background"
+            android:clipToOutline="true"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -93,7 +94,7 @@
 
     <ImageView
         android:layout_width="match_parent"
-        android:layout_height="1dp"
+        android:layout_height="0.5dp"
         android:src="@color/background_basic"
         app:layout_constraintTop_toBottomOf="@+id/cl_contact_background"/>
 
