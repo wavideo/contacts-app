@@ -56,7 +56,7 @@ class ContactListFragment : Fragment() {
 
         super.onViewCreated(view, savedInstanceState)
 
-        val adapter = ContactListAdapter(ContactManager.Contacts,name) // dataList 생성
+        val adapter = ContactListAdapter(ContactManager.Contacts) // dataList 생성
 
 
         binding.recycleListView.adapter = adapter
