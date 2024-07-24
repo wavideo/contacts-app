@@ -69,7 +69,6 @@ class ContactDetailFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         var position = param1?.toInt()!!
-        binding.ivDetailProfile.setImageResource(ContactManager.Contacts[position].photo)
         binding.etDetailName.setText(ContactManager.Contacts[position].name)
         binding.etDetailNumber.setText(ContactManager.Contacts[position].number)
         binding.etDetailEmail.setText(ContactManager.Contacts[position].email)
@@ -138,7 +137,7 @@ class ContactDetailFragment : Fragment() {
             binding.ivDetailSticker5Count.isVisible = true
         }
 
-        binding.ivDetailProfile.setImageResource(ContactManager.Contacts[position].photo)
+        binding.ivDetailProfile.setImageBitmap(ContactManager.Contacts[position].photo)
 
         // 뒤로가기 버튼
         binding?.ivDetailBack?.setOnClickListener{
@@ -160,7 +159,6 @@ class ContactDetailFragment : Fragment() {
 
             binding.ivDetailPhotoDelete.visibility = View.VISIBLE
             binding.ivDetailPhotoEdit.visibility = View.VISIBLE
-            binding.ivDetailAddSticker.visibility = View.VISIBLE
 
             binding.etDetailName.isEnabled = true
             binding.etDetailNumber.isEnabled = true
@@ -201,7 +199,6 @@ class ContactDetailFragment : Fragment() {
 
                 binding.ivDetailPhotoDelete.visibility = View.GONE
                 binding.ivDetailPhotoEdit.visibility = View.GONE
-                binding.ivDetailAddSticker.visibility = View.GONE
 
                 binding.etDetailName.isEnabled = false
                 binding.etDetailNumber.isEnabled = false

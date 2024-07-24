@@ -272,20 +272,6 @@
                 app:layout_constraintStart_toStartOf="parent" />
 
             <ImageView
-                android:id="@+id/iv_detail_add_sticker"
-                android:layout_width="18dp"
-                android:layout_height="18dp"
-                android:layout_margin="12dp"
-                android:clickable="true"
-                android:elevation="2dp"
-                android:focusable="true"
-                android:src="@drawable/plus"
-                android:visibility="visible"
-                app:layout_constraintEnd_toEndOf="@+id/btn_detail_sticker"
-                app:layout_constraintTop_toTopOf="@+id/btn_detail_sticker"
-                app:tint="#BDBDBD" />
-
-            <ImageView
                 android:id="@+id/iv_detail_sticker1"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
