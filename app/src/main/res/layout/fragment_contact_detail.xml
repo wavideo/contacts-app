@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ContactDetailFragment"
-    android:background="@color/gray_a">
+    android:background="@color/gray_b">
 
     <ImageView
         android:id="@+id/iv_detail_back"
@@ -57,7 +57,7 @@
         android:id="@+id/iv_detail_profile"
         android:layout_width="match_parent"
         android:layout_height="300dp"
-        android:background="@color/gray_a"
+        android:background="#8C8C8C"
         android:elevation="1dp"
         android:foregroundGravity="center"
         android:scaleType="centerCrop"

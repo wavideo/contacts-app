@@ -12,6 +12,7 @@ import android.graphics.BitmapFactory
 import kotlinx.coroutines.currentCoroutineContext
 import java.io.File
 import kotlin.coroutines.coroutineContext
+import android.graphics.Path
 
 /* [ 정호정 파트 ]
 연락처에 대한 data class 입니다*/
@@ -21,18 +22,16 @@ fun createSampleBitmap(): Bitmap {
     val bitmap = Bitmap.createBitmap(100, 100, Bitmap.Config.ARGB_8888)
     val canvas = Canvas(bitmap)
     val paint = Paint()
-    canvas.drawColor(Color.LTGRAY)
+
     paint.color = Color.LTGRAY
-    canvas.drawCircle(50f, 50f, 30f, paint)
+    canvas.drawCircle(50f, 45f, 15f, paint)
+
+    paint.color = Color.DKGRAY
+    val path = android.graphics.Path()
+    path.addCircle(50f, 100f, 35f, Path.Direction.CCW)
+    canvas.drawPath(path, paint)
+    
     return bitmap
-}
-fun getBitmapFromInternalStorage(context: Context, fileName: String): Bitmap? {
-    val file = File(context.filesDir, "basic_profile")
-    return if(file.exists()) {
-        BitmapFactory.decodeFile(file.absolutePath)
-    } else {
-        null
-    }
 }
 
 val sampleBitmap = createSampleBitmap()
