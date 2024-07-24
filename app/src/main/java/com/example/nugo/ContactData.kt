@@ -15,6 +15,7 @@ data class ContactData(
     var sticker2: Int,
     var sticker3: Int,
     var sticker4: Int,
+    var recentSticker : Int,
     var photo: Int
 ) {
     constructor(name: String, number: String, email: String) : this(
@@ -26,6 +27,30 @@ data class ContactData(
         0,
         0,
         0,
+        0,
+        R.drawable.basic_profile
+    )
+
+    constructor(
+        name: String,
+        number: String,
+        email: String,
+        sticker0: Int,
+        sticker1: Int,
+        sticker2: Int,
+        sticker3: Int,
+        sticker4: Int,
+        recentSticker: Int
+    ) : this(
+        name,
+        number,
+        email,
+        sticker0,
+        sticker1,
+        sticker2,
+        sticker3,
+        sticker4,
+        recentSticker,
         R.drawable.basic_profile
     )
 
@@ -54,40 +79,38 @@ data class ContactData(
 object ContactManager {
 
     // 데이터 리스트입니다. ContactManager.Contacts[0] 으로 n번째 연락처를 호출할 수 있습니다
-    var Contacts = mutableListOf<ContactData>()
+    val Contacts = mutableListOf<ContactData>()
 
     /*앱에 넣어둘 더미데이터입니다.
     MainActivity 상단에 ContactManager.loading()으로 더미데이터를 등록해주세요 */
     fun loading() {
-        Log.i ("바인드뷰홀더", "로딩성공")
-        Contacts.add(ContactData("나 (본인)", "", ""))
-        Contacts.add(ContactData("김은택", "010-1111-1111", "aaa@naver.com"))
-        Contacts.add(ContactData("정호정", "010-1111-1111", "aaa@naver.com"))
-        Contacts.add(ContactData("허민", "010-1111-1111", "aaa@naver.com"))
-        Contacts.add(ContactData("전은혜", "010-1111-1111", "aaa@naver.com"))
-        Contacts.add(ContactData("한혜림", "010-1111-1111", "aaa@naver.com"))
-        Contacts.add(ContactData("이태우", "010-1111-1111", "aaa@naver.com"))
-        Contacts.add(ContactData("유건희", "010-1111-1111", "aaa@naver.com"))
-        Contacts.add(ContactData("문지혜", "010-1111-1111", "aaa@naver.com"))
-        Contacts.add(ContactData("최어진", "010-1111-1111", "aaa@naver.com"))
-        Contacts.add(ContactData("박혜민", "010-1111-1111", "aaa@naver.com"))
-        Contacts.add(ContactData("이종범", "010-1111-1111", "aaa@naver.com"))
-        Contacts.add(ContactData("황성희", "010-1111-1111", "aaa@naver.com"))
-        Contacts.add(ContactData("신성휘", "010-1111-1111", "aaa@naver.com"))
-        Contacts.add(ContactData("성희영", "010-1111-1111", "aaa@naver.com"))
-        Contacts.add(ContactData("정용현", "010-1111-1111", "aaa@naver.com"))
-        Contacts.add(ContactData("이수빈", "010-1111-1111", "aaa@naver.com"))
-        Contacts.add(ContactData("김린아", "010-1111-1111", "aaa@naver.com"))
-        Contacts.add(ContactData("장세진", "010-1111-1111", "aaa@naver.com"))
-        Contacts.add(ContactData("조 바이든", "010-1111-1111", "aaa@naver.com"))
-        Contacts.add(ContactData("도널드 트럼프", "010-1111-1111", "aaa@naver.com"))
-        Contacts.add(ContactData("박근혜", "010-1111-1111", "aaa@naver.com"))
-        Contacts.add(ContactData("문재인", "010-1111-1111", "aaa@naver.com"))
-        Contacts.add(ContactData("윤석열", "010-1111-1111", "aaa@naver.com"))
+        Contacts.add(ContactData("김은택", "010-1111-1111", "aaa@naver.com", 0, 1, 0, 0, 0, 1))
+        Contacts.add(ContactData("정호정", "010-1111-1111", "aaa@naver.com", 0, 0, 1, 1, 0, 3))
+        Contacts.add(ContactData("허민", "010-1111-1111", "aaa@naver.com", 1, 0, 0, 3, 4, 4))
+        Contacts.add(ContactData("전은혜", "010-1111-1111", "aaa@naver.com", 0, 0, 0, 0, 0, 0))
+        Contacts.add(ContactData("한혜림", "010-1111-1111", "aaa@naver.com", 2, 3, 0, 1, 0, 0))
+        Contacts.add(ContactData("이태우", "010-1111-1111", "aaa@naver.com", 0, 0, 1, 0, 5, 4))
+        Contacts.add(ContactData("유건희", "010-1111-1111", "aaa@naver.com", 0, 0, 1, 0, 0, 2))
+        Contacts.add(ContactData("문지혜", "010-1111-1111", "aaa@naver.com", 0, 0, 0, 0, 0, 0))
+        Contacts.add(ContactData("최어진", "010-1111-1111", "aaa@naver.com", 0, 0, 0, 0, 0, 0))
+        Contacts.add(ContactData("박혜민", "010-1111-1111", "aaa@naver.com", 0, 0, 0, 0, 0, 0))
+        Contacts.add(ContactData("이종범", "010-1111-1111", "aaa@naver.com", 0, 0, 0, 0, 0, 0))
+        Contacts.add(ContactData("황성희", "010-1111-1111", "aaa@naver.com", 0, 0, 0, 0, 0, 0))
+        Contacts.add(ContactData("신성휘", "010-1111-1111", "aaa@naver.com", 0, 0, 0, 0, 0, 0))
+        Contacts.add(ContactData("성희영", "010-1111-1111", "aaa@naver.com", 0, 0, 0, 0, 0, 0))
+        Contacts.add(ContactData("정용현", "010-1111-1111", "aaa@naver.com", 0, 0, 0, 0, 0, 0))
+        Contacts.add(ContactData("이수빈", "010-1111-1111", "aaa@naver.com", 0, 0, 0, 0, 0, 0))
+        Contacts.add(ContactData("김린아", "010-1111-1111", "aaa@naver.com", 0, 0, 0, 0, 0, 0))
+        Contacts.add(ContactData("장세진", "010-1111-1111", "aaa@naver.com", 0, 0, 0, 0, 0, 0))
+        Contacts.add(ContactData("조 바이든", "010-1111-1111", "aaa@naver.com", 0, 0, 0, 0, 0, 0))
+        Contacts.add(ContactData("도널드 트럼프", "010-1111-1111", "aaa@naver.com", 0, 0, 0, 0, 0, 0))
+        Contacts.add(ContactData("박근혜", "010-1111-1111", "aaa@naver.com", 0, 0, 0, 0, 0, 0))
+        Contacts.add(ContactData("문재인", "010-1111-1111", "aaa@naver.com", 0, 0, 0, 0, 0, 0))
+        Contacts.add(ContactData("윤석열", "010-1111-1111", "aaa@naver.com", 0, 0, 0, 0, 0, 0))
     }
 
-    fun delete(name_: String){
-        Contacts.remove(Contacts.find { it.name == name_})
+    fun delete(name_: String) {
+        Contacts.remove(Contacts.find { it.name == name_ })
     }
 
 }

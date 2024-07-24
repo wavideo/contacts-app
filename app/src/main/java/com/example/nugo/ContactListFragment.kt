@@ -49,7 +49,6 @@ class ContactListFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-//        _binding = FragmentContactListBinding.inflate(inflater, container, false)
         return binding.root
     }
 
@@ -73,26 +72,8 @@ class ContactListFragment : Fragment() {
                     .commit()
             }
         }
-
-//        val adapter = ContactListAdapter(dataList, // dataList 생성
-//            itemClickListener = { item, position ->
-//                Toast.makeText(this.requireContext(), "${item.tvName}이 클릭되었습니다.", Toast.LENGTH_SHORT).show()
-//                val dataToSend = position
-//                val fragmentContactDetail = ContactDetailFragment.newInstance(dataToSend.toString())
-//                requireActivity().supportFragmentManager.beginTransaction()
-//                    .replace(R.id.listView, fragmentContactDetail)
-//                    .addToBackStack(null)
-//                    .commit()
-//            })
-
-
     }
 
-
-//    override fun onDestroyView() {
-//        super.onDestroyView()
-//        _binding = null
-//    }
 
     companion object {
         /**
@@ -112,46 +93,5 @@ class ContactListFragment : Fragment() {
                     putString(ARG_PARAM2, param2)
                 }
             }
-
-//        class ContactListFragment : AppCompatActivity() {
-//
-//            private lateinit var binding: FragmentContactListBinding
-//
-//
-//            override fun onCreate(savedInstanceState: Bundle?) {
-//                super.onCreate(savedInstanceState)
-//
-//                enableEdgeToEdge()
-//
-//                binding = FragmentContactListBinding.inflate(layoutInflater)
-//
-//                setContentView(binding.root)
-//
-//                ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
-//                    val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
-//                    v.setPadding(
-//                        systemBars.left,
-//                        systemBars.top,
-//                        systemBars.right,
-//                        systemBars.bottom
-//                    )
-//                    insets
-//                }
-//                //데이터 원본 준비
-//                val dataList = mutableListOf<ContactListItem>()
-//                dataList.add(ContactListItem("김은택", "010-1111-1111", "aaa@naver.com"))
-//
-//                val adapter = ContactListAdapter(dataList, // dataList 생성
-//                    itemClickListener = { item, position ->
-//                        Toast.makeText(this, "${item.tvName} clicked", Toast.LENGTH_SHORT).show()
-//                        var nameIntent = Intent(this@ContactListFragment, StickerListFragment::class.java)
-//                        nameIntent.putExtra("name", item.tvName)
-//                        startActivity(nameIntent)
-//                    })
-//                binding.recycleListView.adapter = adapter
-//                binding.recycleListView.layoutManager = LinearLayoutManager(this@ContactListFragment)
-//
-//            }
-//        }
     }
 }

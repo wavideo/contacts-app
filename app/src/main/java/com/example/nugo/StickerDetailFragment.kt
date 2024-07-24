@@ -9,15 +9,18 @@ package com.example.nugo
 3. 연락처 상세정보 (ContactDetailFragment)로 선택한 연락처를 넘겨줍니다*/
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.app.AlertDialog
+import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.nugo.databinding.FragmentStickerDetailBinding
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
+private const val ARG_PARAM_STICKER = "paramSticker"
 
 /**
  * A simple [Fragment] subclass.
@@ -26,14 +29,13 @@ private const val ARG_PARAM2 = "param2"
  */
 class StickerDetailFragment : Fragment() {
     // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
+    private var paramSticker: Int? = null
+    private val binding by lazy { FragmentStickerDetailBinding.inflate(layoutInflater) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
+            paramSticker = it.getInt(ARG_PARAM_STICKER)
         }
     }
 
@@ -42,7 +44,114 @@ class StickerDetailFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_sticker_detail, container, false)
+        return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        ContactOfStickers.clear()
+
+        var stickerIndex: Int = 0
+        paramSticker?.let { stickerIndex = it }
+
+        when (stickerIndex) {
+            0 -> {
+                ContactOfStickers.addAll(ContactManager.Contacts.filter { it.sticker0 != 0 })
+                ContactOfStickers.sortByDescending { it.sticker0 }
+            }
+
+            1 -> {
+                ContactOfStickers.addAll(ContactManager.Contacts.filter { it.sticker1 != 0 })
+                ContactOfStickers.sortByDescending { it.sticker1 }
+            }
+
+            2 -> {
+                ContactOfStickers.addAll(ContactManager.Contacts.filter { it.sticker2 != 0 })
+                ContactOfStickers.sortByDescending { it.sticker2 }
+            }
+
+            3 -> {
+                ContactOfStickers.addAll(ContactManager.Contacts.filter { it.sticker3 != 0 })
+                ContactOfStickers.sortByDescending { it.sticker3 }
+            }
+
+            else -> {
+                ContactOfStickers.addAll(ContactManager.Contacts.filter { it.sticker4 != 0 })
+                ContactOfStickers.sortByDescending { it.sticker4 }
+            }
+        }
+
+
+        val adapter = ContactOfStickerAdapter(ContactOfStickers)
+        binding.rvStickerList.adapter = adapter
+        binding.rvStickerList.layoutManager = LinearLayoutManager(requireContext())
+
+        adapter.itemClick = object : ContactOfStickerAdapter.ItemClick {
+            override fun onClick(view: View, position: Int) {
+
+                val myIndex = ContactManager.Contacts.indexOf(ContactOfStickers[position])
+                Log.i("문제", "$myIndex")
+
+                val fragment = ContactDetailFragment.newInstance(myIndex.toString())
+                requireActivity().supportFragmentManager.beginTransaction()
+                    .replace(R.id.frameLayout, fragment)
+                    .addToBackStack(null)
+                    .commit()
+            }
+        }
+
+        binding.ivBtnBack.setOnClickListener{
+            requireActivity().onBackPressed()
+        }
+
+        binding.tvBtnEdit.setOnClickListener {
+            StickerManager.stickers[stickerIndex].edit("수정완료", 4)
+            binding.tvTitle.text = StickerManager.stickers[stickerIndex].name
+            binding.ivStickerIcon.setImageResource(StickerManager.stickers[stickerIndex].findDrawable())
+            adapter.updateData(ContactOfStickers)
+        }
+
+
+        binding.tvBtnDelete.setOnClickListener {
+
+            AlertDialog.Builder(this.requireContext())
+                .setMessage("스티커를 삭제하시겠습니까?")
+                .setPositiveButton("확인") { dialog, which ->
+                    StickerManager.stickers[stickerIndex].delete()
+                    when (stickerIndex){
+                        0 -> ContactOfStickers.forEach{
+                            it.sticker0 = 0
+                        }
+                        1 -> ContactOfStickers.forEach{
+                            it.sticker1 = 0
+                        }
+                        2 -> ContactOfStickers.forEach{
+                            it.sticker2 = 0
+                        }
+                        3 -> ContactOfStickers.forEach{
+                            it.sticker3 = 0
+                        }
+                        else -> ContactOfStickers.forEach{
+                            it.sticker4 = 0
+                        }
+                    }
+                    requireActivity().onBackPressed()
+                }
+                .setNegativeButton("취소") { dialog, which ->
+                }
+                .show()
+
+
+            StickerManager.stickers[stickerIndex].delete()
+
+        }
+
+        StickerManager.detailPicker = stickerIndex
+        val mySticker = StickerManager.stickers[stickerIndex]
+        
+        binding.tvTitle.text = mySticker.name
+        binding.ivStickerIcon.setImageResource(mySticker.findDrawable())
     }
 
     companion object {
@@ -56,12 +165,17 @@ class StickerDetailFragment : Fragment() {
          */
         // TODO: Rename and change types and number of parameters
         @JvmStatic
-        fun newInstance(param1: String, param2: String) =
+        fun newInstance(paramSticker: Int) =
             StickerDetailFragment().apply {
                 arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
+                    paramSticker?.let { putInt(ARG_PARAM_STICKER, it) }
                 }
             }
+
+        val ContactOfStickers = mutableListOf<ContactData>()
     }
+}
+
+private fun <E> MutableList<E>.all(predicate: (E) -> Unit) {
+
 }

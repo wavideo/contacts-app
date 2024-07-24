@@ -13,7 +13,7 @@ data class StickerData(var name: String, var icon: Int, var isDelete: Boolean) {
     // .delete() 로 스티커 정보를 지웁니다
     fun delete() {
         isDelete = true
-        name = "스티커 추가하기"
+        name = "추가하기"
         icon = 0
         contactSize = 0
     }
@@ -38,7 +38,7 @@ object StickerManager {
         stickers.add(StickerData("경고", 33, false))
         stickers.add(StickerData("밥 사주신 분들", 16, false))
         stickers.add(StickerData("지각한 사람", 13, false))
-        stickers.add(StickerData("스티커 추가하기", 0, true))
+        stickers.add(StickerData("추가하기", 0, true))
     }
 
     // icon 이미지를 IntArray로 관리합니다
@@ -80,4 +80,6 @@ object StickerManager {
         R.drawable.imoge34_pileofpoo,
         R.drawable.imoge35_bomb
     )
+
+    var detailPicker:Int = 0
 }
