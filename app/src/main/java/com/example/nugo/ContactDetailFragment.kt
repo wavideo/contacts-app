@@ -76,11 +76,6 @@ class ContactDetailFragment : Fragment() {
         binding.etDetailEmail.setText(myContact.email)
         binding.ivDetailProfile.setImageBitmap(myContact.photo)
 
-        if (ContactManager.Contacts[position].photo == sampleBitmap) {
-            binding.ivDetailAvatar.visibility = View.VISIBLE
-        } else {
-            binding.ivDetailAvatar.visibility = View.GONE
-        }
 
 
 

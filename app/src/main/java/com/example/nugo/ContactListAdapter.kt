@@ -1,6 +1,7 @@
 package com.example.nugo
 
 import android.content.ContentValues.TAG
+import android.graphics.BitmapFactory
 import android.os.Bundle
 import android.provider.ContactsContract.Contacts
 import android.util.Log

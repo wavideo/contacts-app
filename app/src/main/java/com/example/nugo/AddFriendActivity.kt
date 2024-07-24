@@ -38,6 +38,8 @@ class AddFriendActivity : AppCompatActivity() {
         enableEdgeToEdge()
         setContentView(binding.root)
 
+        user = ContactData(name_, number_, email_)
+
         // 사진 추가하기
         binding.ivAddFriendPhotoEdit.setOnClickListener{
             binding?.ivAddFriendAvatar?.visibility = View.GONE
