@@ -23,10 +23,10 @@ fun createSampleBitmap(): Bitmap {
     val canvas = Canvas(bitmap)
     val paint = Paint()
 
-    paint.color = Color.LTGRAY
+    paint.color = R.color.white
     canvas.drawCircle(500f, 450f, 150f, paint)
 
-    paint.color = Color.DKGRAY
+    paint.color = R.color.white
     val path = android.graphics.Path()
     path.addCircle(500f, 1000f, 350f, Path.Direction.CCW)
     canvas.drawPath(path, paint)

@@ -7,127 +7,117 @@
     android:background="#F0F0F0"
     tools:context=".StickerDetailFragment">
 
-    <ImageView
-        android:id="@+id/iv_btn_back"
-        android:layout_width="58dp"
-        android:layout_height="58dp"
-        android:layout_marginTop="20dp"
-        android:padding="14dp"
-        android:src="@drawable/ic_arrow_back"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:tint="@color/gray_a" />
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/cl_top_bar"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/top_bar">
 
-    <ImageView
-        android:id="@+id/iv_sticker_icon_background"
-        android:layout_width="68dp"
-        android:layout_height="68dp"
-        android:layout_marginStart="28dp"
-        android:src="@drawable/shape_circle_background"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.15"
-        app:tint="@color/white" />
+        <ImageView
+            android:id="@+id/iv_btn_back"
+            android:layout_width="58dp"
+            android:layout_height="58dp"
+            android:layout_marginTop="20dp"
+            android:padding="14dp"
+            android:src="@drawable/ic_arrow_back"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:tint="@color/gray_a" />
 
-    <ImageView
-        android:id="@+id/iv_sticker_icon"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:gravity="center"
-        android:padding="12dp"
-        android:src="@drawable/imoge01_thumbsup"
-        app:layout_constraintBottom_toBottomOf="@+id/iv_sticker_icon_background"
-        app:layout_constraintEnd_toEndOf="@+id/iv_sticker_icon_background"
-        app:layout_constraintStart_toStartOf="@+id/iv_sticker_icon_background"
-        app:layout_constraintTop_toTopOf="@+id/iv_sticker_icon_background" />
 
-    <TextView
-        android:id="@+id/tv_title"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="12dp"
-        android:paddingHorizontal="24dp"
-        android:text="스티커 이름"
-        android:textSize="32sp"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toStartOf="@+id/tv_btn_edit"
-        app:layout_constraintHorizontal_bias="0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/iv_sticker_icon_background" />
+        <ImageView
+            android:id="@+id/iv_sticker_icon"
+            android:layout_width="68dp"
+            android:layout_height="68dp"
+            android:layout_marginStart="28dp"
+            android:background="@drawable/shape_circle_background"
+            android:backgroundTint="@color/white"
+            android:gravity="center"
+            android:padding="12dp"
+            android:src="@drawable/imoge01_thumbsup"
+            app:layout_constraintBottom_toTopOf="@+id/tv_title"
+            app:layout_constraintStart_toStartOf="parent" />
 
-    <TextView
-        android:id="@+id/tv_btn_edit"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="18dp"
-        android:background="@drawable/shape_rectangle_radius_12"
-        android:backgroundTint="#6590FF"
-        android:paddingHorizontal="18dp"
-        android:paddingVertical="8dp"
-        android:text="수정"
-        android:textColor="@color/white"
-        android:textSize="18sp"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="@+id/tv_title"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/tv_title" />
+        <TextView
+            android:id="@+id/tv_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/horizontal_margin_big"
+            android:paddingStart="@dimen/horizontal_margin_big"
+            android:text="스티커 이름"
+            android:textSize="@dimen/title"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/tv_btn_edit"
+            app:layout_constraintHorizontal_bias="0"
+            app:layout_constraintStart_toStartOf="parent" />
 
-    <androidx.core.widget.NestedScrollView
+        <ImageView
+            android:id="@+id/tv_btn_edit"
+            android:layout_width="58dp"
+            android:layout_height="58dp"
+            android:padding="18dp"
+            android:src="@drawable/ic_edit"
+            android:tint="@color/gray_a"
+            app:layout_constraintBottom_toBottomOf="@+id/tv_title"
+            app:layout_constraintStart_toEndOf="@+id/tv_title"
+            app:layout_constraintTop_toTopOf="@+id/tv_title" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="수정하기"
+            android:textColor="@color/gray_a"
+            android:textSize="@dimen/count"
+            app:layout_constraintBottom_toBottomOf="@+id/tv_btn_edit"
+            app:layout_constraintStart_toEndOf="@id/tv_btn_edit"
+            app:layout_constraintTop_toTopOf="@+id/tv_btn_edit" />
+
+        <TextView
+            android:id="@+id/tv_btn_delete"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/horizontal_margin"
+            android:background="@drawable/shape_rectangle_radius_12"
+            android:backgroundTint="@color/red"
+            android:paddingHorizontal="@dimen/horizontal_margin"
+            android:paddingVertical="8dp"
+            android:text="삭제하기"
+            android:textColor="@color/white"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="@+id/iv_btn_back"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/iv_btn_back" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_marginTop="14dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tv_title"
-        >
+        app:layout_constraintTop_toBottomOf="@+id/cl_top_bar">
 
         <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/cl_sticker_list_radius"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:paddingBottom="14dp"
-            >
+            android:layout_height="wrap_content"
+            app:layout_constraintVertical_bias="0"
+            android:layout_marginHorizontal="@dimen/horizontal_margin"
+            android:layout_marginVertical="@dimen/vertical_margin"
+            android:background="@drawable/shape_rectangle_radius_12"
+            android:backgroundTint="@color/white"
+            android:clipToOutline="true"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
 
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/cl_sticker_list_radius"
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_sticker_list"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:layout_marginHorizontal="18dp"
-                android:layout_marginVertical="14dp"
-                android:background="@drawable/shape_rectangle_radius_12"
-                android:clipToOutline="true">
-
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/rv_sticker_list"
-                    android:layout_width="match_parent"
-                    android:layout_height="0dp"
-                    tools:itemCount="10"
-                    tools:listitem="@layout/item_contact_with_sticker" />
-
-            </androidx.constraintlayout.widget.ConstraintLayout>
-
-            <TextView
-                android:id="@+id/tv_btn_delete"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="18dp"
-                android:layout_marginTop="18dp"
-                android:background="@drawable/shape_rectangle_radius_12"
-                android:backgroundTint="#FF6565"
-                android:gravity="center"
-                android:paddingVertical="12dp"
-                android:text="스티커 삭제하기"
-                android:textColor="@color/white"
-                android:textSize="18sp"
-                android:textStyle="bold"
-                app:layout_constraintTop_toBottomOf="@+id/cl_sticker_list_radius"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-
-                />
+                tools:itemCount="1"
+                tools:listitem="@layout/item_contact_with_sticker" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
-    </androidx.core.widget.NestedScrollView>
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>

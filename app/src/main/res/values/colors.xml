@@ -2,10 +2,11 @@
 <resources>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
-    <color name="background_basic">#F0F0F0</color>
-    <color name="gray_a">#5D5D5D</color>
-    <color name="gray_b">#EAEAEA</color>
-    <color name="red">#FF0000</color>
-    <color name="background_main">#EAEAEA</color>
+    <color name="background_basic">#FFEFEFEF</color>
+    <color name="gray_a">#FF999999</color>
+    <color name="gray_b">#FFDDDDDD</color>
+    <color name="red">#FF6565</color>
+    <color name="blue">#6590FF</color>
+    <color name="green">#43CA60</color>
 
 </resources>

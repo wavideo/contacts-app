@@ -20,8 +20,8 @@
             android:id="@+id/iv_profile"
             android:layout_width="60dp"
             android:layout_height="60dp"
-            android:src="@color/gray_a"
             android:background="@drawable/shape_circle_background"
+            android:backgroundTint="@color/gray_b"
             android:clipToOutline="true"
             android:scaleType="centerCrop"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -34,7 +34,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="18dp"
             android:text="김은택"
-            android:textSize="16sp"
+            android:textSize="@dimen/object_text"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toEndOf="@+id/iv_profile"
             app:layout_constraintTop_toTopOf="parent" />
@@ -69,6 +69,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="6dp"
+                android:textSize="@dimen/count"
+                android:textStyle="bold"
                 android:text="99"
                 android:tint="@color/gray_a"
                 app:layout_constraintBottom_toBottomOf="parent"
@@ -80,8 +82,8 @@
 
         <ImageView
             android:id="@+id/iv_ic_close"
-            android:layout_width="18dp"
-            android:layout_height="18dp"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
             android:layout_marginEnd="12dp"
             android:src="@drawable/ic_close"
             android:tint="@color/gray_a"

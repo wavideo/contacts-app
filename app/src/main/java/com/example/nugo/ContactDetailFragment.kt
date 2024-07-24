@@ -74,6 +74,7 @@ class ContactDetailFragment : Fragment() {
         val myContact = ContactManager.Contacts[position]
 
         binding.etDetailName.setText(myContact.name)
+        binding.tvDetailName.setText(myContact.name)
         binding.etDetailNumber.setText(myContact.number)
         binding.etDetailEmail.setText(myContact.email)
         binding.ivDetailProfile.setImageBitmap(myContact.photo)
@@ -256,7 +257,7 @@ class ContactDetailFragment : Fragment() {
             binding.ivDetailEdit.visibility = View.GONE
             binding.ivDetailSave.visibility = View.VISIBLE
 
-            binding.ivDetailPhotoDelete.visibility = View.VISIBLE
+//            binding.ivDetailPhotoDelete.visibility = View.VISIBLE
             binding.ivDetailPhotoEdit.visibility = View.VISIBLE
 
             binding.etDetailName.isEnabled = true
@@ -264,18 +265,18 @@ class ContactDetailFragment : Fragment() {
             binding.etDetailEmail.isEnabled = true
 
             // 사진 삭제 버튼
-            binding.ivDetailPhotoDelete.setOnClickListener {
-                AlertDialog.Builder(this.requireContext())
-                    .setMessage("사진을 삭제하시겠습니까?")
-                    .setPositiveButton("확인") { dialog, which ->
-                        binding.ivDetailProfile.setImageBitmap(sampleBitmap)
-                        ContactManager.Contacts[position].photo = sampleBitmap
-                        binding.ivDetailAvatar.visibility = View.VISIBLE
-                    }
-                    .setNegativeButton("취소") { dialog, which ->
-                    }
-                    .show()
-            }
+//            binding.ivDetailPhotoDelete.setOnClickListener {
+//                AlertDialog.Builder(this.requireContext())
+//                    .setMessage("사진을 삭제하시겠습니까?")
+//                    .setPositiveButton("확인") { dialog, which ->
+//                        binding.ivDetailProfile.setImageBitmap(sampleBitmap)
+//                        ContactManager.Contacts[position].photo = sampleBitmap
+//                        binding.ivDetailAvatar.visibility = View.VISIBLE
+//                    }
+//                    .setNegativeButton("취소") { dialog, which ->
+//                    }
+//                    .show()
+//            }
 
             // 사진 추가 버튼
             binding.ivDetailPhotoEdit.setOnClickListener {
@@ -287,6 +288,7 @@ class ContactDetailFragment : Fragment() {
 
             binding.ivDetailSave.setOnClickListener {
                 ContactManager.Contacts[position].name = binding.etDetailName.text.toString()
+                binding.tvDetailName.setText(myContact.name)
                 ContactManager.Contacts[position].number = binding.etDetailNumber.text.toString()
                 ContactManager.Contacts[position].email = binding.etDetailEmail.text.toString()
 //                ContactManager.Contacts[position].photo = binding.ivDetailProfile.imageAlpha
@@ -296,8 +298,7 @@ class ContactDetailFragment : Fragment() {
                 isEditClicked = false
                 binding.ivDetailEdit.visibility = View.VISIBLE
                 binding.ivDetailSave.visibility = View.GONE
-
-                binding.ivDetailPhotoDelete.visibility = View.GONE
+//                binding.ivDetailPhotoDelete.visibility = View.GONE
                 binding.ivDetailPhotoEdit.visibility = View.GONE
 
                 binding.etDetailName.isEnabled = false
@@ -308,20 +309,20 @@ class ContactDetailFragment : Fragment() {
 
         // 스티커 클릭 시 +1, 롱클릭 시 -1
         // 삭제하기 버튼
-        binding.btnDetailDelete.setOnClickListener {
-            AlertDialog.Builder(this.requireContext())
-                .setMessage("연락처를 삭제하시겠습니까?")
-                .setPositiveButton("확인") { dialog, which ->
-                    ContactManager.delete(ContactManager.Contacts[position].name.toString())
-                    requireActivity().supportFragmentManager.beginTransaction()
-                        .replace(R.id.frameLayout, ContactListFragment())
-                        .addToBackStack(null)
-                        .commit()
-                }
-                .setNegativeButton("취소") { dialog, which ->
-                }
-                .show()
-        }
+//        binding.btnDetailDelete.setOnClickListener {
+//            AlertDialog.Builder(this.requireContext())
+//                .setMessage("연락처를 삭제하시겠습니까?")
+//                .setPositiveButton("확인") { dialog, which ->
+//                    ContactManager.delete(ContactManager.Contacts[position].name.toString())
+//                    requireActivity().supportFragmentManager.beginTransaction()
+//                        .replace(R.id.frameLayout, ContactListFragment())
+//                        .addToBackStack(null)
+//                        .commit()
+//                }
+//                .setNegativeButton("취소") { dialog, which ->
+//                }
+//                .show()
+//        }
 
     }
 

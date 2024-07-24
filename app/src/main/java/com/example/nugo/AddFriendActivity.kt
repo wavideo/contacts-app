@@ -52,18 +52,18 @@ class AddFriendActivity : AppCompatActivity() {
         }
 
         // 사진 삭제하기
-        binding.ivAddFriendPhotoDelete.setOnClickListener{
-            AlertDialog.Builder(this)
-                .setMessage("사진을 삭제하시겠습니까?")
-                .setPositiveButton("확인") { dialog, which ->
-                    binding?.ivAddFriendProfile?.setImageBitmap(sampleBitmap)
-                    binding?.ivAddFriendAvatar?.visibility = View.VISIBLE
-                    user.photo = sampleBitmap
-                }
-                .setNegativeButton("취소") { dialog, which ->
-                }
-                .show()
-        }
+//        binding.ivAddFriendPhotoDelete.setOnClickListener{
+//            AlertDialog.Builder(this)
+//                .setMessage("사진을 삭제하시겠습니까?")
+//                .setPositiveButton("확인") { dialog, which ->
+//                    binding?.ivAddFriendProfile?.setImageBitmap(sampleBitmap)
+//                    binding?.ivAddFriendAvatar?.visibility = View.VISIBLE
+//                    user.photo = sampleBitmap
+//                }
+//                .setNegativeButton("취소") { dialog, which ->
+//                }
+//                .show()
+//        }
 
         var numberList = mutableListOf<String>()
         for (i in ContactManager.Contacts){

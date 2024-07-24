@@ -12,8 +12,10 @@ import android.widget.ImageView
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContentProviderCompat.requireContext
+import androidx.core.graphics.alpha
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import androidx.core.view.isVisible
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.nugo.ContactManager.makeCall
@@ -43,6 +45,7 @@ class ContactListAdapter(
                     contact.name
                 ) // 해당 연락처의 번호로 통화 (binding.root.context, contact.name을 불러와야한다)
             }
+            ivStickerRecently
         }
     }
 
@@ -82,8 +85,23 @@ class ContactListAdapter(
             else -> contacts[position].sticker4
         }
 
-        holder.ivStickerRecently.setImageResource(recentSticker.findDrawable())
-        holder.tvStickerRecently.text = recentStickerNum.toString()
+        if (recentStickerNum == 0){
+            holder.ivStickerRecently.setImageResource(StickerManager.icons[0])
+            holder.tvStickerRecently.isVisible = false
+        } else {
+            holder.ivStickerRecently.setImageResource(recentSticker.findDrawable())
+            holder.tvStickerRecently.isVisible = true
+            holder.tvStickerRecently.text = recentStickerNum.toString()
+            holder.ivStickerRecently.setOnClickListener{
+                when (recentIndex){
+                    0 -> holder.tvStickerRecently.text = (++contacts[position].sticker0).toString()
+                    1 -> holder.tvStickerRecently.text = (++contacts[position].sticker1).toString()
+                    2 -> holder.tvStickerRecently.text = (++contacts[position].sticker2).toString()
+                    3 -> holder.tvStickerRecently.text = (++contacts[position].sticker3).toString()
+                    else -> holder.tvStickerRecently.text = (++contacts[position].sticker4).toString()
+                }
+            }
+        }
 
         val copyStickers = StickerManager.stickers.toMutableList()
         val adapter = ContactListStickerMiniAdapter(copyStickers, position)
