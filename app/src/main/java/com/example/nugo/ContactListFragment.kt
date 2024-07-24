@@ -32,7 +32,8 @@ private const val ARG_PARAM2 = "param2"
 class ContactListFragment : Fragment() {
     // TODO: Rename and change types of parameters
     private val binding by lazy { FragmentContactListBinding.inflate(layoutInflater) }
-//    private var _binding: FragmentContactListBinding? = null
+    private lateinit var adapter : ContactListAdapter
+    //    private var _binding: FragmentContactListBinding? = null
 //    private val binding get() = _binding!!
     private var param1: String? = null
     private var param2: String? = null
@@ -49,6 +50,7 @@ class ContactListFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+//        _binding = FragmentContactListBinding.inflate(inflater, container, false)
         return binding.root
     }
 
@@ -56,7 +58,7 @@ class ContactListFragment : Fragment() {
 
         super.onViewCreated(view, savedInstanceState)
 
-        val adapter = ContactListAdapter(ContactManager.Contacts) // dataList 생성
+        adapter = ContactListAdapter(ContactManager.Contacts) // adapter 초기화
 
 
         binding.recycleListView.adapter = adapter
@@ -72,6 +74,19 @@ class ContactListFragment : Fragment() {
                     .commit()
             }
         }
+
+        // 연락처 추가 intent
+        binding.addFriend.setOnClickListener {
+            val intent_addFriend = Intent(requireContext(), AddFriendActivity::class.java)
+            startActivity(intent_addFriend)
+//            adapter.notifyDataSetChanged() // 전부 다 수정(대규모 데이터 처리 비추)
+        }
+
+    }
+
+    override fun onResume() {
+        super.onResume()
+        adapter.updateData(ContactManager.Contacts)
     }
 
 

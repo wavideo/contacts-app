@@ -66,6 +66,43 @@
         app:layout_constraintTop_toTopOf="parent
 " />
 
+    <ImageView
+        android:id="@+id/iv_detail_avatar"
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        android:elevation="2dp"
+        android:src="@drawable/avatar"
+        android:visibility="gone"
+        app:layout_constraintTop_toTopOf="@+id/iv_detail_profile"
+        app:layout_constraintBottom_toBottomOf="@+id/iv_detail_profile"
+        app:layout_constraintStart_toStartOf="@+id/iv_detail_profile"
+        app:layout_constraintEnd_toEndOf="@+id/iv_detail_profile"
+        />
+
+    <ImageView
+        android:id="@+id/iv_detail_photo_edit"
+        android:layout_width="25dp"
+        android:layout_height="25dp"
+        android:elevation="2dp"
+        android:layout_margin="15dp"
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="@+id/iv_detail_profile"
+        android:src="@drawable/gallery"
+        />
+
+    <ImageView
+        android:id="@+id/iv_detail_photo_delete"
+        android:layout_width="25dp"
+        android:layout_height="25dp"
+        android:elevation="2dp"
+        android:layout_margin="15dp"
+        android:visibility="gone"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toBottomOf="@+id/iv_detail_profile"
+        android:src="@drawable/bin"
+        />
+
     <ScrollView
         android:id="@+id/detail_scrollview"
         android:layout_width="match_parent"

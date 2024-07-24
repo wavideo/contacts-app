@@ -75,4 +75,10 @@ class ContactListAdapter(
     override fun getItemId(position: Int): Long {
         return position.toLong()
     }
+
+    fun updateData(newItems: MutableList<ContactData>){
+        mItems = newItems
+        notifyDataSetChanged()
+    }
+
 }
