@@ -35,6 +35,7 @@ class ContactListFragment : Fragment() {
     private lateinit var adapter : ContactListAdapter
     //    private var _binding: FragmentContactListBinding? = null
 //    private val binding get() = _binding!!
+    private val PICK_IMAGE_REQUEST = 1
     private var param1: String? = null
     private var param2: String? = null
 
@@ -55,12 +56,14 @@ class ContactListFragment : Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-
         super.onViewCreated(view, savedInstanceState)
 
+        arguments?.let {
+            param1 = it.getString(ARG_PARAM1)
+            param2 = it.getString(ARG_PARAM2)
+        }
+
         adapter = ContactListAdapter(ContactManager.Contacts) // adapter 초기화
-
-
         binding.recycleListView.adapter = adapter
         binding.recycleListView.layoutManager = LinearLayoutManager(this.requireContext())
 
@@ -88,6 +91,7 @@ class ContactListFragment : Fragment() {
         super.onResume()
         adapter.updateData(ContactManager.Contacts)
     }
+
 
 
     companion object {
