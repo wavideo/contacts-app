@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <View
+        android:id="@+id/view_detail_addsticker_box"
+        android:layout_width="350dp"
+        android:layout_height="75dp"
+        android:background="@drawable/round_border"
+        android:backgroundTint="#FDF0B1"
+        android:clickable="true"
+        android:focusable="true"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <ImageView
+        android:id="@+id/iv_detail_addsticker_bg"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:layout_marginStart="15dp"
+        android:elevation="2dp"
+        android:src="@drawable/shape_circle_background"
+        app:layout_constraintBottom_toBottomOf="@+id/view_detail_addsticker_box"
+        app:layout_constraintStart_toStartOf="@+id/view_detail_addsticker_box"
+        app:layout_constraintTop_toTopOf="@+id/view_detail_addsticker_box"
+        app:tint="@color/gray_b" />
+
+    <ImageView
+        android:id="@+id/iv_detail_addsticker"
+        android:layout_width="63dp"
+        android:layout_height="56dp"
+        android:clickable="true"
+        android:elevation="2dp"
+        android:focusable="true"
+        android:gravity="center"
+        android:padding="12dp"
+        android:src="@drawable/gallery"
+        app:layout_constraintBottom_toBottomOf="@+id/iv_detail_addsticker_bg"
+        app:layout_constraintEnd_toEndOf="@+id/iv_detail_addsticker_bg"
+        app:layout_constraintStart_toStartOf="@+id/iv_detail_addsticker_bg"
+        app:layout_constraintTop_toTopOf="@+id/iv_detail_addsticker_bg" />
+
+    <TextView
+        android:id="@+id/tv_detail_addsticker"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:text="설정된 스티커가 없습니다."
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@+id/iv_detail_addsticker_bg"
+        app:layout_constraintStart_toEndOf="@+id/iv_detail_addsticker_bg"
+        app:layout_constraintTop_toTopOf="@+id/iv_detail_addsticker_bg" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

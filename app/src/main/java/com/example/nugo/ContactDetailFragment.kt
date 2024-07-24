@@ -128,6 +128,17 @@ class ContactDetailFragment : Fragment() {
                 getImageFromGallery.launch("image/*")
             }
 
+            // 스티커 추가 버튼
+            binding?.ivDetailAddSticker?.setOnClickListener{
+                val dataToSend = position
+                val fragmentStickerAddDialog = AddStickerDialogFragment.newInstance(dataToSend.toString())
+                requireActivity().supportFragmentManager.beginTransaction()
+                    .replace(R.id.frameLayout, AddStickerDialogFragment())
+                    .addToBackStack(null)
+                    .commit()
+            }
+
+            // 수정 완료 후 저장
             binding?.ivDetailSave?.setOnClickListener{
                 ContactManager.Contacts[position].name = binding.etDetailName.text.toString()
                 ContactManager.Contacts[position].number = binding.etDetailNumber.text.toString()
@@ -148,6 +159,8 @@ class ContactDetailFragment : Fragment() {
                 binding?.etDetailEmail?.isEnabled = false
             }
         }
+
+        // 스티커 클릭 시 +1, 롱클릭 시 -1
 
         // 연락처 삭제하기 버튼
         binding?.btnDetailDelete?.setOnClickListener{

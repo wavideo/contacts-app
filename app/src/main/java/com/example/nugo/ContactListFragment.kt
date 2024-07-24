@@ -32,7 +32,7 @@ private const val ARG_PARAM2 = "param2"
 class ContactListFragment : Fragment() {
     // TODO: Rename and change types of parameters
     private val binding by lazy { FragmentContactListBinding.inflate(layoutInflater) }
-
+    private lateinit var adapter : ContactListAdapter
     //    private var _binding: FragmentContactListBinding? = null
 //    private val binding get() = _binding!!
     private var param1: String? = null
@@ -58,7 +58,7 @@ class ContactListFragment : Fragment() {
 
         super.onViewCreated(view, savedInstanceState)
 
-        val adapter = ContactListAdapter(ContactManager.Contacts) // dataList 생성
+        adapter = ContactListAdapter(ContactManager.Contacts) // adapter 초기화
 
 
         binding.recycleListView.adapter = adapter
@@ -103,6 +103,12 @@ class ContactListFragment : Fragment() {
                     putString(ARG_PARAM2, param2)
                 }
             }
+    }
+
+
+    override fun onResume() {
+        super.onResume()
+        adapter.updateData(ContactManager.Contacts)
     }
 
 }

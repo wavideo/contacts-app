@@ -16,7 +16,7 @@ import com.example.nugo.databinding.ActivityContactListItemBinding
 import com.example.nugo.databinding.FragmentContactListBinding
 
 class ContactListAdapter(
-    private val mItems:MutableList<ContactData>,
+    private var mItems:MutableList<ContactData>,
     ) : RecyclerView.Adapter<ContactListAdapter.Holder>() {
 
         inner class Holder(private val binding: ActivityContactListItemBinding): RecyclerView.ViewHolder(binding.root){
@@ -48,4 +48,10 @@ class ContactListAdapter(
     override fun getItemId(position: Int): Long {
         return position.toLong()
     }
+
+    fun updateData(newItems: MutableList<ContactData>){
+        mItems = newItems
+        notifyDataSetChanged()
+    }
+
 }
