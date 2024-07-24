@@ -68,19 +68,7 @@ class ContactListAdapter(
         }
         holder.ivProfile.setImageBitmap(contacts[position].photo)
 
-//        myStickers = StickerManager.stickers.map { it.copy() }.toMutableList()
-//        val myContact = ContactManager.Contacts[position]
-//        val stickerCount = intArrayOf(myContact.sticker0, myContact.sticker1, myContact.sticker2, myContact.sticker3, myContact.sticker4)
-//        for (i in stickerCount.indices){
-//            if (stickerCount[i] == 0){
-//                myStickers.removeAt(i)
-//                notifyDataSetChanged()
-//            }
-//        }
-//        myStickers.removeAt(myContact.recentSticker)
-
-
-        val adapter = ContactListStickerMiniAdapter(StickerManager.stickers)
+        val adapter = ContactListStickerMiniAdapter(StickerManager.stickers, position)
         holder.rvStickerMini.adapter = adapter
         holder.rvStickerMini.layoutManager = LinearLayoutManager(holder.rvStickerMini.context, LinearLayoutManager.HORIZONTAL, false)
     }
