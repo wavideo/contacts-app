@@ -38,16 +38,9 @@ class AddFriendActivity : AppCompatActivity() {
         enableEdgeToEdge()
         setContentView(binding.root)
 
-        // onCreate() 안에서 lateinit 변수 초기화해줘야 함.
-        user = ContactData(name_, number_, email_)
 
-        name_ = binding.etAddFriendName.text.toString()
-        number_ = binding.etAddFriendNumber.text.toString()
-        email_ = binding.etAddFriendEmail.text.toString()
 
-        user.name = name_
-        user.number = number_
-        user.email = email_
+
 
         // 사진 추가하기
         binding.ivAddFriendPhotoEdit.setOnClickListener{
@@ -73,7 +66,15 @@ class AddFriendActivity : AppCompatActivity() {
         // 연락처 저장하기
         binding.btnAddFriendSave.setOnClickListener{
             Toast.makeText(this, "연락처가 저장되었습니다.", Toast.LENGTH_SHORT).show()
-            ContactManager.Contacts.add(user)
+            name_ = binding.etAddFriendName.text.toString()
+            number_ = binding.etAddFriendNumber.text.toString()
+            email_ = binding.etAddFriendEmail.text.toString()
+
+            // onCreate() 안에서 lateinit 변수 초기화해줘야 함.
+            user = ContactData(name_, number_, email_)
+            // 데이터에 신규 연락처 정보 추가, 리스트 맨 위에 표시
+            ContactManager.Contacts.add(0, user)
+
             finish()
         }
 
