@@ -19,18 +19,18 @@ import android.graphics.Path
 
 // 예시 bitmap 이미지 생성
 fun createSampleBitmap(): Bitmap {
-    val bitmap = Bitmap.createBitmap(100, 100, Bitmap.Config.ARGB_8888)
+    val bitmap = Bitmap.createBitmap(1000, 1000, Bitmap.Config.ARGB_8888)
     val canvas = Canvas(bitmap)
     val paint = Paint()
 
     paint.color = Color.LTGRAY
-    canvas.drawCircle(50f, 45f, 15f, paint)
+    canvas.drawCircle(500f, 450f, 150f, paint)
 
     paint.color = Color.DKGRAY
     val path = android.graphics.Path()
-    path.addCircle(50f, 100f, 35f, Path.Direction.CCW)
+    path.addCircle(500f, 1000f, 350f, Path.Direction.CCW)
     canvas.drawPath(path, paint)
-    
+
     return bitmap
 }
 
