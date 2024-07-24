@@ -65,7 +65,7 @@ class CustomDialog : DialogFragment(){
 
 //        binding = CustomDialogBinding.inflate(inflater,container,false)
 
-        val view = inflater.inflate(R.layout.dialog_sticker_detail)
+//        val view = inflater.inflate(R.layout.dialog_sticker_detail)
         dialog?.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
 
         positiveButton.setOnClickListener{
