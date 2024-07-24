@@ -27,6 +27,7 @@ class ContactListAdapter(
         RecyclerView.ViewHolder(binding.root) {
         val tvName = binding.tvName
         val rvStickerMini = binding.rvStickerMini
+        val ivProfile = binding.ivProFill
 
         val ivCall: ImageView = itemView.findViewById(R.id.iv_call)
 
@@ -65,6 +66,7 @@ class ContactListAdapter(
         holder.itemView.setOnClickListener {
             itemClick?.onClick(it, position)
         }
+        holder.ivProfile.setImageBitmap(contacts[position].photo)
 
 //        myStickers = StickerManager.stickers.map { it.copy() }.toMutableList()
 //        val myContact = ContactManager.Contacts[position]

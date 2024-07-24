@@ -3,6 +3,7 @@ package com.example.nugo
 /* [ 허민 파트 ]
 연락처 리스트(ContactListFragment)와 스티커 리스트(StickerListFragment)를 하단탭 레이아웃으로 연결합니다 */
 
+import android.graphics.BitmapFactory
 import android.os.Bundle
 import android.text.TextUtils.replace
 import androidx.activity.enableEdgeToEdge
