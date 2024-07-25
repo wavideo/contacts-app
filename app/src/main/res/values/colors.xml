@@ -8,5 +8,6 @@
     <color name="red">#FF6565</color>
     <color name="blue">#6590FF</color>
     <color name="green">#43CA60</color>
+    <color name="half_alpha_black">#43000000</color>
 
 </resources>

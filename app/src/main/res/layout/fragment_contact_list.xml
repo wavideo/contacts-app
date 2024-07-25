@@ -30,18 +30,19 @@
             android:layout_width="match_parent"
             android:layout_height="@dimen/top_bar"
             android:background="@drawable/shape_gradient"
-            android:elevation="1dp"
+            android:elevation="0dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <TextView
+        <EditText
             android:id="@+id/tv_my_name"
+            android:enabled="false"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="@dimen/horizontal_margin_big"
+            android:maxLength="8"
             android:paddingStart="@dimen/horizontal_margin_big"
-            android:elevation="2dp"
             android:text="내 프로필"
             android:textAlignment="center"
             android:textColor="@color/white"

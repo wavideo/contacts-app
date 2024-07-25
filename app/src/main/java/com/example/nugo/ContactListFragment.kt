@@ -82,6 +82,18 @@ class ContactListFragment : Fragment() {
             val intent_addFriend = Intent(requireContext(), AddFriendActivity::class.java)
             startActivity(intent_addFriend)
         }
+
+        var editableText:Boolean = false
+        binding.edit.setOnClickListener{
+            if (editableText){
+                binding.tvMyName.isEnabled = false
+                binding.edit.setImageResource(R.drawable.ic_edit)
+            } else {
+                binding.tvMyName.isEnabled = true
+                binding.edit.setImageResource(R.drawable.ic_done)
+            }
+            editableText = !editableText
+        }
     }
 
     private fun openImageChooser() {  // 멤버 함수로 정의
