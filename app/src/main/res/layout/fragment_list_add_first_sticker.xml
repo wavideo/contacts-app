@@ -1,0 +1,222 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/cl_sticker_box"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintBottom_toBottomOf="parent"
+    app:layout_constraintTop_toTopOf="parent"
+    app:layout_constraintEnd_toEndOf="parent"
+    android:background="#90000000"
+    >
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="400dp"
+        android:layout_height="170dp"
+        android:layout_marginTop="320dp"
+        android:layout_marginStart="5dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:background="@drawable/round_border5"
+        android:paddingTop="10dp"
+        android:paddingBottom="20dp"
+        android:paddingRight="15dp"
+        android:paddingLeft="15dp"
+        >
+
+        <ImageView
+            android:id="@+id/iv_cancel"
+            android:layout_width="15dp"
+            android:layout_height="15dp"
+            android:layout_margin="10dp"
+            android:clickable="true"
+            android:focusable="true"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:src="@drawable/close"
+            />
+
+        <TextView
+            android:id="@+id/tv_ListAddFirst_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="추가할 스티커를 선택하세요."
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:textColor="@color/black"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            />
+
+        <ImageView
+            android:id="@+id/iv_ListAddFirst_sticker1"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:background="@drawable/shape_circle_background"
+            android:backgroundTint="@color/white"
+            android:layout_marginTop="20dp"
+            android:layout_marginLeft="5dp"
+            android:clickable="true"
+            android:elevation="2dp"
+            android:focusable="true"
+            android:gravity="center"
+            android:padding="12dp"
+            android:src="@drawable/imoge01_thumbsup"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintTop_toBottomOf="@+id/tv_ListAddFirst_title"
+            app:layout_constraintStart_toStartOf="parent"
+            />
+
+        <ImageView
+            android:id="@+id/iv_ListAddFirst_sticker2"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:background="@drawable/shape_circle_background"
+            android:backgroundTint="@color/white"
+            android:layout_marginLeft="25dp"
+            android:clickable="true"
+            android:elevation="2dp"
+            android:focusable="true"
+            android:gravity="center"
+            android:padding="12dp"
+            android:src="@drawable/imoge01_thumbsup"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/iv_ListAddFirst_sticker1"
+            app:layout_constraintTop_toTopOf="@+id/iv_ListAddFirst_sticker1"
+            app:layout_constraintBottom_toBottomOf="@+id/iv_ListAddFirst_sticker1"
+            />
+
+        <ImageView
+            android:id="@+id/iv_ListAddFirst_sticker3"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:background="@drawable/shape_circle_background"
+            android:backgroundTint="@color/white"
+            android:clickable="true"
+            android:layout_marginLeft="25dp"
+            android:elevation="2dp"
+            android:focusable="true"
+            android:gravity="center"
+            android:padding="12dp"
+            android:src="@drawable/imoge01_thumbsup"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/iv_ListAddFirst_sticker2"
+            app:layout_constraintTop_toTopOf="@+id/iv_ListAddFirst_sticker2"
+            app:layout_constraintBottom_toBottomOf="@+id/iv_ListAddFirst_sticker2"
+            />
+
+        <ImageView
+            android:id="@+id/iv_ListAddFirst_sticker4"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:background="@drawable/shape_circle_background"
+            android:backgroundTint="@color/white"
+            android:layout_marginLeft="25dp"
+            android:clickable="true"
+            android:elevation="2dp"
+            android:focusable="true"
+            android:gravity="center"
+            android:padding="12dp"
+            android:src="@drawable/imoge01_thumbsup"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/iv_ListAddFirst_sticker3"
+            app:layout_constraintTop_toTopOf="@+id/iv_ListAddFirst_sticker3"
+            app:layout_constraintBottom_toBottomOf="@+id/iv_ListAddFirst_sticker3"
+            />
+
+
+        <ImageView
+            android:id="@+id/iv_ListAddFirst_sticker5"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:background="@drawable/shape_circle_background"
+            android:backgroundTint="@color/white"
+            android:layout_marginLeft="25dp"
+            android:clickable="true"
+            android:elevation="2dp"
+            android:focusable="true"
+            android:gravity="center"
+            android:padding="12dp"
+            android:src="@drawable/imoge01_thumbsup"
+            app:layout_constraintBottom_toBottomOf="@+id/iv_ListAddFirst_sticker4"
+            app:layout_constraintStart_toEndOf="@+id/iv_ListAddFirst_sticker4"
+            app:layout_constraintTop_toTopOf="@+id/iv_ListAddFirst_sticker4" />
+
+        <TextView
+            android:id="@+id/tv_ListAddFirst_sticker1_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:elevation="2dp"
+            android:maxLength="4"
+            android:text="스티커명"
+            android:textColor="@color/black"
+            android:textSize="12sp"
+            app:layout_constraintEnd_toEndOf="@+id/iv_ListAddFirst_sticker1"
+            app:layout_constraintStart_toStartOf="@+id/iv_ListAddFirst_sticker1"
+            app:layout_constraintTop_toBottomOf="@+id/iv_ListAddFirst_sticker1" />
+
+        <TextView
+            android:id="@+id/tv_ListAddFirst_sticker2_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:elevation="2dp"
+            android:maxLength="4"
+            android:text="스티커명"
+            android:textColor="@color/black"
+            android:textSize="12sp"
+            app:layout_constraintEnd_toEndOf="@+id/iv_ListAddFirst_sticker2"
+            app:layout_constraintStart_toStartOf="@+id/iv_ListAddFirst_sticker2"
+            app:layout_constraintTop_toBottomOf="@+id/iv_ListAddFirst_sticker2" />
+
+        <TextView
+            android:id="@+id/tv_ListAddFirst_sticker3_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:elevation="2dp"
+            android:maxLength="4"
+            android:text="스티커명"
+            android:textColor="@color/black"
+            android:textSize="12sp"
+            app:layout_constraintEnd_toEndOf="@+id/iv_ListAddFirst_sticker3"
+            app:layout_constraintStart_toStartOf="@+id/iv_ListAddFirst_sticker3"
+            app:layout_constraintTop_toBottomOf="@+id/iv_ListAddFirst_sticker3" />
+
+        <TextView
+            android:id="@+id/tv_ListAddFirst_sticker4_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:elevation="2dp"
+            android:maxLength="4"
+            android:text="스티커명"
+            android:textColor="@color/black"
+            android:textSize="12sp"
+            app:layout_constraintEnd_toEndOf="@+id/iv_ListAddFirst_sticker4"
+            app:layout_constraintStart_toStartOf="@+id/iv_ListAddFirst_sticker4"
+            app:layout_constraintTop_toBottomOf="@+id/iv_ListAddFirst_sticker4" />
+
+        <TextView
+            android:id="@+id/tv_ListAddFirst_sticker5_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:elevation="2dp"
+            android:maxLength="4"
+            android:text="스티커명"
+            android:textColor="@color/black"
+            android:textSize="12sp"
+            app:layout_constraintEnd_toEndOf="@+id/iv_ListAddFirst_sticker5"
+            app:layout_constraintStart_toStartOf="@+id/iv_ListAddFirst_sticker5"
+            app:layout_constraintTop_toBottomOf="@+id/iv_ListAddFirst_sticker5" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

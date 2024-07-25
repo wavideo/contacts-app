@@ -64,6 +64,19 @@ class ContactListFragment : Fragment() {
             }
         }
 
+        adapter.itemClick2 = object : ContactListAdapter.ItemClick2 {
+            override fun onClick(view: View, position: Int) {
+                val dataToSend = position
+                val fragmentListAddFirstSticker = ListAddFirstStickerFragment.newInstance(dataToSend.toString())
+//                Toast.makeText(binding.root.context, "새 스티커를 추가합니다.", Toast.LENGTH_SHORT).show()
+                requireActivity().supportFragmentManager.beginTransaction()
+                    .replace(R.id.frameLayout, fragmentListAddFirstSticker)
+                    .addToBackStack(null)
+                    .commit()
+            }
+        }
+
+
         // 연락처 추가 intent
         binding.addFriend.setOnClickListener {
             val intent_addFriend = Intent(requireContext(), AddFriendActivity::class.java)

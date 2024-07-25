@@ -18,10 +18,15 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
+import android.widget.ImageView
+import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AlertDialog
 import androidx.core.view.isVisible
+import androidx.lifecycle.findViewTreeViewModelStoreOwner
+import com.example.nugo.databinding.DialogEditStickerNumberBinding
 import androidx.fragment.app.setFragmentResultListener
 import com.example.nugo.databinding.FragmentContactDetailBinding
 import com.example.nugo.databinding.FragmentStickerDetailBinding
@@ -32,6 +37,8 @@ private const val ARG_PARAM1 = "param1"
 class ContactDetailFragment : Fragment() {
     private var param1: String? = null
 //    private var param2: String? = null
+
+    private var editStickerCountNumber: Int = 99
 
     private val binding by lazy { FragmentContactDetailBinding.inflate(layoutInflater) }
 
@@ -173,6 +180,10 @@ class ContactDetailFragment : Fragment() {
                 updateStickerNum(i)
             }
 
+            editStickerCountNumber = 0
+            showCustomDialog()
+            true
+
         }
 
         for (i in 0..4) {
@@ -276,6 +287,93 @@ class ContactDetailFragment : Fragment() {
         } else {
             MediaStore.Images.Media.getBitmap(requireActivity().contentResolver, uri)
         }
+    }
+
+    private fun showCustomDialog(){
+        val dialogView = LayoutInflater.from(binding.root.context).inflate(R.layout.dialog_edit_sticker_number, null)
+        val ivStickerIcon = dialogView.findViewById<ImageView>(R.id.iv_dialog_sticker_icon)
+        val btnMinus = dialogView.findViewById<Button>(R.id.btn_minus)
+        val btnPlus = dialogView.findViewById<Button>(R.id.btn_plus)
+        val tvCount = dialogView.findViewById<TextView>(R.id.tv_editted_count)
+
+//        when (editStickerCountNumber) {
+//            0 -> count = ContactManager.Contacts[param1!!.toInt()].sticker0.toString().toInt()
+//            1 -> count = ContactManager.Contacts[param1!!.toInt()].sticker1.toString().toInt()
+//            2 -> count = ContactManager.Contacts[param1!!.toInt()].sticker2.toString().toInt()
+//            3 -> count = ContactManager.Contacts[param1!!.toInt()].sticker3.toString().toInt()
+//            4 -> count = ContactManager.Contacts[param1!!.toInt()].sticker4.toString().toInt()
+//        }
+
+        // 다이얼로그의 스티커 아이콘 설정
+        when (editStickerCountNumber) {
+            0 -> ivStickerIcon.setImageResource(StickerManager.stickers[0].findDrawable())
+            1 -> ivStickerIcon.setImageResource(StickerManager.stickers[1].findDrawable())
+            2 -> ivStickerIcon.setImageResource(StickerManager.stickers[2].findDrawable())
+            3 -> ivStickerIcon.setImageResource(StickerManager.stickers[3].findDrawable())
+            4 -> ivStickerIcon.setImageResource(StickerManager.stickers[4].findDrawable())
+        }
+
+        // 다이얼로그의 초기 카운트 값 설정
+        when (editStickerCountNumber) {
+            0 -> tvCount.text = ContactManager.Contacts[param1!!.toInt()].sticker0.toString()
+            1 -> tvCount.text = ContactManager.Contacts[param1!!.toInt()].sticker1.toString()
+            2 -> tvCount.text = ContactManager.Contacts[param1!!.toInt()].sticker2.toString()
+            3 -> tvCount.text = ContactManager.Contacts[param1!!.toInt()].sticker3.toString()
+            4 -> tvCount.text = ContactManager.Contacts[param1!!.toInt()].sticker4.toString()
+        }
+
+        var count2 = tvCount.text.toString().toInt()
+
+        // 빼기 버튼 클릭 시 동작
+        btnMinus.setOnClickListener{
+            if (count2 > 0) {
+                count2 -= 1
+                tvCount.text = count2.toString()
+            }
+        }
+        // 더하기 버튼 클릭 시 동작
+        btnPlus.setOnClickListener{
+            if (count2 < 100) {
+                count2 += 1
+                tvCount.text = count2.toString()
+            }
+        }
+
+        val dialogBuilder = AlertDialog.Builder(binding.root.context)
+            .setView(dialogView)
+            .setPositiveButton("확인") { dialog, _ ->
+                when (editStickerCountNumber) {
+                    0 -> {
+                        ContactManager.Contacts[param1!!.toInt()].sticker0 = tvCount.text.toString().toInt()
+                        binding.ivDetailSticker1Count.text = ContactManager.Contacts[param1!!.toInt()].sticker0.toString()
+                    }
+                    1 -> {
+                        ContactManager.Contacts[param1!!.toInt()].sticker1 = tvCount.text.toString().toInt()
+                        binding.ivDetailSticker2Count.text = ContactManager.Contacts[param1!!.toInt()].sticker1.toString()
+                    }
+                    2 -> {
+                        ContactManager.Contacts[param1!!.toInt()].sticker2 = tvCount.text.toString().toInt()
+                        binding.ivDetailSticker3Count.text = ContactManager.Contacts[param1!!.toInt()].sticker2.toString()
+                    }
+                    3 -> {
+                        ContactManager.Contacts[param1!!.toInt()].sticker3 = tvCount.text.toString().toInt()
+                        binding.ivDetailSticker4Count.text = ContactManager.Contacts[param1!!.toInt()].sticker3.toString()
+                    }
+                    4 -> {
+                        ContactManager.Contacts[param1!!.toInt()].sticker4 = tvCount.text.toString().toInt()
+                        binding.ivDetailSticker5Count.text = ContactManager.Contacts[param1!!.toInt()].sticker4.toString()
+                    }
+                }
+                dialog.dismiss()
+            }
+            .setNegativeButton("취소") { dialog, _ ->
+                dialog.dismiss()
+            }
+
+        val dialog = dialogBuilder.create()
+        dialog.show()
+
+
     }
 
 }
