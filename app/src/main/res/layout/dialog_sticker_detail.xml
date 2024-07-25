@@ -1,87 +1,117 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:layout_gravity="center"
-    android:minHeight="600dp">
+    android:background="@drawable/shape_rectangle_radius_12"
+    android:backgroundTint="@color/white"
+    android:clipToOutline="true"
+    android:minWidth="360dp"
+    android:minHeight="400dp">
 
     <TextView
         android:id="@+id/txt_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="32dp"
-        android:layout_marginTop="32dp"
+        android:layout_marginStart="@dimen/horizontal_margin_big"
+        android:layout_marginTop="@dimen/horizontal_margin_big"
         android:text="스티커"
-        android:textColor="@color/black"
-        android:textSize="24sp"
+        android:textSize="22dp"
+        android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+
+    <ImageView
+        android:id="@+id/iv_ic_close"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:layout_marginEnd="@dimen/horizontal_margin_big"
+        android:src="@drawable/ic_close"
+        android:tint="@color/gray_a"
+        app:layout_constraintBottom_toBottomOf="@+id/txt_title"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/txt_title" />
+
 
     <TextView
         android:id="@+id/txt_subtitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="40dp"
+        android:layout_marginTop="@dimen/horizontal_margin_big"
         android:text="스티커 이름"
-        android:textColor="@color/black"
-        android:textSize="20sp"
+        android:textSize="@dimen/object_text"
         app:layout_constraintStart_toStartOf="@id/txt_title"
         app:layout_constraintTop_toBottomOf="@id/txt_title" />
 
     <EditText
         android:id="@+id/txt_subtitle_name"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:layout_marginTop="20dp"
-        android:layout_marginStart="32dp"
-        android:layout_marginEnd="32dp"
-        android:background="#F0F0F0"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/vertical_margin"
+        android:layout_marginEnd="@dimen/horizontal_margin_big"
+        android:background="@drawable/shape_rectangle_radius_12"
+        android:backgroundTint="@color/background_basic"
         android:gravity="center_vertical"
+        android:paddingHorizontal="14dp"
+        android:paddingVertical="12dp"
         android:text="스티커 이름"
-        android:textSize="18sp"
-        app:layout_constraintStart_toStartOf="@id/txt_subtitle"
+        android:textColor="@color/gray_a"
+        android:textSize="@dimen/btn_text"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@id/txt_title"
         app:layout_constraintTop_toBottomOf="@id/txt_subtitle" />
 
     <TextView
         android:id="@+id/txt_icon_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="@dimen/horizontal_margin_big"
         android:text="아이콘"
-        android:textColor="@color/black"
-        android:textSize="20sp"
-        app:layout_constraintStart_toStartOf="@id/txt_subtitle"
+        android:textSize="@dimen/object_text"
+        app:layout_constraintStart_toStartOf="@id/txt_title"
         app:layout_constraintTop_toBottomOf="@id/txt_subtitle_name" />
 
 
     <!--GirdItemAdapter랑 연결(은혜)-->
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_sticker_list"
-        android:layout_width="match_parent"
-        android:layout_height="150dp"
-        android:layout_marginVertical="20dp"
-        android:layout_marginStart="32dp"
-        android:layout_marginEnd="32dp"
+        android:layout_width="0dp"
+        android:layout_height="200dp"
+        android:layout_marginHorizontal="@dimen/horizontal_margin_big"
+        android:layout_marginVertical="@dimen/horizontal_margin_big"
         app:layoutManager="GridLayoutManager"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/txt_icon_title"
-        app:spanCount="5" />
+        app:spanCount="5"
+        tools:itemCount="35"
+        tools:listitem="@layout/item_grid" />
 
-    <Button
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/btn_edit"
-        android:backgroundTint="#658FFE"
-        android:text="수정 완료"
-        android:textSize="20sp"
-        android:textStyle="bold"
-        android:textColor="@color/white"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
+        android:layout_width="0dp"
+        android:layout_height="60dp"
+        android:layout_marginTop="@dimen/horizontal_margin_big"
+        android:background="@color/blue"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/rv_sticker_list"
-        />
+        app:layout_constraintTop_toBottomOf="@+id/rv_sticker_list">
 
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="수정 완료"
+            android:textColor="@color/white"
+            android:textSize="@dimen/btn_text"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

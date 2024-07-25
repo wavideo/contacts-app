@@ -1,13 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical"
-    android:padding="8dp">
+    android:paddingVertical="10dp"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <ImageView
         android:id="@+id/iv_sticker_griditem"
-        android:layout_width="match_parent"
+        android:layout_width="50dp"
         android:layout_height="50dp"
-        android:scaleType="centerCrop" />
-</LinearLayout>
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:src="@drawable/imoge01_thumbsup"
+        android:padding="8dp"
+        android:background="@drawable/shape_circle_background"
+        android:backgroundTint="#C7D3F3" />
+</androidx.constraintlayout.widget.ConstraintLayout>
