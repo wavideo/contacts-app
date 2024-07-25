@@ -14,6 +14,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.setFragmentResultListener
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.nugo.databinding.FragmentStickerListBinding
 
@@ -64,6 +65,11 @@ class StickerListFragment : Fragment() {
                 // StickerDetailFragment로 넘어가야합니다
 
                 if (StickerManager.stickers[position].isDelete==true){
+                        val fragment = NewStickerDialogueFragment.newInstance(position)
+                        requireActivity().supportFragmentManager.beginTransaction()
+                            .replace(R.id.cv_popup_container, fragment)
+                            .addToBackStack(null)
+                            .commit()
 
                 } else {
                     val fragment = StickerDetailFragment.newInstance(position)
@@ -73,7 +79,9 @@ class StickerListFragment : Fragment() {
                         .addToBackStack(null)
                         .commit()
                 }
-
+                setFragmentResultListener("dataSend") { key, bundle ->
+                    stickerAdapter.updateData(StickerManager.stickers)
+                }
             }
         }
 

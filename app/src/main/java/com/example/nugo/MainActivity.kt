@@ -15,11 +15,11 @@ import androidx.fragment.app.commit
 import com.example.nugo.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
-
-    private val binding by lazy { ActivityMainBinding.inflate(layoutInflater) }
+    private lateinit var binding:ActivityMainBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         binding.apply {
@@ -42,6 +42,10 @@ class MainActivity : AppCompatActivity() {
             setReorderingAllowed(true)
             addToBackStack("")
         }
+    }
+
+    fun getBinding():ActivityMainBinding{
+        return binding
     }
 
 }

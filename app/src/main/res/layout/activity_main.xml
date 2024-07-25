@@ -21,11 +21,12 @@
 
 
 
-    <Button
+    <TextView
         android:id="@+id/fragment1_btn"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
+        android:gravity="center"
         android:text="목록"
         android:textSize="20dp"
         android:textAllCaps="false"
@@ -36,10 +37,11 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/frameLayout" />
 
-    <Button
+    <TextView
         android:id="@+id/fragment2_btn"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:gravity="center"
         android:layout_margin="10dp"
         android:text="스티커"
         android:textSize="20dp"
@@ -50,6 +52,11 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/fragment1_btn"
         app:layout_constraintTop_toBottomOf="@+id/frameLayout" />
+
+    <androidx.fragment.app.FragmentContainerView
+        android:id="@+id/cv_popup_container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

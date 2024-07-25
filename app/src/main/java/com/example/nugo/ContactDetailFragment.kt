@@ -22,6 +22,7 @@ import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AlertDialog
 import androidx.core.view.isVisible
+import androidx.fragment.app.setFragmentResultListener
 import com.example.nugo.databinding.FragmentContactDetailBinding
 import com.example.nugo.databinding.FragmentStickerDetailBinding
 
@@ -142,90 +143,60 @@ class ContactDetailFragment : Fragment() {
                 count.isVisible = true
             }
         }
+        fun stickerClickListener(i: Int) {
+            fun stickerPlus(){
+                when(i) {
+                    0 -> myContact.sticker0++
+                    1 -> myContact.sticker1++
+                    2 -> myContact.sticker2++
+                    3 -> myContact.sticker3++
+                    else -> myContact.sticker4++
+                }
+            }
+            val mySticker = StickerManager.stickers[i]
+            if (mySticker.isDelete == true) {
+
+                val fragment = NewStickerDialogueFragment.newInstance(i)
+                requireActivity().supportFragmentManager.beginTransaction()
+                    .replace(R.id.cv_popup_container, fragment)
+                    .addToBackStack(null)
+                    .commit()
+                setFragmentResultListener("dataSend") { key, bundle ->
+                    stickerPlus()
+                    myContact.recentSticker = i
+                    updateStickerNum(i)
+                }
+
+            } else {
+                stickerPlus()
+                myContact.recentSticker = i
+                updateStickerNum(i)
+            }
+
+        }
 
         for (i in 0..4) {
             updateStickerNum(i)
         }
 
+
         binding.ivDetailSticker1.setOnClickListener {
-            val mySticker = StickerManager.stickers[0]
-            if (mySticker.isDelete == true) {
-                mySticker.name = "수정테스트"
-                mySticker.icon = 3
-                mySticker.isDelete = false
-                myContact.sticker0++
-                myContact.recentSticker = 0
-                updateStickerNum(0)
-            } else {
-                myContact.sticker0++
-                myContact.recentSticker = 0
-                updateStickerNum(0)
-            }
+            stickerClickListener(0)
         }
-
         binding.ivDetailSticker2.setOnClickListener {
-            val mySticker = StickerManager.stickers[1]
-            if (mySticker.isDelete == true) {
-                mySticker.name = "수정테스트"
-                mySticker.icon = 33
-                mySticker.isDelete = false
-                myContact.sticker1++
-                myContact.recentSticker = 1
-                updateStickerNum(1)
-            } else {
-                myContact.sticker1++
-                myContact.recentSticker = 1
-                updateStickerNum(1)
-            }
+            stickerClickListener(1)
         }
-
         binding.ivDetailSticker3.setOnClickListener {
-            val mySticker = StickerManager.stickers[2]
-            if (mySticker.isDelete == true) {
-                mySticker.name = "수정테스트"
-                mySticker.icon = 33
-                mySticker.isDelete = false
-                myContact.sticker2++
-                myContact.recentSticker = 2
-                updateStickerNum(2)
-            } else {
-                myContact.sticker2++
-                myContact.recentSticker = 2
-                updateStickerNum(2)
-            }
+            stickerClickListener(2)
         }
-
         binding.ivDetailSticker4.setOnClickListener {
-            val mySticker = StickerManager.stickers[3]
-            if (mySticker.isDelete == true) {
-                mySticker.name = "수정테스트"
-                mySticker.icon = 33
-                mySticker.isDelete = false
-                myContact.sticker3++
-                myContact.recentSticker = 3
-                updateStickerNum(3)
-            } else {
-                myContact.sticker3++
-                myContact.recentSticker = 3
-                updateStickerNum(3)
-            }
+            stickerClickListener(3)
+        }
+        binding.ivDetailSticker5.setOnClickListener {
+            stickerClickListener(4)
         }
 
-        binding.ivDetailSticker5.setOnClickListener {
-            val mySticker = StickerManager.stickers[4]
-            if (mySticker.isDelete == true) {
-                mySticker.name = "수정테스트"
-                mySticker.icon = 33
-                mySticker.isDelete = false
-                myContact.sticker4++
-                myContact.recentSticker = 4
-                updateStickerNum(4)
-            } else {
-                myContact.sticker4++
-                myContact.recentSticker = 4
-                updateStickerNum(4)
-            }
-        }
+
 
         binding.ivDetailProfile.setImageBitmap(ContactManager.Contacts[position].photo)
 
@@ -257,26 +228,11 @@ class ContactDetailFragment : Fragment() {
             binding.ivDetailEdit.visibility = View.GONE
             binding.ivDetailSave.visibility = View.VISIBLE
 
-//            binding.ivDetailPhotoDelete.visibility = View.VISIBLE
             binding.ivDetailPhotoEdit.visibility = View.VISIBLE
 
             binding.etDetailName.isEnabled = true
             binding.etDetailNumber.isEnabled = true
             binding.etDetailEmail.isEnabled = true
-
-            // 사진 삭제 버튼
-//            binding.ivDetailPhotoDelete.setOnClickListener {
-//                AlertDialog.Builder(this.requireContext())
-//                    .setMessage("사진을 삭제하시겠습니까?")
-//                    .setPositiveButton("확인") { dialog, which ->
-//                        binding.ivDetailProfile.setImageBitmap(sampleBitmap)
-//                        ContactManager.Contacts[position].photo = sampleBitmap
-//                        binding.ivDetailAvatar.visibility = View.VISIBLE
-//                    }
-//                    .setNegativeButton("취소") { dialog, which ->
-//                    }
-//                    .show()
-//            }
 
             // 사진 추가 버튼
             binding.ivDetailPhotoEdit.setOnClickListener {
@@ -306,23 +262,6 @@ class ContactDetailFragment : Fragment() {
                 binding.etDetailEmail.isEnabled = false
             }
         }
-
-        // 스티커 클릭 시 +1, 롱클릭 시 -1
-        // 삭제하기 버튼
-//        binding.btnDetailDelete.setOnClickListener {
-//            AlertDialog.Builder(this.requireContext())
-//                .setMessage("연락처를 삭제하시겠습니까?")
-//                .setPositiveButton("확인") { dialog, which ->
-//                    ContactManager.delete(ContactManager.Contacts[position].name.toString())
-//                    requireActivity().supportFragmentManager.beginTransaction()
-//                        .replace(R.id.frameLayout, ContactListFragment())
-//                        .addToBackStack(null)
-//                        .commit()
-//                }
-//                .setNegativeButton("취소") { dialog, which ->
-//                }
-//                .show()
-//        }
 
     }
 

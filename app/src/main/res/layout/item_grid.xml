@@ -16,5 +16,5 @@
         android:src="@drawable/imoge01_thumbsup"
         android:padding="8dp"
         android:background="@drawable/shape_circle_background"
-        android:backgroundTint="#C7D3F3" />
+        android:backgroundTint="#00C7D3F3" />
 </androidx.constraintlayout.widget.ConstraintLayout>

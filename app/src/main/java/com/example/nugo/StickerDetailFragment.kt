@@ -15,6 +15,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AlertDialog
+import androidx.fragment.app.setFragmentResultListener
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.nugo.databinding.FragmentStickerDetailBinding
 
@@ -91,7 +92,6 @@ class StickerDetailFragment : Fragment() {
             override fun onClick(view: View, position: Int) {
 
                 val myIndex = ContactManager.Contacts.indexOf(ContactOfStickers[position])
-                Log.i("문제", "$myIndex")
 
                 val fragment = ContactDetailFragment.newInstance(myIndex.toString())
                 requireActivity().supportFragmentManager.beginTransaction()
@@ -106,7 +106,14 @@ class StickerDetailFragment : Fragment() {
         }
 
         binding.tvBtnEdit.setOnClickListener {
-            StickerManager.stickers[stickerIndex].edit("수정완료", 4)
+            val fragment = NewStickerDialogueFragment.newInstance(stickerIndex)
+            requireActivity().supportFragmentManager.beginTransaction()
+                .replace(R.id.cv_popup_container, fragment)
+                .addToBackStack(null)
+                .commit()
+        }
+
+        setFragmentResultListener("dataSend") { key, bundle ->
             binding.tvTitle.text = StickerManager.stickers[stickerIndex].name
             binding.ivStickerIcon.setImageResource(StickerManager.stickers[stickerIndex].findDrawable())
             adapter.updateData(ContactOfStickers)

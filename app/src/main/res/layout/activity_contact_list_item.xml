@@ -36,7 +36,7 @@
             android:id="@+id/tv_name"
             android:layout_width="wrap_content"
             android:layout_height="30dp"
-            android:text="정호정 팀원"
+            android:text="친구 이름"
             android:textSize="@dimen/object_text"
             app:layout_constraintBottom_toTopOf="@+id/rv_sticker_mini"
             app:layout_constraintStart_toStartOf="parent"

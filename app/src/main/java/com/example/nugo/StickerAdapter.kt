@@ -9,7 +9,7 @@ import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
 import com.example.nugo.databinding.ItemStickerBinding
 
-class StickerAdapter (val items:MutableList<StickerData>) :RecyclerView.Adapter<StickerAdapter.Holder>(){
+class StickerAdapter (var items:MutableList<StickerData>) :RecyclerView.Adapter<StickerAdapter.Holder>(){
         inner class Holder (val binding: ItemStickerBinding):RecyclerView.ViewHolder(binding.root){
             val ivStickerIcon = binding.ivStickerIcon
             val tvStickerName = binding.tvStickerName
@@ -67,6 +67,11 @@ class StickerAdapter (val items:MutableList<StickerData>) :RecyclerView.Adapter<
             holder.clStickerBackground.backgroundTintList = ContextCompat.getColorStateList(holder.itemView.getContext(), R.color.white);
         }
 
+    }
+
+    fun updateData(newItems: MutableList<StickerData>){
+        items = newItems
+        notifyDataSetChanged()
     }
 
 }
