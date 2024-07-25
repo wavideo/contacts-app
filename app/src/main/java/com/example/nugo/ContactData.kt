@@ -23,10 +23,10 @@ fun createSampleBitmap(): Bitmap {
     val canvas = Canvas(bitmap)
     val paint = Paint()
 
-    paint.color = R.color.white
+    paint.color = Color.WHITE
     canvas.drawCircle(500f, 450f, 150f, paint)
 
-    paint.color = R.color.white
+    paint.color = Color.WHITE
     val path = android.graphics.Path()
     path.addCircle(500f, 1000f, 350f, Path.Direction.CCW)
     canvas.drawPath(path, paint)
@@ -111,7 +111,7 @@ object ContactManager {
     val sampleBitmap = createSampleBitmap()
 
     // 데이터 리스트입니다. ContactManager.Contacts[0] 으로 n번째 연락처를 호출할 수 있습니다
-    val Contacts = mutableListOf<ContactData>()
+    var Contacts = mutableListOf<ContactData>()
 
     /*앱에 넣어둘 더미데이터입니다.
     MainActivity 상단에 ContactManager.loading()으로 더미데이터를 등록해주세요 */
@@ -168,5 +168,9 @@ object ContactManager {
             }
             context.startActivity(intentMessage)
         }
+    }
+
+    fun getData(): MutableList<ContactData> {
+        return Contacts
     }
 }

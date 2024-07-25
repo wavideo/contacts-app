@@ -89,6 +89,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/top_view">
 
+
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/cl_sticker_list_radius"
             android:layout_width="match_parent"

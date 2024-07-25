@@ -9,9 +9,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContentProviderCompat.requireContext
+import androidx.core.content.ContextCompat
 import androidx.core.graphics.alpha
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
@@ -45,7 +47,7 @@ class ContactListAdapter(
                     contact.name
                 ) // 해당 연락처의 번호로 통화 (binding.root.context, contact.name을 불러와야한다)
             }
-            ivStickerRecently
+
         }
     }
 
@@ -53,10 +55,15 @@ class ContactListAdapter(
         fun onClick(view: View, position: Int)
     }
 
+    interface ItemClick2 {
+        fun onClick(view: View, position: Int)
+    }
+
 
     var myStickers = mutableListOf<StickerData>()
 
     var itemClick: ItemClick? = null
+    var itemClick2 : ItemClick2? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): Holder {
         val binding = ActivityContactListItemBinding.inflate(
@@ -72,6 +79,7 @@ class ContactListAdapter(
         holder.itemView.setOnClickListener {
             itemClick?.onClick(it, position)
         }
+
         holder.ivProfile.setImageBitmap(contacts[position].photo)
 
         var recentIndex = contacts[position].recentSticker
@@ -88,6 +96,9 @@ class ContactListAdapter(
         if (recentStickerNum == 0){
             holder.ivStickerRecently.setImageResource(StickerManager.icons[0])
             holder.tvStickerRecently.isVisible = false
+            holder.ivStickerRecently.setOnClickListener{
+                itemClick2?.onClick(it, position)
+            }
         } else {
             holder.ivStickerRecently.setImageResource(recentSticker.findDrawable())
             holder.tvStickerRecently.isVisible = true
