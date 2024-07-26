@@ -58,7 +58,7 @@ class ContactListFragment : Fragment() {
                 val dataToSend = position
                 val fragmentContactDetail = ContactDetailFragment.newInstance(dataToSend.toString())
                 requireActivity().supportFragmentManager.beginTransaction()
-                    .replace(R.id.frameLayout, fragmentContactDetail)
+                    .replace(R.id.cv_contact_container, fragmentContactDetail)
                     .addToBackStack(null)
                     .commit()
             }
