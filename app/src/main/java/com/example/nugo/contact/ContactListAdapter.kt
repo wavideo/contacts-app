@@ -1,28 +1,16 @@
-package com.example.nugo
+package com.example.nugo.contact
 
-import android.content.ContentValues.TAG
-import android.graphics.BitmapFactory
-import android.os.Bundle
-import android.provider.ContactsContract.Contacts
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
-import android.widget.Toast
-import androidx.activity.enableEdgeToEdge
-import androidx.appcompat.app.AppCompatActivity
-import androidx.core.content.ContentProviderCompat.requireContext
-import androidx.core.content.ContextCompat
-import androidx.core.graphics.alpha
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.nugo.ContactManager.makeCall
+import com.example.nugo.R
+import com.example.nugo.sticker.StickerData
+import com.example.nugo.sticker.StickerManager
 import com.example.nugo.databinding.ActivityContactListItemBinding
-import com.example.nugo.databinding.FragmentContactListBinding
 
 class ContactListAdapter(
     private var contacts: List<ContactData>
@@ -42,7 +30,7 @@ class ContactListAdapter(
             ivCall.setOnClickListener {
                 // 클릭 시 통화
                 val contact = contacts[adapterPosition] // contacts의 연락처 가져오기
-                makeCall(
+                ContactManager.makeCall(
                     binding.root.context,
                     contact.name
                 ) // 해당 연락처의 번호로 통화 (binding.root.context, contact.name을 불러와야한다)
@@ -111,13 +99,16 @@ class ContactListAdapter(
                     3 -> holder.tvStickerRecently.text = (++contacts[position].sticker3).toString()
                     else -> holder.tvStickerRecently.text = (++contacts[position].sticker4).toString()
                 }
+
+
             }
         }
 
         val copyStickers = StickerManager.stickers.toMutableList()
         val adapter = ContactListStickerMiniAdapter(copyStickers, position)
         holder.rvStickerMini.adapter = adapter
-        holder.rvStickerMini.layoutManager = LinearLayoutManager(holder.rvStickerMini.context, LinearLayoutManager.HORIZONTAL, false)
+        holder.rvStickerMini.layoutManager =
+            LinearLayoutManager(holder.rvStickerMini.context, LinearLayoutManager.HORIZONTAL, false)
     }
 
     override fun getItemCount(): Int {

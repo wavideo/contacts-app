@@ -2,16 +2,13 @@ package com.example.nugo
 
 import android.content.res.ColorStateList
 import android.graphics.Color
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
-import androidx.core.os.bundleOf
-import androidx.fragment.app.setFragmentResult
-import androidx.fragment.app.setFragmentResultListener
 import androidx.recyclerview.widget.RecyclerView
 import com.example.nugo.databinding.ItemGridBinding
+import com.example.nugo.sticker.NewStickerDialogueFragment
+import com.example.nugo.sticker.StickerManager
 
 class GridItemAdapter(val iconPickers: MutableList<NewStickerDialogueFragment.IconPicker>, var sellectIconImg: Int) :
     RecyclerView.Adapter<GridItemAdapter.Holder>() {

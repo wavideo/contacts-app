@@ -1,24 +1,28 @@
-package com.example.nugo
+package com.example.nugo.contact
 
-import android.icu.text.Transliterator.Position
 import android.view.LayoutInflater
-import android.view.View.GONE
-import android.view.View.VISIBLE
+import android.view.View
 import android.view.ViewGroup
-import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
-import com.example.nugo.databinding.ItemContactWithStickerBinding
+import com.example.nugo.sticker.StickerData
+import com.example.nugo.sticker.StickerManager
 import com.example.nugo.databinding.ItemStickerForContactListMiniBinding
 
-class ContactListStickerMiniAdapter(val items: MutableList<StickerData>, val parentPosition :Int):RecyclerView.Adapter<ContactListStickerMiniAdapter.Holder>() {
-    inner class Holder (val binding : ItemStickerForContactListMiniBinding, parentPosition :Int):RecyclerView.ViewHolder(binding.root){
+class ContactListStickerMiniAdapter(val items: MutableList<StickerData>, val parentPosition :Int):
+    RecyclerView.Adapter<ContactListStickerMiniAdapter.Holder>() {
+    inner class Holder (val binding : ItemStickerForContactListMiniBinding, parentPosition :Int):
+        RecyclerView.ViewHolder(binding.root){
         val img = binding.ivSticker
         val text = binding.tvSticker
         val box = binding.clBox
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): Holder {
-        var binding = ItemStickerForContactListMiniBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        var binding = ItemStickerForContactListMiniBinding.inflate(
+            LayoutInflater.from(parent.context),
+            parent,
+            false
+        )
         return Holder(binding, parentPosition)
     }
 
@@ -34,7 +38,7 @@ class ContactListStickerMiniAdapter(val items: MutableList<StickerData>, val par
 
         holder.img.setImageResource(StickerManager.stickers[position].findDrawable())
 
-        val myContact = ContactManager.Contacts[parentPosition]
+        val myContact = ContactManager.contacts[parentPosition]
         val mySticker = StickerManager.stickers[position]
         val myStickerNum = when (position){
             0 -> myContact.sticker0
@@ -46,10 +50,10 @@ class ContactListStickerMiniAdapter(val items: MutableList<StickerData>, val par
 
         fun checkStickerNum(){
             if (myStickerNum != 0 && mySticker.isDelete == false && position != myContact.recentSticker) {
-                holder.itemView.visibility = VISIBLE
+                holder.itemView.visibility = View.VISIBLE
                 holder.box.maxWidth = 10000
             } else {
-                holder.itemView.visibility = GONE
+                holder.itemView.visibility = View.GONE
                 holder.box.maxWidth = 0
             }
         }

@@ -1,4 +1,6 @@
-package com.example.nugo
+package com.example.nugo.sticker
+
+import com.example.nugo.R
 
 /* [ 김은택 파트 ]
 스티커에 대한 data class 입니다*/

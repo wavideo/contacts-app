@@ -12,12 +12,11 @@ import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
+import com.example.nugo.contact.ContactData
+import com.example.nugo.contact.ContactManager
+import com.example.nugo.contact.sampleBitmap
 import com.example.nugo.databinding.ActivityAddFriendBinding
-import com.google.android.material.navigation.NavigationBarView.OnItemSelectedListener
 
 class AddFriendActivity : AppCompatActivity() {
 
@@ -66,7 +65,7 @@ class AddFriendActivity : AppCompatActivity() {
 //        }
 
         var numberList = mutableListOf<String>()
-        for (i in ContactManager.Contacts){
+        for (i in ContactManager.contacts){
             numberList.add(i.number)
         }
 
@@ -106,7 +105,7 @@ class AddFriendActivity : AppCompatActivity() {
                 // onCreate() 안에서 lateinit 변수 초기화해줘야 함.
                 user = ContactData(name_, number_, email_)
                 // 데이터에 신규 연락처 정보 추가, 리스트 맨 위에 표시
-                ContactManager.Contacts.add(0, user)
+                ContactManager.contacts.add(0, user)
                 numberList.add(user.number)
                 binding?.ivAddFriendProfile?.setImageBitmap(sampleBitmap)
                 finish()

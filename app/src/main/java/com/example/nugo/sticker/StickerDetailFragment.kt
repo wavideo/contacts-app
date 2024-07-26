@@ -1,4 +1,4 @@
-package com.example.nugo
+package com.example.nugo.sticker
 
 /* [ 김은택 파트 ]
 스티커 상세정보에 대한 Fragment 입니다
@@ -9,7 +9,6 @@ package com.example.nugo
 3. 연락처 상세정보 (ContactDetailFragment)로 선택한 연락처를 넘겨줍니다*/
 
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -17,6 +16,11 @@ import android.view.ViewGroup
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.setFragmentResultListener
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.nugo.contact.ContactData
+import com.example.nugo.contact.ContactManager
+import com.example.nugo.R
+import com.example.nugo.contact.ContactDetailFragment
+import com.example.nugo.contact.ContactOfStickerAdapter
 import com.example.nugo.databinding.FragmentStickerDetailBinding
 
 // TODO: Rename parameter arguments, choose names that match
@@ -58,27 +62,27 @@ class StickerDetailFragment : Fragment() {
 
         when (stickerIndex) {
             0 -> {
-                ContactOfStickers.addAll(ContactManager.Contacts.filter { it.sticker0 != 0 })
+                ContactOfStickers.addAll(ContactManager.contacts.filter { it.sticker0 != 0 })
                 ContactOfStickers.sortByDescending { it.sticker0 }
             }
 
             1 -> {
-                ContactOfStickers.addAll(ContactManager.Contacts.filter { it.sticker1 != 0 })
+                ContactOfStickers.addAll(ContactManager.contacts.filter { it.sticker1 != 0 })
                 ContactOfStickers.sortByDescending { it.sticker1 }
             }
 
             2 -> {
-                ContactOfStickers.addAll(ContactManager.Contacts.filter { it.sticker2 != 0 })
+                ContactOfStickers.addAll(ContactManager.contacts.filter { it.sticker2 != 0 })
                 ContactOfStickers.sortByDescending { it.sticker2 }
             }
 
             3 -> {
-                ContactOfStickers.addAll(ContactManager.Contacts.filter { it.sticker3 != 0 })
+                ContactOfStickers.addAll(ContactManager.contacts.filter { it.sticker3 != 0 })
                 ContactOfStickers.sortByDescending { it.sticker3 }
             }
 
             else -> {
-                ContactOfStickers.addAll(ContactManager.Contacts.filter { it.sticker4 != 0 })
+                ContactOfStickers.addAll(ContactManager.contacts.filter { it.sticker4 != 0 })
                 ContactOfStickers.sortByDescending { it.sticker4 }
             }
         }
@@ -91,7 +95,7 @@ class StickerDetailFragment : Fragment() {
         adapter.itemClick = object : ContactOfStickerAdapter.ItemClick {
             override fun onClick(view: View, position: Int) {
 
-                val myIndex = ContactManager.Contacts.indexOf(ContactOfStickers[position])
+                val myIndex = ContactManager.contacts.indexOf(ContactOfStickers[position])
 
                 val fragment = ContactDetailFragment.newInstance(myIndex.toString())
                 requireActivity().supportFragmentManager.beginTransaction()
@@ -149,6 +153,10 @@ class StickerDetailFragment : Fragment() {
                 .setNegativeButton("취소") { dialog, which ->
                 }
                 .show()
+        }
+
+        setFragmentResultListener("dataSend") { key, bundle ->
+            adapter.updateData(ContactOfStickers)
         }
 
         StickerManager.detailPicker = stickerIndex

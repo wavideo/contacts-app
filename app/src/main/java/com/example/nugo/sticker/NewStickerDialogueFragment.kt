@@ -1,10 +1,6 @@
-package com.example.nugo
+package com.example.nugo.sticker
 
-import android.content.res.ColorStateList
-import android.graphics.Color
 import android.os.Bundle
-import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,8 +9,7 @@ import androidx.core.os.bundleOf
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.setFragmentResult
 import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
+import com.example.nugo.GridItemAdapter
 import com.example.nugo.databinding.FragmentNewStickerDialogueBinding
 
 // TODO: Rename parameter arguments, choose names that match

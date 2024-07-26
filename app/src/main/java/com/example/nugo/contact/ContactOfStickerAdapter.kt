@@ -1,16 +1,17 @@
-package com.example.nugo
+package com.example.nugo.contact
 
 import android.annotation.SuppressLint
-import android.view.GestureDetector
 import android.view.LayoutInflater
-import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.example.nugo.sticker.StickerDetailFragment
+import com.example.nugo.sticker.StickerManager
 import com.example.nugo.databinding.ItemContactWithStickerBinding
 
-class ContactOfStickerAdapter(val items:MutableList<ContactData>):RecyclerView.Adapter<ContactOfStickerAdapter.Holder>() {
-    inner class Holder(val binding : ItemContactWithStickerBinding) :RecyclerView.ViewHolder(binding.root){
+class ContactOfStickerAdapter(val items:MutableList<ContactData>):
+    RecyclerView.Adapter<ContactOfStickerAdapter.Holder>() {
+    inner class Holder(val binding : ItemContactWithStickerBinding) : RecyclerView.ViewHolder(binding.root){
         val tvName = binding.tvName
         val ivProfile = binding.ivProfile
         val ivStickerIcon = binding.ivStickerIcon
@@ -19,7 +20,11 @@ class ContactOfStickerAdapter(val items:MutableList<ContactData>):RecyclerView.A
         val ivIcClose = binding.ivIcClose
     }
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): Holder {
-        var binding = ItemContactWithStickerBinding.inflate(LayoutInflater.from(parent.context),parent,false)
+        var binding = ItemContactWithStickerBinding.inflate(
+            LayoutInflater.from(parent.context),
+            parent,
+            false
+        )
         return Holder(binding)
     }
 

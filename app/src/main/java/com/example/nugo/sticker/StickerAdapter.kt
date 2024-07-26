@@ -1,12 +1,13 @@
-package com.example.nugo
+package com.example.nugo.sticker
 
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
+import com.example.nugo.contact.ContactManager
+import com.example.nugo.R
 import com.example.nugo.databinding.ItemStickerBinding
 
 class StickerAdapter (var items:MutableList<StickerData>) :RecyclerView.Adapter<StickerAdapter.Holder>(){
@@ -47,11 +48,11 @@ class StickerAdapter (var items:MutableList<StickerData>) :RecyclerView.Adapter<
         }
 
         val filterContact = when(position){
-            0 -> ContactManager.Contacts.filter {it.sticker0!=0}
-            1 -> ContactManager.Contacts.filter {it.sticker1!=0}
-            2 -> ContactManager.Contacts.filter {it.sticker2!=0}
-            3 -> ContactManager.Contacts.filter {it.sticker3!=0}
-            else -> ContactManager.Contacts.filter {it.sticker4!=0}
+            0 -> ContactManager.contacts.filter {it.sticker0!=0}
+            1 -> ContactManager.contacts.filter {it.sticker1!=0}
+            2 -> ContactManager.contacts.filter {it.sticker2!=0}
+            3 -> ContactManager.contacts.filter {it.sticker3!=0}
+            else -> ContactManager.contacts.filter {it.sticker4!=0}
         }
 
         holder.ivStickerIcon.setImageResource(mySticker.findDrawable())
@@ -60,11 +61,15 @@ class StickerAdapter (var items:MutableList<StickerData>) :RecyclerView.Adapter<
 
         if (mySticker.isDelete == true) {
             holder.clContactSize.isVisible = false
-            holder.clStickerBackground.backgroundTintList = ContextCompat.getColorStateList(holder.itemView.getContext(), R.color.background_basic);
+            holder.clStickerBackground.backgroundTintList = ContextCompat.getColorStateList(holder.itemView.getContext(),
+                R.color.background_basic
+            );
 
         } else {
             holder.clContactSize.isVisible = true
-            holder.clStickerBackground.backgroundTintList = ContextCompat.getColorStateList(holder.itemView.getContext(), R.color.white);
+            holder.clStickerBackground.backgroundTintList = ContextCompat.getColorStateList(holder.itemView.getContext(),
+                R.color.white
+            );
         }
 
     }

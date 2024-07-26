@@ -6,9 +6,14 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.core.os.bundleOf
+import androidx.fragment.app.setFragmentResult
 import androidx.fragment.app.setFragmentResultListener
-import com.example.nugo.databinding.FragmentContactDetailBinding
+import com.example.nugo.contact.ContactListFragment
+import com.example.nugo.contact.ContactManager
 import com.example.nugo.databinding.FragmentListAddFirstStickerBinding
+import com.example.nugo.sticker.NewStickerDialogueFragment
+import com.example.nugo.sticker.StickerManager
 
 private const val ARG_PARAM1 = "param1"
 
@@ -33,7 +38,7 @@ class ListAddFirstStickerFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         var position = param1?.toInt()!!
-        val myContact = ContactManager.Contacts[position]
+        val myContact = ContactManager.contacts[position]
 
         // 닫기 버튼
         binding.ivCancel.setOnClickListener{
@@ -73,6 +78,11 @@ class ListAddFirstStickerFragment : Fragment() {
                     .replace(R.id.frameLayout, ContactListFragment())
                     .addToBackStack(null)
                     .commit()
+                val resultBundle = bundleOf("dataSend" to "dataSend")
+                setFragmentResult("dataSend", resultBundle)
+                requireActivity().onBackPressed()
+                requireActivity().onBackPressed()
+
             }
         }
 
@@ -85,6 +95,7 @@ class ListAddFirstStickerFragment : Fragment() {
                     .commit()
                 setFragmentResultListener("dataSend") { key, bundle ->
                     update()
+                    requireActivity().onBackPressed()
                 }
             } else {
                 myContact.recentSticker = 1
@@ -94,6 +105,11 @@ class ListAddFirstStickerFragment : Fragment() {
                     .replace(R.id.frameLayout, ContactListFragment())
                     .addToBackStack(null)
                     .commit()
+                val resultBundle = bundleOf("dataSend" to "dataSend")
+                setFragmentResult("dataSend", resultBundle)
+                requireActivity().onBackPressed()
+                requireActivity().onBackPressed()
+
             }
         }
 
@@ -115,6 +131,11 @@ class ListAddFirstStickerFragment : Fragment() {
                     .replace(R.id.frameLayout, ContactListFragment())
                     .addToBackStack(null)
                     .commit()
+                val resultBundle = bundleOf("dataSend" to "dataSend")
+                setFragmentResult("dataSend", resultBundle)
+                requireActivity().onBackPressed()
+                requireActivity().onBackPressed()
+
             }
         }
 
@@ -136,6 +157,11 @@ class ListAddFirstStickerFragment : Fragment() {
                     .replace(R.id.frameLayout, ContactListFragment())
                     .addToBackStack(null)
                     .commit()
+                val resultBundle = bundleOf("dataSend" to "dataSend")
+                setFragmentResult("dataSend", resultBundle)
+                requireActivity().onBackPressed()
+                requireActivity().onBackPressed()
+
             }
         }
 
@@ -157,6 +183,10 @@ class ListAddFirstStickerFragment : Fragment() {
                     .replace(R.id.frameLayout, ContactListFragment())
                     .addToBackStack(null)
                     .commit()
+                val resultBundle = bundleOf("dataSend" to "dataSend")
+                setFragmentResult("dataSend", resultBundle)
+                requireActivity().onBackPressed()
+                requireActivity().onBackPressed()
             }
         }
 
