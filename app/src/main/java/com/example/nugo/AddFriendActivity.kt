@@ -32,7 +32,7 @@ class AddFriendActivity : AppCompatActivity() {
         // 선택한 이미지를 ImageView에 저장
         val bitmap = uriToBitmap(it)
         binding?.ivAddFriendProfile?.setImageBitmap(bitmap)
-        user.photo = bitmap
+        photo_ = bitmap
     }
     }
 
@@ -48,7 +48,9 @@ class AddFriendActivity : AppCompatActivity() {
         // 사진 추가하기
         binding.ivAddFriendPhotoEdit.setOnClickListener{
             Toast.makeText(this, "갤러리에서 사진을 선택해주세요.", Toast.LENGTH_SHORT).show()
+            photo_ = sampleBitmap
             getImageFromGallery.launch("image/*")
+            user.photo = photo_
         }
 
         // 사진 삭제하기
@@ -102,11 +104,11 @@ class AddFriendActivity : AppCompatActivity() {
                 } else {
                     email_ = binding.etAddFriendEmail.text.toString()
                 }
-
                 // onCreate() 안에서 lateinit 변수 초기화해줘야 함.
                 user = ContactData(name_, number_, email_)
                 // 데이터에 신규 연락처 정보 추가, 리스트 맨 위에 표시
                 ContactManager.Contacts.add(0, user)
+                user.photo = photo_
                 numberList.add(user.number)
                 binding?.ivAddFriendProfile?.setImageBitmap(sampleBitmap)
                 finish()
