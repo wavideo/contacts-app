@@ -70,7 +70,7 @@ class ContactListFragment : Fragment() {
                 val fragmentListAddFirstSticker = ListAddFirstStickerFragment.newInstance(dataToSend.toString())
 //                Toast.makeText(binding.root.context, "새 스티커를 추가합니다.", Toast.LENGTH_SHORT).show()
                 requireActivity().supportFragmentManager.beginTransaction()
-                    .replace(R.id.frameLayout, fragmentListAddFirstSticker)
+                    .replace(R.id.cv_popup_container, fragmentListAddFirstSticker)
                     .addToBackStack(null)
                     .commit()
             }

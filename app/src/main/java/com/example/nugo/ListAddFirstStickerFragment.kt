@@ -37,10 +37,7 @@ class ListAddFirstStickerFragment : Fragment() {
 
         // 닫기 버튼
         binding.ivCancel.setOnClickListener{
-            requireActivity().supportFragmentManager.beginTransaction()
-                .replace(R.id.frameLayout, ContactListFragment())
-                .addToBackStack(null)
-                .commit()
+            requireActivity().onBackPressed()
         }
 
         fun update() {
