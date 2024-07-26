@@ -73,6 +73,8 @@ class ListAddFirstStickerFragment : Fragment() {
                     .replace(R.id.frameLayout, ContactListFragment())
                     .addToBackStack(null)
                     .commit()
+                requireActivity().onBackPressed()
+                requireActivity().onBackPressed()
             }
         }
 
@@ -94,6 +96,8 @@ class ListAddFirstStickerFragment : Fragment() {
                     .replace(R.id.frameLayout, ContactListFragment())
                     .addToBackStack(null)
                     .commit()
+                requireActivity().onBackPressed()
+                requireActivity().onBackPressed()
             }
         }
 
@@ -115,6 +119,8 @@ class ListAddFirstStickerFragment : Fragment() {
                     .replace(R.id.frameLayout, ContactListFragment())
                     .addToBackStack(null)
                     .commit()
+                requireActivity().onBackPressed()
+                requireActivity().onBackPressed()
             }
         }
 
@@ -136,6 +142,8 @@ class ListAddFirstStickerFragment : Fragment() {
                     .replace(R.id.frameLayout, ContactListFragment())
                     .addToBackStack(null)
                     .commit()
+                requireActivity().onBackPressed()
+                requireActivity().onBackPressed()
             }
         }
 
@@ -157,6 +165,8 @@ class ListAddFirstStickerFragment : Fragment() {
                     .replace(R.id.frameLayout, ContactListFragment())
                     .addToBackStack(null)
                     .commit()
+                requireActivity().onBackPressed()
+                requireActivity().onBackPressed()
             }
         }
 
