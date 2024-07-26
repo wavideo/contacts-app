@@ -22,7 +22,6 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
         StickerManager.loading()
-        ContactManager.loading()
         binding.viewpager.apply {
             adapter = MainPageradapter(context as FragmentActivity)
             TabLayoutMediator(binding.tabs, binding.viewpager) { tab, position ->

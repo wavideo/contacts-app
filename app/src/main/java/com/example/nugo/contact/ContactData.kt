@@ -1,13 +1,13 @@
 package com.example.nugo.contact
 
+import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.Canvas
 import android.graphics.Color
 import android.graphics.Paint
-import android.content.Intent // 안드로이드 Intent 임포트
-import android.net.Uri
-import android.content.Context
 import android.graphics.Path
+import android.os.Parcelable
+import kotlinx.parcelize.Parcelize
 
 /* [ 정호정 파트 ]
 연락처에 대한 data class 입니다*/
@@ -31,54 +31,19 @@ fun createSampleBitmap(): Bitmap {
 
 val sampleBitmap = createSampleBitmap()
 
+@Parcelize
 data class ContactData(
     var name: String,
     var number: String,
-    var email: String,
-    var sticker0: Int,
-    var sticker1: Int,
-    var sticker2: Int,
-    var sticker3: Int,
-    var sticker4: Int,
-    var recentSticker : Int,
-    var photo: Bitmap
-) {
-    constructor(name: String, number: String, email: String) : this(
-        name,
-        number,
-        email,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        sampleBitmap
-    )
-
-    constructor(
-        name: String,
-        number: String,
-        email: String,
-        sticker0: Int,
-        sticker1: Int,
-        sticker2: Int,
-        sticker3: Int,
-        sticker4: Int,
-        recentSticker: Int
-    ) : this(
-        name,
-        number,
-        email,
-        sticker0,
-        sticker1,
-        sticker2,
-        sticker3,
-        sticker4,
-        recentSticker,
-        sampleBitmap
-    )
-
+    var email: String = "",
+    var sticker0: Int = 0,
+    var sticker1: Int = 0,
+    var sticker2: Int = 0,
+    var sticker3: Int = 0,
+    var sticker4: Int = 0,
+    var recentSticker: Int = 0,
+    var photo: Bitmap = sampleBitmap
+) : Parcelable {
     // 연락처 인스턴스에 .stickerUp(3) 하면 스티커 등록 갯수가 1개 늘어납니다
     fun stickerUp(index: Int) {
         when (index) {
@@ -126,6 +91,7 @@ object ContactManager {
 //            //context를 통해 다이얼 시작
 //        }
     }
+
     fun makeSMS(context: Context, name: String) {
 //        val contact = contacts.find { it.name == name }
 //        contact?.let {

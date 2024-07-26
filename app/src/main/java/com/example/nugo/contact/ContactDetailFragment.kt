@@ -6,6 +6,7 @@ import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.provider.MediaStore
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -15,21 +16,22 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AlertDialog
+import androidx.core.os.bundleOf
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.setFragmentResultListener
 import com.example.nugo.sticker.NewStickerDialogueFragment
 import com.example.nugo.R
+import com.example.nugo.SharedViewModel
 import com.example.nugo.sticker.StickerManager
 import com.example.nugo.databinding.FragmentContactDetailBinding
 
 class ContactDetailFragment : Fragment() {
-    private var param1: String? = null
-//    private var param2: String? = null
-
-    private var editStickerCountNumber: Int = 99
-
     private val binding by lazy { FragmentContactDetailBinding.inflate(layoutInflater) }
+    private val viewModel by activityViewModels<SharedViewModel>()
+    private lateinit var contact: ContactData
+    private var editStickerCountNumber: Int = 99
 
     private val getImageFromGallery =
         registerForActivityResult(ActivityResultContracts.GetContent()) { uri: Uri? ->
@@ -38,14 +40,18 @@ class ContactDetailFragment : Fragment() {
 
                 val bitmap = uriToBitmap(it)
                 binding?.ivDetailProfile?.setImageBitmap(bitmap)
-                ContactManager.contacts[param1!!.toInt()].photo = bitmap
+                contact.photo = bitmap
             }
         }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
+            contact = it.getParcelable<ContactData>(ARG_DETAIL_DATA) ?: run {
+                Log.e(TAG, "contact is null")
+                parentFragmentManager.popBackStack()
+                return
+            }
         }
     }
 
@@ -57,85 +63,80 @@ class ContactDetailFragment : Fragment() {
     }
 
     companion object {
-
-        private val ARG_PARAM1 = "param1"
-        fun newInstance(param1: String) =
+        private const val TAG = "ContactDetail"
+        private const val ARG_DETAIL_DATA = "DETAIL_DATA"
+        fun newInstance(data: ContactData) =
             ContactDetailFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                }
+                arguments = bundleOf(ARG_DETAIL_DATA to data)
             }
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        var position = param1?.toInt()!!
-        val myContact = ContactManager.contacts[position]
-
-        binding.etDetailName.setText(myContact.name)
-        binding.tvDetailName.setText(myContact.name)
-        binding.etDetailNumber.setText(myContact.number)
-        binding.etDetailEmail.setText(myContact.email)
-        binding.ivDetailProfile.setImageBitmap(myContact.photo)
+        binding.etDetailName.setText(contact.name)
+        binding.tvDetailName.setText(contact.name)
+        binding.etDetailNumber.setText(contact.number)
+        binding.etDetailEmail.setText(contact.email)
+        binding.ivDetailProfile.setImageBitmap(contact.photo)
 
 
         for (i in 0..4) {
-            updateStickerNum(position, i)
+            updateStickerNum(i)
         }
 
 
         binding.ivDetailSticker1.setOnClickListener {
-            stickerClickListener(position, 0)
+            stickerClickListener(0)
         }
-        binding.ivDetailSticker1.setOnLongClickListener{
-            showCustomDialog(position,0)
+        binding.ivDetailSticker1.setOnLongClickListener {
+            showCustomDialog(0)
             true
         }
 
         binding.ivDetailSticker2.setOnClickListener {
-            stickerClickListener(position,1)
+            stickerClickListener(1)
         }
-        binding.ivDetailSticker2.setOnLongClickListener{
-            showCustomDialog(position,1)
+        binding.ivDetailSticker2.setOnLongClickListener {
+            showCustomDialog(1)
             true
         }
 
         binding.ivDetailSticker3.setOnClickListener {
-            stickerClickListener(position,2)
+            stickerClickListener(2)
         }
-        binding.ivDetailSticker3.setOnLongClickListener{
-            showCustomDialog(position,2)
+        binding.ivDetailSticker3.setOnLongClickListener {
+            showCustomDialog(2)
             true
         }
 
         binding.ivDetailSticker4.setOnClickListener {
-            stickerClickListener(position,3)
+            stickerClickListener(3)
         }
-        binding.ivDetailSticker4.setOnLongClickListener{
-            showCustomDialog(position, 3)
+        binding.ivDetailSticker4.setOnLongClickListener {
+            showCustomDialog(3)
             true
         }
 
         binding.ivDetailSticker5.setOnClickListener {
-            stickerClickListener(position,4)
+            stickerClickListener(4)
         }
-        binding.ivDetailSticker5.setOnLongClickListener{
-            showCustomDialog(position,4)
+        binding.ivDetailSticker5.setOnLongClickListener {
+            showCustomDialog(4)
             true
         }
 
 
 
-        binding.ivDetailProfile.setImageBitmap(ContactManager.contacts[position].photo)
+        binding.ivDetailProfile.setImageBitmap(contact.photo)
 
         // 통화 버튼
         binding.btnDetailCall.setOnClickListener {
-            ContactManager.makeCall(this.requireContext(), ContactManager.contacts[position].name)
+            ContactManager.makeCall(this.requireContext(), contact.name)
         }
 
         // 메시지 버튼
         binding.btnDetailMessage.setOnClickListener {
-            ContactManager.makeSMS(this.requireContext(), ContactManager.contacts[position].name)
+            ContactManager.makeSMS(this.requireContext(), contact.name)
         }
 
         // 뒤로가기 버튼
@@ -168,10 +169,10 @@ class ContactDetailFragment : Fragment() {
             }
 
             binding.ivDetailSave.setOnClickListener {
-                ContactManager.contacts[position].name = binding.etDetailName.text.toString()
-                binding.tvDetailName.setText(myContact.name)
-                ContactManager.contacts[position].number = binding.etDetailNumber.text.toString()
-                ContactManager.contacts[position].email = binding.etDetailEmail.text.toString()
+                contact.name = binding.etDetailName.text.toString()
+                binding.tvDetailName.setText(contact.name)
+                contact.number = binding.etDetailNumber.text.toString()
+                contact.email = binding.etDetailEmail.text.toString()
 //                ContactManager.Contacts[position].photo = binding.ivDetailProfile.imageAlpha
 
                 Toast.makeText(this.requireContext(), "수정사항이 저장되었습니다.", Toast.LENGTH_SHORT).show()
@@ -193,7 +194,7 @@ class ContactDetailFragment : Fragment() {
             AlertDialog.Builder(this.requireContext())
                 .setMessage("연락처를 삭제하시겠습니까?")
                 .setPositiveButton("확인") { dialog, which ->
-                    ContactManager.delete(ContactManager.contacts[position].name.toString())
+                    viewModel.removeContactDataByName(contact.name)
                     requireActivity().onBackPressed()
                 }
                 .setNegativeButton("취소") { dialog, which ->
@@ -216,8 +217,8 @@ class ContactDetailFragment : Fragment() {
         }
     }
 
-    private fun showCustomDialog(position:Int, i:Int) {
-        if (StickerManager.stickers[i].isDelete){
+    private fun showCustomDialog(i: Int) {
+        if (StickerManager.stickers[i].isDelete) {
             return
         }
 
@@ -240,24 +241,24 @@ class ContactDetailFragment : Fragment() {
 
         // 다이얼로그의 초기 카운트 값 설정
         when (editStickerCountNumber) {
-            0 -> tvCount.text = ContactManager.contacts[param1!!.toInt()].sticker0.toString()
-            1 -> tvCount.text = ContactManager.contacts[param1!!.toInt()].sticker1.toString()
-            2 -> tvCount.text = ContactManager.contacts[param1!!.toInt()].sticker2.toString()
-            3 -> tvCount.text = ContactManager.contacts[param1!!.toInt()].sticker3.toString()
-            4 -> tvCount.text = ContactManager.contacts[param1!!.toInt()].sticker4.toString()
+            0 -> tvCount.text = contact.sticker0.toString()
+            1 -> tvCount.text = contact.sticker1.toString()
+            2 -> tvCount.text = contact.sticker2.toString()
+            3 -> tvCount.text = contact.sticker3.toString()
+            4 -> tvCount.text = contact.sticker4.toString()
         }
 
         var count2 = tvCount.text.toString().toInt()
 
         // 빼기 버튼 클릭 시 동작
-        btnMinus.setOnClickListener{
+        btnMinus.setOnClickListener {
             if (count2 > 0) {
                 count2 -= 1
                 tvCount.text = count2.toString()
             }
         }
         // 더하기 버튼 클릭 시 동작
-        btnPlus.setOnClickListener{
+        btnPlus.setOnClickListener {
             if (count2 < 100) {
                 count2 += 1
                 tvCount.text = count2.toString()
@@ -269,27 +270,32 @@ class ContactDetailFragment : Fragment() {
             .setPositiveButton("확인") { dialog, _ ->
                 when (editStickerCountNumber) {
                     0 -> {
-                        ContactManager.contacts[param1!!.toInt()].sticker0 = tvCount.text.toString().toInt()
-                        binding.ivDetailSticker1Count.text = ContactManager.contacts[param1!!.toInt()].sticker0.toString()
+                        contact.sticker0 = tvCount.text.toString().toInt()
+                        binding.ivDetailSticker1Count.text = contact.sticker0.toString()
                     }
+
                     1 -> {
-                        ContactManager.contacts[param1!!.toInt()].sticker1 = tvCount.text.toString().toInt()
-                        binding.ivDetailSticker2Count.text = ContactManager.contacts[param1!!.toInt()].sticker1.toString()
+                        contact.sticker1 = tvCount.text.toString().toInt()
+                        binding.ivDetailSticker2Count.text =
+                            contact.sticker1.toString()
                     }
+
                     2 -> {
-                        ContactManager.contacts[param1!!.toInt()].sticker2 = tvCount.text.toString().toInt()
-                        binding.ivDetailSticker3Count.text = ContactManager.contacts[param1!!.toInt()].sticker2.toString()
+                        contact.sticker2 = tvCount.text.toString().toInt()
+                        binding.ivDetailSticker3Count.text = contact.sticker2.toString()
                     }
+
                     3 -> {
-                        ContactManager.contacts[param1!!.toInt()].sticker3 = tvCount.text.toString().toInt()
-                        binding.ivDetailSticker4Count.text = ContactManager.contacts[param1!!.toInt()].sticker3.toString()
+                        contact.sticker3 = tvCount.text.toString().toInt()
+                        binding.ivDetailSticker4Count.text = contact.sticker3.toString()
                     }
+
                     4 -> {
-                        ContactManager.contacts[param1!!.toInt()].sticker4 = tvCount.text.toString().toInt()
-                        binding.ivDetailSticker5Count.text = ContactManager.contacts[param1!!.toInt()].sticker4.toString()
+                        contact.sticker4 = tvCount.text.toString().toInt()
+                        binding.ivDetailSticker5Count.text = contact.sticker4.toString()
                     }
                 }
-                updateStickerNum(position, i)
+                updateStickerNum(i)
                 dialog.dismiss()
             }
             .setNegativeButton("취소") { dialog, _ ->
@@ -300,9 +306,7 @@ class ContactDetailFragment : Fragment() {
         dialog.show()
     }
 
-    fun updateStickerNum(position:Int, index: Int) {
-        val myContact = ContactManager.contacts[position]
-
+    fun updateStickerNum(index: Int) {
         when (index) {
             0 -> {
                 binding.ivDetailSticker1.setImageResource(StickerManager.stickers[0].findDrawable())
@@ -338,11 +342,11 @@ class ContactDetailFragment : Fragment() {
             else -> binding.ivDetailSticker5Count
         }
         val num: Int = when (index) {
-            0 -> myContact.sticker0
-            1 -> myContact.sticker1
-            2 -> myContact.sticker2
-            3 -> myContact.sticker3
-            else -> myContact.sticker4
+            0 -> contact.sticker0
+            1 -> contact.sticker1
+            2 -> contact.sticker2
+            3 -> contact.sticker3
+            else -> contact.sticker4
         }
         val sticker = when (index) {
             0 -> binding.ivDetailSticker1
@@ -363,8 +367,7 @@ class ContactDetailFragment : Fragment() {
         }
     }
 
-    fun updateIsDelete (position :Int, index : Int){
-        val myContact = ContactManager.contacts[position]
+    fun updateIsDelete(index: Int) {
         val count = when (index) {
             0 -> binding.ivDetailSticker1Count
             1 -> binding.ivDetailSticker2Count
@@ -373,11 +376,11 @@ class ContactDetailFragment : Fragment() {
             else -> binding.ivDetailSticker5Count
         }
         val num: Int = when (index) {
-            0 -> myContact.sticker0
-            1 -> myContact.sticker1
-            2 -> myContact.sticker2
-            3 -> myContact.sticker3
-            else -> myContact.sticker4
+            0 -> contact.sticker0
+            1 -> contact.sticker1
+            2 -> contact.sticker2
+            3 -> contact.sticker3
+            else -> contact.sticker4
         }
         val sticker = when (index) {
             0 -> binding.ivDetailSticker1
@@ -396,20 +399,20 @@ class ContactDetailFragment : Fragment() {
             count.isVisible = true
         }
     }
-    fun stickerClickListener(position:Int, i: Int, ) {
-        val myContact = ContactManager.contacts[position]
 
-        fun stickerPlus(){
-            when(i) {
-                0 -> myContact.sticker0++
-                1 -> myContact.sticker1++
-                2 -> myContact.sticker2++
-                3 -> myContact.sticker3++
-                else -> myContact.sticker4++
+    fun stickerClickListener(i: Int) {
+        fun stickerPlus() {
+            when (i) {
+                0 -> contact.sticker0++
+                1 -> contact.sticker1++
+                2 -> contact.sticker2++
+                3 -> contact.sticker3++
+                else -> contact.sticker4++
             }
         }
+
         val mySticker = StickerManager.stickers[i]
-        if (mySticker.isDelete == true) {
+        if (mySticker.isDelete) {
 
             val fragment = NewStickerDialogueFragment.newInstance(i)
             requireActivity().supportFragmentManager.beginTransaction()
@@ -418,18 +421,19 @@ class ContactDetailFragment : Fragment() {
                 .commit()
             setFragmentResultListener("dataSend") { key, bundle ->
                 stickerPlus()
-                myContact.recentSticker = i
-                updateStickerNum(position, i)
+                contact.recentSticker = i
+                updateStickerNum(i)
+                viewModel.editContactData(contact)
             }
 
         } else {
             stickerPlus()
-            myContact.recentSticker = i
-            updateStickerNum(position, i)
+            contact.recentSticker = i
+            updateStickerNum(i)
+            viewModel.editContactData(contact)
         }
 
     }
-
 
 
 }

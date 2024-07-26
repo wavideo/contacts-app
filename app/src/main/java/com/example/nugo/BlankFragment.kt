@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.activityViewModels
 import com.example.nugo.contact.ContactManager
 
 // TODO: Rename parameter arguments, choose names that match
@@ -36,12 +37,6 @@ class BlankFragment : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_blank, container, false)
-    }
-
-    override fun onResume() {
-        super.onResume()
-        val updatedContacts = ContactManager.getData()
-        ContactManager.contacts = updatedContacts
     }
 
     companion object {

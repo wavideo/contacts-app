@@ -8,16 +8,18 @@ import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
 import com.example.nugo.contact.ContactManager
 import com.example.nugo.R
+import com.example.nugo.contact.ContactData
 import com.example.nugo.databinding.ItemStickerBinding
 
-class StickerAdapter (var items:MutableList<StickerData>) :RecyclerView.Adapter<StickerAdapter.Holder>(){
-        inner class Holder (val binding: ItemStickerBinding):RecyclerView.ViewHolder(binding.root){
-            val ivStickerIcon = binding.ivStickerIcon
-            val tvStickerName = binding.tvStickerName
-            val tvContactSizeNum = binding.tvContactSizeNum
-            val clContactSize = binding.clContactSize
-            val clStickerBackground = binding.clStickerBackground
-        }
+class StickerAdapter(var items: MutableList<StickerData>, private val contacts: List<ContactData>) :
+    RecyclerView.Adapter<StickerAdapter.Holder>() {
+    inner class Holder(val binding: ItemStickerBinding) : RecyclerView.ViewHolder(binding.root) {
+        val ivStickerIcon = binding.ivStickerIcon
+        val tvStickerName = binding.tvStickerName
+        val tvContactSizeNum = binding.tvContactSizeNum
+        val clContactSize = binding.clContactSize
+        val clStickerBackground = binding.clStickerBackground
+    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): Holder {
         var binding = ItemStickerBinding.inflate(LayoutInflater.from(parent.context), parent, false)
@@ -34,9 +36,10 @@ class StickerAdapter (var items:MutableList<StickerData>) :RecyclerView.Adapter<
 
     // itemClick.onClick 추상메서드 선언
     interface ItemClick {
-        fun onClick(view : View, position : Int)
+        fun onClick(view: View, position: Int)
     }
-    var itemClick : ItemClick? = null
+
+    var itemClick: ItemClick? = null
 
     override fun onBindViewHolder(holder: Holder, position: Int) {
 
@@ -47,12 +50,12 @@ class StickerAdapter (var items:MutableList<StickerData>) :RecyclerView.Adapter<
             itemClick?.onClick(it, position)
         }
 
-        val filterContact = when(position){
-            0 -> ContactManager.contacts.filter {it.sticker0!=0}
-            1 -> ContactManager.contacts.filter {it.sticker1!=0}
-            2 -> ContactManager.contacts.filter {it.sticker2!=0}
-            3 -> ContactManager.contacts.filter {it.sticker3!=0}
-            else -> ContactManager.contacts.filter {it.sticker4!=0}
+        val filterContact = when (position) {
+            0 -> contacts.filter { it.sticker0 != 0 }
+            1 -> contacts.filter { it.sticker1 != 0 }
+            2 -> contacts.filter { it.sticker2 != 0 }
+            3 -> contacts.filter { it.sticker3 != 0 }
+            else -> contacts.filter { it.sticker4 != 0 }
         }
 
         holder.ivStickerIcon.setImageResource(mySticker.findDrawable())
@@ -61,20 +64,22 @@ class StickerAdapter (var items:MutableList<StickerData>) :RecyclerView.Adapter<
 
         if (mySticker.isDelete == true) {
             holder.clContactSize.isVisible = false
-            holder.clStickerBackground.backgroundTintList = ContextCompat.getColorStateList(holder.itemView.getContext(),
+            holder.clStickerBackground.backgroundTintList = ContextCompat.getColorStateList(
+                holder.itemView.getContext(),
                 R.color.background_basic
             );
 
         } else {
             holder.clContactSize.isVisible = true
-            holder.clStickerBackground.backgroundTintList = ContextCompat.getColorStateList(holder.itemView.getContext(),
+            holder.clStickerBackground.backgroundTintList = ContextCompat.getColorStateList(
+                holder.itemView.getContext(),
                 R.color.white
             );
         }
 
     }
 
-    fun updateData(newItems: MutableList<StickerData>){
+    fun updateData(newItems: MutableList<StickerData>) {
         items = newItems
         notifyDataSetChanged()
     }

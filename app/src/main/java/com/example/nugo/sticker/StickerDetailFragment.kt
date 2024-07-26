@@ -14,11 +14,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AlertDialog
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.setFragmentResultListener
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.nugo.contact.ContactData
 import com.example.nugo.contact.ContactManager
 import com.example.nugo.R
+import com.example.nugo.SharedViewModel
 import com.example.nugo.contact.ContactDetailFragment
 import com.example.nugo.contact.ContactOfStickerAdapter
 import com.example.nugo.databinding.FragmentStickerDetailBinding
@@ -36,6 +38,7 @@ class StickerDetailFragment : Fragment() {
     // TODO: Rename and change types of parameters
     private var paramSticker: Int? = null
     private val binding by lazy { FragmentStickerDetailBinding.inflate(layoutInflater) }
+    private val viewModel by activityViewModels<SharedViewModel>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -60,29 +63,30 @@ class StickerDetailFragment : Fragment() {
         var stickerIndex: Int = 0
         paramSticker?.let { stickerIndex = it }
 
+        val contacts = viewModel.getContactList()
         when (stickerIndex) {
             0 -> {
-                ContactOfStickers.addAll(ContactManager.contacts.filter { it.sticker0 != 0 })
+                ContactOfStickers.addAll(contacts.filter { it.sticker0 != 0 })
                 ContactOfStickers.sortByDescending { it.sticker0 }
             }
 
             1 -> {
-                ContactOfStickers.addAll(ContactManager.contacts.filter { it.sticker1 != 0 })
+                ContactOfStickers.addAll(contacts.filter { it.sticker1 != 0 })
                 ContactOfStickers.sortByDescending { it.sticker1 }
             }
 
             2 -> {
-                ContactOfStickers.addAll(ContactManager.contacts.filter { it.sticker2 != 0 })
+                ContactOfStickers.addAll(contacts.filter { it.sticker2 != 0 })
                 ContactOfStickers.sortByDescending { it.sticker2 }
             }
 
             3 -> {
-                ContactOfStickers.addAll(ContactManager.contacts.filter { it.sticker3 != 0 })
+                ContactOfStickers.addAll(contacts.filter { it.sticker3 != 0 })
                 ContactOfStickers.sortByDescending { it.sticker3 }
             }
 
             else -> {
-                ContactOfStickers.addAll(ContactManager.contacts.filter { it.sticker4 != 0 })
+                ContactOfStickers.addAll(contacts.filter { it.sticker4 != 0 })
                 ContactOfStickers.sortByDescending { it.sticker4 }
             }
         }
@@ -95,9 +99,9 @@ class StickerDetailFragment : Fragment() {
         adapter.itemClick = object : ContactOfStickerAdapter.ItemClick {
             override fun onClick(view: View, position: Int) {
 
-                val myIndex = ContactManager.contacts.indexOf(ContactOfStickers[position])
+                val myIndex = contacts.indexOf(ContactOfStickers[position])
 
-                val fragment = ContactDetailFragment.newInstance(myIndex.toString())
+                val fragment = ContactDetailFragment.newInstance(contacts[myIndex])
                 requireActivity().supportFragmentManager.beginTransaction()
                     .replace(R.id.frameLayout, fragment)
                     .addToBackStack(null)

@@ -1,7 +1,7 @@
 package com.example.nugo.contact
 
+import android.util.Log
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import androidx.core.view.isVisible
@@ -12,8 +12,10 @@ import com.example.nugo.sticker.StickerData
 import com.example.nugo.sticker.StickerManager
 import com.example.nugo.databinding.ActivityContactListItemBinding
 
+private const val TAG = "ContactListAdapter"
+
 class ContactListAdapter(
-    private var contacts: List<ContactData>
+    val contacts: MutableList<ContactData> = mutableListOf<ContactData>()
 ) : RecyclerView.Adapter<ContactListAdapter.Holder>() {
 
     inner class Holder(private val binding: ActivityContactListItemBinding) :
@@ -40,18 +42,15 @@ class ContactListAdapter(
     }
 
     interface ItemClick {
-        fun onClick(view: View, position: Int)
-    }
-
-    interface ItemClick2 {
-        fun onClick(view: View, position: Int)
+        fun onClick(position: Int, contact: ContactData)
     }
 
 
     var myStickers = mutableListOf<StickerData>()
 
     var itemClick: ItemClick? = null
-    var itemClick2 : ItemClick2? = null
+    var itemClick2: ItemClick? = null
+    var recentStickerClick: ItemClick? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): Holder {
         val binding = ActivityContactListItemBinding.inflate(
@@ -63,49 +62,55 @@ class ContactListAdapter(
     }
 
     override fun onBindViewHolder(holder: Holder, position: Int) {
-        holder.tvName.text = contacts[position].name
+        val contact = contacts[position]
+        holder.tvName.text = contact.name
         holder.itemView.setOnClickListener {
-            itemClick?.onClick(it, position)
+            itemClick?.onClick(position, contact)
         }
 
-        holder.ivProfile.setImageBitmap(contacts[position].photo)
+        holder.ivProfile.setImageBitmap(contact.photo)
 
-        var recentIndex = contacts[position].recentSticker
-        var recentSticker = StickerManager.stickers[recentIndex]
+        val recentIndex = contact.recentSticker
+        val recentSticker = StickerManager.stickers[recentIndex]
 
-        var recentStickerNum = when (recentIndex){
-            0 -> contacts[position].sticker0
-            1 -> contacts[position].sticker1
-            2 -> contacts[position].sticker2
-            3 -> contacts[position].sticker3
-            else -> contacts[position].sticker4
+        val recentStickerNum = when (recentIndex) {
+            0 -> contact.sticker0
+            1 -> contact.sticker1
+            2 -> contact.sticker2
+            3 -> contact.sticker3
+            else -> contact.sticker4
         }
+        holder.tvStickerRecently.text = recentStickerNum.toString()
 
-        if (recentStickerNum == 0){
+        if (recentStickerNum == 0) {
             holder.ivStickerRecently.setImageResource(StickerManager.icons[0])
             holder.tvStickerRecently.isVisible = false
-            holder.ivStickerRecently.setOnClickListener{
-                itemClick2?.onClick(it, position)
+            holder.ivStickerRecently.setOnClickListener {
+                itemClick2?.onClick(position, contact)
             }
         } else {
             holder.ivStickerRecently.setImageResource(recentSticker.findDrawable())
             holder.tvStickerRecently.isVisible = true
             holder.tvStickerRecently.text = recentStickerNum.toString()
-            holder.ivStickerRecently.setOnClickListener{
-                when (recentIndex){
-                    0 -> holder.tvStickerRecently.text = (++contacts[position].sticker0).toString()
-                    1 -> holder.tvStickerRecently.text = (++contacts[position].sticker1).toString()
-                    2 -> holder.tvStickerRecently.text = (++contacts[position].sticker2).toString()
-                    3 -> holder.tvStickerRecently.text = (++contacts[position].sticker3).toString()
-                    else -> holder.tvStickerRecently.text = (++contacts[position].sticker4).toString()
+            holder.ivStickerRecently.setOnClickListener {
+                Log.d(
+                    TAG,
+                    "Recent Sticker is clicked. position:$position, current contact:$contact"
+                )
+                when (recentIndex) {
+                    0 -> contact.sticker0++
+                    1 -> contact.sticker1++
+                    2 -> contact.sticker2++
+                    3 -> contact.sticker3++
+                    else -> contact.sticker4++
                 }
-
-
+                Log.d(TAG, "Recent Sticker is clicked. changed contact:$contact")
+                recentStickerClick?.onClick(position, contact)
             }
         }
 
         val copyStickers = StickerManager.stickers.toMutableList()
-        val adapter = ContactListStickerMiniAdapter(copyStickers, position)
+        val adapter = ContactListStickerMiniAdapter(copyStickers, contact)
         holder.rvStickerMini.adapter = adapter
         holder.rvStickerMini.layoutManager =
             LinearLayoutManager(holder.rvStickerMini.context, LinearLayoutManager.HORIZONTAL, false)
@@ -119,8 +124,9 @@ class ContactListAdapter(
         return position.toLong()
     }
 
-    fun updateData(newItems: MutableList<ContactData>){
-        contacts = newItems
+    fun updateData(newItems: List<ContactData>) {
+        contacts.clear()
+        contacts.addAll(newItems)
         notifyDataSetChanged()
     }
 

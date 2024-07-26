@@ -65,7 +65,8 @@ class StickerListFragment : Fragment() {
 
 
 
-        val stickerAdapter = StickerAdapter(StickerManager.stickers)
+        val contacts = viewModel.getContactList()
+        val stickerAdapter = StickerAdapter(StickerManager.stickers, contacts)
         binding.rvStickerList.adapter =stickerAdapter
         binding.rvStickerList.layoutManager = LinearLayoutManager( requireContext() )
 

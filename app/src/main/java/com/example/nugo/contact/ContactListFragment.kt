@@ -1,52 +1,53 @@
 package com.example.nugo.contact
 
 import android.app.Activity
+import android.app.Activity.RESULT_OK
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.result.ActivityResultLauncher
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.setFragmentResult
-import androidx.fragment.app.setFragmentResultListener
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.nugo.AddFriendActivity
+import com.example.nugo.EXTRA_NEW_USER_NAME
+import com.example.nugo.EXTRA_NEW_USER_NUMBER
+import com.example.nugo.EXTRA_NUMBER_LIST
 import com.example.nugo.ListAddFirstStickerFragment
 import com.example.nugo.R
 import com.example.nugo.SharedViewModel
 import com.example.nugo.databinding.FragmentContactListBinding
-import kotlin.random.Random
 
 class ContactListFragment : Fragment() {
     private val binding by lazy { FragmentContactListBinding.inflate(layoutInflater) }
-    private lateinit var adapter: ContactListAdapter
+    private val adapter by lazy { ContactListAdapter() }
     private val PICK_IMAGE_REQUEST = 1 // 추가된 부분: 이미지 선택 요청 코드
     private val viewModel by activityViewModels<SharedViewModel>()
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-    }
-
+    private lateinit var addFriendLauncher: ActivityResultLauncher<Intent>
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        return binding.root
-    }
+    ): View? = binding.root
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        initView()
+        initViewModel()
+    }
 
-        adapter = ContactListAdapter(ContactManager.contacts) // adapter 초기화
-        binding.recycleListView.adapter = adapter
-        binding.recycleListView.layoutManager = LinearLayoutManager(requireContext())
+    private fun initView() = with(binding) {
+        recycleListView.adapter = adapter
+        recycleListView.layoutManager = LinearLayoutManager(requireContext())
 
         adapter.itemClick = object : ContactListAdapter.ItemClick {
-            override fun onClick(view: View, position: Int) {
-                val dataToSend = position
-                val fragmentContactDetail = ContactDetailFragment.newInstance(dataToSend.toString())
+            override fun onClick(position: Int, contact: ContactData) {
+                val fragmentContactDetail = ContactDetailFragment.newInstance(contact)
                 requireActivity().supportFragmentManager.beginTransaction()
                     .replace(R.id.frameLayout, fragmentContactDetail)
                     .addToBackStack(null)
@@ -54,11 +55,10 @@ class ContactListFragment : Fragment() {
             }
         }
 
-        adapter.itemClick2 = object : ContactListAdapter.ItemClick2 {
-            override fun onClick(view: View, position: Int) {
-                val dataToSend = position
+        adapter.itemClick2 = object : ContactListAdapter.ItemClick {
+            override fun onClick(position: Int, contact: ContactData) {
                 val fragmentListAddFirstSticker =
-                    ListAddFirstStickerFragment.newInstance(dataToSend.toString())
+                    ListAddFirstStickerFragment.newInstance(contact)
 //                Toast.makeText(binding.root.context, "새 스티커를 추가합니다.", Toast.LENGTH_SHORT).show()
                 requireActivity().supportFragmentManager.beginTransaction()
                     .replace(R.id.cv_popup_container, fragmentListAddFirstSticker)
@@ -69,43 +69,54 @@ class ContactListFragment : Fragment() {
             }
         }
 
-        setFragmentResultListener("dataSend") { key, bundle ->
-            adapter.updateData(ContactManager.contacts)
+        adapter.recentStickerClick = object : ContactListAdapter.ItemClick {
+            override fun onClick(position: Int, contact: ContactData) {
+                viewModel.editContactData(position, contact)
+            }
         }
 
-        binding.ivMyInfo.setOnClickListener {  // 추가된 부분: 이미지 선택 버튼 클릭 리스너
+        ivMyInfo.setOnClickListener {  // 추가된 부분: 이미지 선택 버튼 클릭 리스너
             openImageChooser()  // 추가된 부분: 이미지 선택 메소드 호출
         }
 
-
-
-
+        addFriendLauncher = registerForActivityResult(
+            ActivityResultContracts.StartActivityForResult()
+        ) { result ->
+            if (result.resultCode == RESULT_OK) {
+                val data: Intent? = result.data
+                val name = data?.getStringExtra(EXTRA_NEW_USER_NAME) ?: return@registerForActivityResult
+                val number = data.getStringExtra(EXTRA_NEW_USER_NUMBER) ?: return@registerForActivityResult
+                viewModel.addContactData(ContactData(name, number))
+            }
+        }
         // 연락처 추가 intent
-        binding.addFriend.setOnClickListener {
-            val intent_addFriend = Intent(requireContext(), AddFriendActivity::class.java)
-            startActivity(intent_addFriend)
+        addFriend.setOnClickListener {
+            val intent_addFriend = Intent(requireContext(), AddFriendActivity::class.java).apply {
+                val numberList = ArrayList(viewModel.getContactList().map { it.number })
+                putStringArrayListExtra(EXTRA_NUMBER_LIST, numberList)
+            }
+            addFriendLauncher.launch(intent_addFriend)
         }
 
-
-        binding.edit.setOnClickListener{
-            viewModel.setCount( Random.nextInt() )
+        var editableText: Boolean = false
+        edit.setOnClickListener {
+            if (editableText) {
+                tvMyName.isEnabled = false
+                edit.setImageResource(R.drawable.ic_edit)
+            } else {
+                tvMyName.isEnabled = true
+                edit.setImageResource(R.drawable.ic_done)
+            }
+            editableText = !editableText
         }
+    }
 
-        viewModel.count.observe(viewLifecycleOwner){
-            binding.tvMyName.setText(it.toString())
+    private fun initViewModel() = with(viewModel) {
+        contacts.observe(viewLifecycleOwner) {
+            Log.d(TAG, "Contact list is changed. ${it.size}")
+            adapter.updateData(it)
+            adapter.notifyDataSetChanged()
         }
-
-//        var editableText:Boolean = false
-//        binding.edit.setOnClickListener{
-//            if (editableText){
-//                binding.tvMyName.isEnabled = false
-//                binding.edit.setImageResource(R.drawable.ic_edit)
-//            } else {
-//                binding.tvMyName.isEnabled = true
-//                binding.edit.setImageResource(R.drawable.ic_done)
-//            }
-//            editableText = !editableText
-//        }
     }
 
     private fun openImageChooser() {  // 멤버 함수로 정의
@@ -122,12 +133,9 @@ class ContactListFragment : Fragment() {
         }
     }
 
-    override fun onResume() {
-        super.onResume()
-        adapter.updateData(ContactManager.contacts)
-    }
-
     companion object {
+        private const val TAG = "ContactList"
+
         @JvmStatic
         fun newInstance(param1: String, param2: String) =
             ContactListFragment().apply {

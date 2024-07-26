@@ -8,10 +8,13 @@ import com.example.nugo.sticker.StickerData
 import com.example.nugo.sticker.StickerManager
 import com.example.nugo.databinding.ItemStickerForContactListMiniBinding
 
-class ContactListStickerMiniAdapter(val items: MutableList<StickerData>, val parentPosition :Int):
+class ContactListStickerMiniAdapter(
+    private val items: MutableList<StickerData>,
+    private val contactData: ContactData
+) :
     RecyclerView.Adapter<ContactListStickerMiniAdapter.Holder>() {
-    inner class Holder (val binding : ItemStickerForContactListMiniBinding, parentPosition :Int):
-        RecyclerView.ViewHolder(binding.root){
+    inner class Holder(val binding: ItemStickerForContactListMiniBinding) :
+        RecyclerView.ViewHolder(binding.root) {
         val img = binding.ivSticker
         val text = binding.tvSticker
         val box = binding.clBox
@@ -23,7 +26,7 @@ class ContactListStickerMiniAdapter(val items: MutableList<StickerData>, val par
             parent,
             false
         )
-        return Holder(binding, parentPosition)
+        return Holder(binding)
     }
 
     override fun getItemCount(): Int {
@@ -38,9 +41,9 @@ class ContactListStickerMiniAdapter(val items: MutableList<StickerData>, val par
 
         holder.img.setImageResource(StickerManager.stickers[position].findDrawable())
 
-        val myContact = ContactManager.contacts[parentPosition]
+        val myContact = contactData
         val mySticker = StickerManager.stickers[position]
-        val myStickerNum = when (position){
+        val myStickerNum = when (position) {
             0 -> myContact.sticker0
             1 -> myContact.sticker1
             2 -> myContact.sticker2
@@ -48,7 +51,7 @@ class ContactListStickerMiniAdapter(val items: MutableList<StickerData>, val par
             else -> myContact.sticker4
         }
 
-        fun checkStickerNum(){
+        fun checkStickerNum() {
             if (myStickerNum != 0 && mySticker.isDelete == false && position != myContact.recentSticker) {
                 holder.itemView.visibility = View.VISIBLE
                 holder.box.maxWidth = 10000
