@@ -75,7 +75,7 @@ class StickerListFragment : Fragment() {
                     val fragment = StickerDetailFragment.newInstance(position)
 
                     requireActivity().supportFragmentManager.beginTransaction()
-                        .replace(R.id.frameLayout, fragment)
+                        .replace(R.id.cv_sticker_container, fragment)
                         .addToBackStack(null)
                         .commit()
                 }
