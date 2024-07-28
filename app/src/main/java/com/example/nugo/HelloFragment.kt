@@ -56,7 +56,7 @@ class HelloFragment : Fragment() {
 
         binding.rvStickerList2.setOnClickListener{
             viewModel.editStickerDataByIndex(0, StickerData("경고",33, false))
-            viewModel.editStickerDataByIndex(1, StickerData("지각한 사람",14, false))
+            viewModel.editStickerDataByIndex(1, StickerData("지각한 사람",13, false))
             viewModel.editStickerDataByIndex(2, StickerData("기분 나쁜 말투",7, false))
             viewModel.editStickerDataByIndex(3, StickerData("스타일이 별로야",34, false))
             viewModel.editStickerDataByIndex(4, StickerData("새 스티커 생성",0, true))
@@ -67,7 +67,7 @@ class HelloFragment : Fragment() {
             viewModel.editStickerDataByIndex(0, StickerData("고마워",1, false))
             viewModel.editStickerDataByIndex(1, StickerData("경고",33, false))
             viewModel.editStickerDataByIndex(2, StickerData("밥 사주신 분들",16, false))
-            viewModel.editStickerDataByIndex(3, StickerData("지각한 사람",14, false))
+            viewModel.editStickerDataByIndex(3, StickerData("지각한 사람",13, false))
             viewModel.editStickerDataByIndex(4, StickerData("새 스티커 생성",0, true))
             parentFragmentManager.popBackStack()
         }
