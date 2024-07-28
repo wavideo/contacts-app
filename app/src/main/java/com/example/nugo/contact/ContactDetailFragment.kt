@@ -1,5 +1,7 @@
 package com.example.nugo.contact
 
+import android.content.Context
+import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.ImageDecoder
 import android.net.Uri
@@ -131,12 +133,12 @@ class ContactDetailFragment : Fragment() {
 
         // 통화 버튼
         binding.btnDetailCall.setOnClickListener {
-            ContactManager.makeCall(this.requireContext(), contact.name)
+            makeCall(this.requireContext(), contact.name)
         }
 
         // 메시지 버튼
         binding.btnDetailMessage.setOnClickListener {
-            ContactManager.makeSMS(this.requireContext(), contact.name)
+            makeSMS(this.requireContext(), contact.name)
         }
 
         // 뒤로가기 버튼
@@ -218,7 +220,7 @@ class ContactDetailFragment : Fragment() {
     }
 
     private fun showCustomDialog(i: Int) {
-        if (StickerManager.stickers[i].isDelete) {
+        if (viewModel.getStickerList()[i].isDelete) {
             return
         }
 
@@ -232,11 +234,11 @@ class ContactDetailFragment : Fragment() {
 
         // 다이얼로그의 스티커 아이콘 설정
         when (editStickerCountNumber) {
-            0 -> ivStickerIcon.setImageResource(StickerManager.stickers[0].findDrawable())
-            1 -> ivStickerIcon.setImageResource(StickerManager.stickers[1].findDrawable())
-            2 -> ivStickerIcon.setImageResource(StickerManager.stickers[2].findDrawable())
-            3 -> ivStickerIcon.setImageResource(StickerManager.stickers[3].findDrawable())
-            4 -> ivStickerIcon.setImageResource(StickerManager.stickers[4].findDrawable())
+            0 -> ivStickerIcon.setImageResource(viewModel.getStickerList()[0].findDrawable())
+            1 -> ivStickerIcon.setImageResource(viewModel.getStickerList()[1].findDrawable())
+            2 -> ivStickerIcon.setImageResource(viewModel.getStickerList()[2].findDrawable())
+            3 -> ivStickerIcon.setImageResource(viewModel.getStickerList()[3].findDrawable())
+            4 -> ivStickerIcon.setImageResource(viewModel.getStickerList()[4].findDrawable())
         }
 
         // 다이얼로그의 초기 카운트 값 설정
@@ -309,28 +311,28 @@ class ContactDetailFragment : Fragment() {
     fun updateStickerNum(index: Int) {
         when (index) {
             0 -> {
-                binding.ivDetailSticker1.setImageResource(StickerManager.stickers[0].findDrawable())
-                binding.tvDetailSticker1Name.setText(StickerManager.stickers[0].name)
+                binding.ivDetailSticker1.setImageResource(viewModel.getStickerList()[0].findDrawable())
+                binding.tvDetailSticker1Name.setText(viewModel.getStickerList()[0].name)
             }
 
             1 -> {
-                binding.ivDetailSticker2.setImageResource(StickerManager.stickers[1].findDrawable())
-                binding.tvDetailSticker2Name.setText(StickerManager.stickers[1].name)
+                binding.ivDetailSticker2.setImageResource(viewModel.getStickerList()[1].findDrawable())
+                binding.tvDetailSticker2Name.setText(viewModel.getStickerList()[1].name)
             }
 
             2 -> {
-                binding.ivDetailSticker3.setImageResource(StickerManager.stickers[2].findDrawable())
-                binding.tvDetailSticker3Name.setText(StickerManager.stickers[2].name)
+                binding.ivDetailSticker3.setImageResource(viewModel.getStickerList()[2].findDrawable())
+                binding.tvDetailSticker3Name.setText(viewModel.getStickerList()[2].name)
             }
 
             3 -> {
-                binding.ivDetailSticker4.setImageResource(StickerManager.stickers[3].findDrawable())
-                binding.tvDetailSticker4Name.setText(StickerManager.stickers[3].name)
+                binding.ivDetailSticker4.setImageResource(viewModel.getStickerList()[3].findDrawable())
+                binding.tvDetailSticker4Name.setText(viewModel.getStickerList()[3].name)
             }
 
             else -> {
-                binding.ivDetailSticker5.setImageResource(StickerManager.stickers[4].findDrawable())
-                binding.tvDetailSticker5Name.setText(StickerManager.stickers[4].name)
+                binding.ivDetailSticker5.setImageResource(viewModel.getStickerList()[4].findDrawable())
+                binding.tvDetailSticker5Name.setText(viewModel.getStickerList()[4].name)
             }
         }
 
@@ -411,7 +413,7 @@ class ContactDetailFragment : Fragment() {
             }
         }
 
-        val mySticker = StickerManager.stickers[i]
+        val mySticker = viewModel.getStickerList()[i]
         if (mySticker.isDelete) {
 
             val fragment = NewStickerDialogueFragment.newInstance(i)
@@ -433,6 +435,33 @@ class ContactDetailFragment : Fragment() {
             viewModel.editContactData(contact)
         }
 
+    }
+
+    fun makeCall(context: Context, name: String) {
+        //앱의 현재 상태를 불러옴 Context, name은 전화할 사람
+        val contact = viewModel.findContactDataByName(name)
+        //Contacts에서 name과 일치하는 연락처를 찾음, find는 name을 반환.
+        contact?.let {
+            val number = it.number
+            //연락처가 ? = null이 아닐 경우, 연락처의 number를 가져옴
+            val intent = Intent(Intent.ACTION_DIAL).apply {
+                //Intent를 생성 ACTION_DIAL로 다이얼을 열게함,apply를 사용해 가독성을 높임.
+                data = Uri.parse("tel:$number")
+            }
+            context.startActivity(intent)
+            //context를 통해 다이얼 시작
+        }
+    }
+
+    fun makeSMS(context: Context, name: String) {
+        val contact = viewModel.findContactDataByName(name)
+        contact?.let {
+            val number = it.number
+            val intentMessage = Intent(Intent.ACTION_SENDTO).apply {
+                data = Uri.parse("smsto:$number")
+            }
+            context.startActivity(intentMessage)
+        }
     }
 
 

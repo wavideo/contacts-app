@@ -51,22 +51,22 @@ class ListAddFirstStickerFragment : Fragment() {
         }
 
         fun update() {
-            binding.ivListAddFirstSticker1.setImageResource(StickerManager.icons[StickerManager.stickers[0].icon])
-            binding.ivListAddFirstSticker2.setImageResource(StickerManager.icons[StickerManager.stickers[1].icon])
-            binding.ivListAddFirstSticker3.setImageResource(StickerManager.icons[StickerManager.stickers[2].icon])
-            binding.ivListAddFirstSticker4.setImageResource(StickerManager.icons[StickerManager.stickers[3].icon])
-            binding.ivListAddFirstSticker5.setImageResource(StickerManager.icons[StickerManager.stickers[4].icon])
+            binding.ivListAddFirstSticker1.setImageResource(StickerManager.icons[viewModel.getStickerList()[0].icon])
+            binding.ivListAddFirstSticker2.setImageResource(StickerManager.icons[viewModel.getStickerList()[1].icon])
+            binding.ivListAddFirstSticker3.setImageResource(StickerManager.icons[viewModel.getStickerList()[2].icon])
+            binding.ivListAddFirstSticker4.setImageResource(StickerManager.icons[viewModel.getStickerList()[3].icon])
+            binding.ivListAddFirstSticker5.setImageResource(StickerManager.icons[viewModel.getStickerList()[4].icon])
 
-            binding.tvListAddFirstSticker1Name.text = StickerManager.stickers[0].name
-            binding.tvListAddFirstSticker2Name.text = StickerManager.stickers[1].name
-            binding.tvListAddFirstSticker3Name.text = StickerManager.stickers[2].name
-            binding.tvListAddFirstSticker4Name.text = StickerManager.stickers[3].name
-            binding.tvListAddFirstSticker5Name.text = StickerManager.stickers[4].name
+            binding.tvListAddFirstSticker1Name.text = viewModel.getStickerList()[0].name
+            binding.tvListAddFirstSticker2Name.text = viewModel.getStickerList()[1].name
+            binding.tvListAddFirstSticker3Name.text = viewModel.getStickerList()[2].name
+            binding.tvListAddFirstSticker4Name.text = viewModel.getStickerList()[3].name
+            binding.tvListAddFirstSticker5Name.text = viewModel.getStickerList()[4].name
         }
         update()
 
         binding.ivListAddFirstSticker1.setOnClickListener {
-            if (StickerManager.stickers[0].isDelete == true) {
+            if (viewModel.getStickerList()[0].isDelete == true) {
                 val fragment = NewStickerDialogueFragment.newInstance(0)
                 requireActivity().supportFragmentManager.beginTransaction()
                     .replace(R.id.cv_popup_container, fragment)
@@ -86,7 +86,7 @@ class ListAddFirstStickerFragment : Fragment() {
         }
 
         binding.ivListAddFirstSticker2.setOnClickListener {
-            if (StickerManager.stickers[1].isDelete == true) {
+            if (viewModel.getStickerList()[1].isDelete == true) {
                 val fragment = NewStickerDialogueFragment.newInstance(1)
                 requireActivity().supportFragmentManager.beginTransaction()
                     .replace(R.id.cv_popup_container, fragment)
@@ -107,7 +107,7 @@ class ListAddFirstStickerFragment : Fragment() {
         }
 
         binding.ivListAddFirstSticker3.setOnClickListener {
-            if (StickerManager.stickers[2].isDelete == true) {
+            if (viewModel.getStickerList()[2].isDelete == true) {
                 val fragment = NewStickerDialogueFragment.newInstance(2)
                 requireActivity().supportFragmentManager.beginTransaction()
                     .replace(R.id.cv_popup_container, fragment)
@@ -127,7 +127,7 @@ class ListAddFirstStickerFragment : Fragment() {
         }
 
         binding.ivListAddFirstSticker4.setOnClickListener {
-            if (StickerManager.stickers[3].isDelete == true) {
+            if (viewModel.getStickerList()[3].isDelete == true) {
                 val fragment = NewStickerDialogueFragment.newInstance(3)
                 requireActivity().supportFragmentManager.beginTransaction()
                     .replace(R.id.cv_popup_container, fragment)
@@ -147,7 +147,7 @@ class ListAddFirstStickerFragment : Fragment() {
         }
 
         binding.ivListAddFirstSticker5.setOnClickListener {
-            if (StickerManager.stickers[4].isDelete == true) {
+            if (viewModel.getStickerList()[4].isDelete == true) {
                 val fragment = NewStickerDialogueFragment.newInstance(4)
                 requireActivity().supportFragmentManager.beginTransaction()
                     .replace(R.id.cv_popup_container, fragment)

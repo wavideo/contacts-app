@@ -6,13 +6,14 @@ import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
-import com.example.nugo.contact.ContactManager
 import com.example.nugo.R
+import com.example.nugo.SharedViewModel
 import com.example.nugo.contact.ContactData
 import com.example.nugo.databinding.ItemStickerBinding
 
-class StickerAdapter(var items: MutableList<StickerData>, private val contacts: List<ContactData>) :
+class StickerAdapter(private var items: List<StickerData>, private val contacts: List<ContactData>, private val viewModel : SharedViewModel) :
     RecyclerView.Adapter<StickerAdapter.Holder>() {
+
     inner class Holder(val binding: ItemStickerBinding) : RecyclerView.ViewHolder(binding.root) {
         val ivStickerIcon = binding.ivStickerIcon
         val tvStickerName = binding.tvStickerName
@@ -43,26 +44,28 @@ class StickerAdapter(var items: MutableList<StickerData>, private val contacts: 
 
     override fun onBindViewHolder(holder: Holder, position: Int) {
 
-        val mySticker = StickerManager.stickers[position]
+        val mySticker = viewModel.getStickerList()[position]
 
         // itemClick.onClick 추상메서드 사용
         holder.clStickerBackground.setOnClickListener() {
             itemClick?.onClick(it, position)
         }
 
-        val filterContact = when (position) {
-            0 -> contacts.filter { it.sticker0 != 0 }
-            1 -> contacts.filter { it.sticker1 != 0 }
-            2 -> contacts.filter { it.sticker2 != 0 }
-            3 -> contacts.filter { it.sticker3 != 0 }
-            else -> contacts.filter { it.sticker4 != 0 }
+        fun contactSize(index:Int):Int = when (index) {
+            0 -> (viewModel.getContactList().filter{ it.sticker0 != 0 }).size
+            1 -> (viewModel.getContactList().filter{  it.sticker1 != 0 }).size
+            2 -> (viewModel.getContactList().filter{  it.sticker2 != 0 }).size
+            3 -> (viewModel.getContactList().filter{  it.sticker3 != 0 }).size
+            else -> (viewModel.getContactList().filter{  it.sticker4 != 0 }).size
         }
+        viewModel.getStickerList()[position].contactSize = contactSize(position)
+        viewModel.editStickerDataByIndex(position, viewModel.getStickerList()[position])
 
-        holder.ivStickerIcon.setImageResource(mySticker.findDrawable())
-        holder.tvStickerName.text = mySticker.name
-        holder.tvContactSizeNum.text = filterContact.size.toString()
+        holder.ivStickerIcon.setImageResource(viewModel.getStickerList()[position].findDrawable())
+        holder.tvStickerName.text = viewModel.getStickerList()[position].name
+        holder.tvContactSizeNum.text = viewModel.getStickerList()[position].contactSize.toString()
 
-        if (mySticker.isDelete == true) {
+        if (viewModel.findStickerDataByIndex(position)?.isDelete == true) {
             holder.clContactSize.isVisible = false
             holder.clStickerBackground.backgroundTintList = ContextCompat.getColorStateList(
                 holder.itemView.getContext(),
@@ -79,7 +82,7 @@ class StickerAdapter(var items: MutableList<StickerData>, private val contacts: 
 
     }
 
-    fun updateData(newItems: MutableList<StickerData>) {
+    fun updateData(newItems: List<StickerData>) {
         items = newItems
         notifyDataSetChanged()
     }

@@ -48,8 +48,7 @@ class StickerDetailFragment : Fragment() {
     }
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
+        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
         return binding.root
@@ -92,7 +91,7 @@ class StickerDetailFragment : Fragment() {
         }
 
 
-        val adapter = ContactOfStickerAdapter(ContactOfStickers)
+        val adapter = ContactOfStickerAdapter(ContactOfStickers, viewModel)
         binding.rvStickerList.adapter = adapter
         binding.rvStickerList.layoutManager = LinearLayoutManager(requireContext())
 
@@ -103,60 +102,56 @@ class StickerDetailFragment : Fragment() {
 
                 val fragment = ContactDetailFragment.newInstance(contacts[myIndex])
                 requireActivity().supportFragmentManager.beginTransaction()
-                    .replace(R.id.frameLayout, fragment)
-                    .addToBackStack(null)
-                    .commit()
+                    .replace(R.id.frameLayout, fragment).addToBackStack(null).commit()
             }
         }
 
-        binding.ivBtnBack.setOnClickListener{
+        binding.ivBtnBack.setOnClickListener {
             requireActivity().onBackPressed()
         }
 
         binding.tvBtnEdit.setOnClickListener {
             val fragment = NewStickerDialogueFragment.newInstance(stickerIndex)
             requireActivity().supportFragmentManager.beginTransaction()
-                .replace(R.id.cv_popup_container, fragment)
-                .addToBackStack(null)
-                .commit()
+                .replace(R.id.cv_popup_container, fragment).addToBackStack(null).commit()
         }
 
         setFragmentResultListener("dataSend") { key, bundle ->
-            binding.tvTitle.text = StickerManager.stickers[stickerIndex].name
-            binding.ivStickerIcon.setImageResource(StickerManager.stickers[stickerIndex].findDrawable())
+            binding.tvTitle.text = viewModel.getStickerList()[stickerIndex].name
+            binding.ivStickerIcon.setImageResource(viewModel.getStickerList()[stickerIndex].findDrawable())
             adapter.updateData(ContactOfStickers)
         }
 
 
         binding.tvBtnDelete.setOnClickListener {
 
-            AlertDialog.Builder(this.requireContext())
-                .setMessage("스티커를 삭제하시겠습니까?")
+            AlertDialog.Builder(this.requireContext()).setMessage("스티커를 삭제하시겠습니까?")
                 .setPositiveButton("확인") { dialog, which ->
-                    StickerManager.stickers[stickerIndex].delete()
-                    when (stickerIndex){
-                        0 -> ContactOfStickers.forEach{
-                            it.sticker0 = 0
+                    viewModel.getStickerList()[stickerIndex].delete()
+                    when (stickerIndex) {
+                        0 -> {
+                            ContactOfStickers.forEach { it.sticker0 = 0 }
                         }
-                        1 -> ContactOfStickers.forEach{
+
+                        1 -> ContactOfStickers.forEach {
                             it.sticker1 = 0
                         }
-                        2 -> ContactOfStickers.forEach{
-                            it.sticker2 = 0
+
+                        2 -> ContactOfStickers.forEach { it.sticker2 = 0
                         }
-                        3 -> ContactOfStickers.forEach{
-                            it.sticker3 = 0
+
+                        3 -> ContactOfStickers.forEach { it.sticker3 = 0
                         }
-                        else -> ContactOfStickers.forEach{
-                            it.sticker4 = 0
+
+                        else -> ContactOfStickers.forEach { it.sticker4 = 0
                         }
                     }
-                    StickerManager.stickers[stickerIndex].delete()
+                    viewModel.getStickerList()[stickerIndex].delete()
+                    viewModel.updateContactList()
+
                     requireActivity().onBackPressed()
-                }
-                .setNegativeButton("취소") { dialog, which ->
-                }
-                .show()
+                }.setNegativeButton("취소") { dialog, which ->
+                }.show()
         }
 
         setFragmentResultListener("dataSend") { key, bundle ->
@@ -164,8 +159,8 @@ class StickerDetailFragment : Fragment() {
         }
 
         StickerManager.detailPicker = stickerIndex
-        val mySticker = StickerManager.stickers[stickerIndex]
-        
+        val mySticker = viewModel.getStickerList()[stickerIndex]
+
         binding.tvTitle.text = mySticker.name
         binding.ivStickerIcon.setImageResource(mySticker.findDrawable())
     }
@@ -181,12 +176,11 @@ class StickerDetailFragment : Fragment() {
          */
         // TODO: Rename and change types and number of parameters
         @JvmStatic
-        fun newInstance(paramSticker: Int) =
-            StickerDetailFragment().apply {
-                arguments = Bundle().apply {
-                    paramSticker?.let { putInt(ARG_PARAM_STICKER, it) }
-                }
+        fun newInstance(paramSticker: Int) = StickerDetailFragment().apply {
+            arguments = Bundle().apply {
+                paramSticker?.let { putInt(ARG_PARAM_STICKER, it) }
             }
+        }
 
         val ContactOfStickers = mutableListOf<ContactData>()
     }

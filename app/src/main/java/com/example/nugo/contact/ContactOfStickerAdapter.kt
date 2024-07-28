@@ -5,11 +5,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.example.nugo.SharedViewModel
 import com.example.nugo.sticker.StickerDetailFragment
 import com.example.nugo.sticker.StickerManager
 import com.example.nugo.databinding.ItemContactWithStickerBinding
 
-class ContactOfStickerAdapter(val items:MutableList<ContactData>):
+class ContactOfStickerAdapter(private val items:MutableList<ContactData>, private val viewModel: SharedViewModel):
     RecyclerView.Adapter<ContactOfStickerAdapter.Holder>() {
     inner class Holder(val binding : ItemContactWithStickerBinding) : RecyclerView.ViewHolder(binding.root){
         val tvName = binding.tvName
@@ -91,11 +92,11 @@ class ContactOfStickerAdapter(val items:MutableList<ContactData>):
             // position 말고 다른 거 넣어야됨
         }
         holder.ivStickerIcon.setImageResource(when (StickerManager.detailPicker){
-            0 -> StickerManager.stickers[0].findDrawable()
-            1 -> StickerManager.stickers[1].findDrawable()
-            2 -> StickerManager.stickers[2].findDrawable()
-            3 -> StickerManager.stickers[3].findDrawable()
-            else -> StickerManager.stickers[4].findDrawable()
+            0 -> viewModel.getStickerList()[0].findDrawable()
+            1 -> viewModel.getStickerList()[1].findDrawable()
+            2 -> viewModel.getStickerList()[2].findDrawable()
+            3 -> viewModel.getStickerList()[3].findDrawable()
+            else -> viewModel.getStickerList()[4].findDrawable()
         })
     }
 

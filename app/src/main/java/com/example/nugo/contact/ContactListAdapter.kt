@@ -1,13 +1,18 @@
 package com.example.nugo.contact
 
+import android.content.Context
+import android.content.Intent
+import android.net.Uri
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.ImageView
+import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.nugo.R
+import com.example.nugo.SharedViewModel
 import com.example.nugo.sticker.StickerData
 import com.example.nugo.sticker.StickerManager
 import com.example.nugo.databinding.ActivityContactListItemBinding
@@ -15,7 +20,7 @@ import com.example.nugo.databinding.ActivityContactListItemBinding
 private const val TAG = "ContactListAdapter"
 
 class ContactListAdapter(
-    val contacts: MutableList<ContactData> = mutableListOf<ContactData>()
+    val contacts: MutableList<ContactData>, private val viewModel: SharedViewModel
 ) : RecyclerView.Adapter<ContactListAdapter.Holder>() {
 
     inner class Holder(private val binding: ActivityContactListItemBinding) :
@@ -27,18 +32,6 @@ class ContactListAdapter(
         val tvStickerRecently = binding.tvStickerRecently
 
         val ivCall: ImageView = itemView.findViewById(R.id.iv_call)
-
-        init {
-            ivCall.setOnClickListener {
-                // 클릭 시 통화
-                val contact = contacts[adapterPosition] // contacts의 연락처 가져오기
-                ContactManager.makeCall(
-                    binding.root.context,
-                    contact.name
-                ) // 해당 연락처의 번호로 통화 (binding.root.context, contact.name을 불러와야한다)
-            }
-
-        }
     }
 
     interface ItemClick {
@@ -70,8 +63,22 @@ class ContactListAdapter(
 
         holder.ivProfile.setImageBitmap(contact.photo)
 
+        holder.ivCall.setOnClickListener {
+            contact.let {
+                val number = it.number
+                //연락처가 ? = null이 아닐 경우, 연락처의 number를 가져옴
+                val intent = Intent(Intent.ACTION_DIAL).apply {
+                    //Intent를 생성 ACTION_DIAL로 다이얼을 열게함,apply를 사용해 가독성을 높임.
+                    data = Uri.parse("tel:$number")
+                }
+                holder.itemView.context.startActivity(intent)
+                //context를 통해 다이얼 시작
+            }
+        }
+
+
         val recentIndex = contact.recentSticker
-        val recentSticker = StickerManager.stickers[recentIndex]
+        val recentSticker = viewModel.getStickerList()[recentIndex]
 
         val recentStickerNum = when (recentIndex) {
             0 -> contact.sticker0
@@ -109,8 +116,8 @@ class ContactListAdapter(
             }
         }
 
-        val copyStickers = StickerManager.stickers.toMutableList()
-        val adapter = ContactListStickerMiniAdapter(copyStickers, contact)
+        val copyStickers = viewModel.getStickerList().toMutableList()
+        val adapter = ContactListStickerMiniAdapter(copyStickers, contact, viewModel)
         holder.rvStickerMini.adapter = adapter
         holder.rvStickerMini.layoutManager =
             LinearLayoutManager(holder.rvStickerMini.context, LinearLayoutManager.HORIZONTAL, false)

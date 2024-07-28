@@ -6,6 +6,7 @@ import android.util.Log
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.FragmentActivity
+import androidx.lifecycle.Observer
 import androidx.viewpager2.widget.ViewPager2
 import com.example.nugo.contact.ContactManager
 import com.example.nugo.databinding.ActivityMainBinding
@@ -21,7 +22,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        StickerManager.loading()
+
         binding.viewpager.apply {
             adapter = MainPageradapter(context as FragmentActivity)
             TabLayoutMediator(binding.tabs, binding.viewpager) { tab, position ->

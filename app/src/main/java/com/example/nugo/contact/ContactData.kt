@@ -7,6 +7,7 @@ import android.graphics.Color
 import android.graphics.Paint
 import android.graphics.Path
 import android.os.Parcelable
+import com.example.nugo.SharedViewModel
 import kotlinx.parcelize.Parcelize
 
 /* [ 정호정 파트 ]
@@ -67,43 +68,5 @@ data class ContactData(
 }
 
 object ContactManager {
-
     val sampleBitmap = createSampleBitmap()
-
-    // 데이터 리스트입니다. ContactManager.Contacts[0] 으로 n번째 연락처를 호출할 수 있습니다
-//    var contacts = mutableListOf<ContactData>()
-
-    /*앱에 넣어둘 더미데이터입니다.
-    MainActivity 상단에 ContactManager.loading()으로 더미데이터를 등록해주세요 */
-
-    fun makeCall(context: Context, name: String) {
-//        //앱의 현재 상태를 불러옴 Context, name은 전화할 사람
-//        val contact = contacts.find { it.name == name }
-//        //Contacts에서 name과 일치하는 연락처를 찾음, find는 name을 반환.
-//        contact?.let {
-//            val number = it.number
-//            //연락처가 ? = null이 아닐 경우, 연락처의 number를 가져옴
-//            val intent = Intent(Intent.ACTION_DIAL).apply {
-//                //Intent를 생성 ACTION_DIAL로 다이얼을 열게함,apply를 사용해 가독성을 높임.
-//                data = Uri.parse("tel:$number")
-//            }
-//            context.startActivity(intent)
-//            //context를 통해 다이얼 시작
-//        }
-    }
-
-    fun makeSMS(context: Context, name: String) {
-//        val contact = contacts.find { it.name == name }
-//        contact?.let {
-//            val number = it.number
-//            val intentMessage = Intent(Intent.ACTION_SENDTO).apply {
-//                data = Uri.parse("smsto:$number")
-//            }
-//            context.startActivity(intentMessage)
-//        }
-    }
-
-//    fun getData(): MutableList<ContactData> {
-//        return contacts
-//    }
 }

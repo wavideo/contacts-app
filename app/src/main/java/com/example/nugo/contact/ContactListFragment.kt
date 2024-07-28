@@ -2,7 +2,9 @@ package com.example.nugo.contact
 
 import android.app.Activity
 import android.app.Activity.RESULT_OK
+import android.content.Context
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -23,10 +25,11 @@ import com.example.nugo.ListAddFirstStickerFragment
 import com.example.nugo.R
 import com.example.nugo.SharedViewModel
 import com.example.nugo.databinding.FragmentContactListBinding
+import com.example.nugo.sticker.StickerAdapter
 
 class ContactListFragment : Fragment() {
     private val binding by lazy { FragmentContactListBinding.inflate(layoutInflater) }
-    private val adapter by lazy { ContactListAdapter() }
+    private val contactAdapter by lazy { ContactListAdapter(mutableListOf<ContactData>(), viewModel) }
     private val PICK_IMAGE_REQUEST = 1 // 추가된 부분: 이미지 선택 요청 코드
     private val viewModel by activityViewModels<SharedViewModel>()
     private lateinit var addFriendLauncher: ActivityResultLauncher<Intent>
@@ -42,10 +45,10 @@ class ContactListFragment : Fragment() {
     }
 
     private fun initView() = with(binding) {
-        recycleListView.adapter = adapter
+        recycleListView.adapter = contactAdapter
         recycleListView.layoutManager = LinearLayoutManager(requireContext())
 
-        adapter.itemClick = object : ContactListAdapter.ItemClick {
+        contactAdapter.itemClick = object : ContactListAdapter.ItemClick {
             override fun onClick(position: Int, contact: ContactData) {
                 val fragmentContactDetail = ContactDetailFragment.newInstance(contact)
                 requireActivity().supportFragmentManager.beginTransaction()
@@ -55,7 +58,7 @@ class ContactListFragment : Fragment() {
             }
         }
 
-        adapter.itemClick2 = object : ContactListAdapter.ItemClick {
+        contactAdapter.itemClick2 = object : ContactListAdapter.ItemClick {
             override fun onClick(position: Int, contact: ContactData) {
                 val fragmentListAddFirstSticker =
                     ListAddFirstStickerFragment.newInstance(contact)
@@ -69,7 +72,7 @@ class ContactListFragment : Fragment() {
             }
         }
 
-        adapter.recentStickerClick = object : ContactListAdapter.ItemClick {
+        contactAdapter.recentStickerClick = object : ContactListAdapter.ItemClick {
             override fun onClick(position: Int, contact: ContactData) {
                 viewModel.editContactData(position, contact)
             }
@@ -114,8 +117,8 @@ class ContactListFragment : Fragment() {
     private fun initViewModel() = with(viewModel) {
         contacts.observe(viewLifecycleOwner) {
             Log.d(TAG, "Contact list is changed. ${it.size}")
-            adapter.updateData(it)
-            adapter.notifyDataSetChanged()
+            contactAdapter.updateData(it)
+            contactAdapter.notifyDataSetChanged()
         }
     }
 
@@ -141,4 +144,5 @@ class ContactListFragment : Fragment() {
             ContactListFragment().apply {
             }
     }
+
 }

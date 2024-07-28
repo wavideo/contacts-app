@@ -4,13 +4,14 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.example.nugo.SharedViewModel
 import com.example.nugo.sticker.StickerData
 import com.example.nugo.sticker.StickerManager
 import com.example.nugo.databinding.ItemStickerForContactListMiniBinding
 
 class ContactListStickerMiniAdapter(
     private val items: MutableList<StickerData>,
-    private val contactData: ContactData
+    private val contactData: ContactData, private val viewModel: SharedViewModel
 ) :
     RecyclerView.Adapter<ContactListStickerMiniAdapter.Holder>() {
     inner class Holder(val binding: ItemStickerForContactListMiniBinding) :
@@ -39,10 +40,10 @@ class ContactListStickerMiniAdapter(
 
     override fun onBindViewHolder(holder: Holder, position: Int) {
 
-        holder.img.setImageResource(StickerManager.stickers[position].findDrawable())
+        holder.img.setImageResource(viewModel.getStickerList()[position].findDrawable())
 
         val myContact = contactData
-        val mySticker = StickerManager.stickers[position]
+        val mySticker = viewModel.getStickerList()[position]
         val myStickerNum = when (position) {
             0 -> myContact.sticker0
             1 -> myContact.sticker1

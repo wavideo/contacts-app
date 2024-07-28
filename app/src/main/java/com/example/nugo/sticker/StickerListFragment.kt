@@ -8,12 +8,14 @@ package com.example.nugo.sticker
 2. 스티커 디테일 (StickerDetailFragment)로 선택한 스티커를 넘겨줍니다*/
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.setFragmentResultListener
+import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.nugo.R
 import com.example.nugo.SharedViewModel
@@ -57,16 +59,13 @@ class StickerListFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-
-        viewModel.count.observe(viewLifecycleOwner){
-            binding.tvTitle.text = it.toString()
-        }
-
+//        viewModel.stickers.observe(viewLifecycleOwner){
+//            binding.tvTitle.text = it.toString()
+//        }
 
 
         val contacts = viewModel.getContactList()
-        val stickerAdapter = StickerAdapter(StickerManager.stickers, contacts)
+        val stickerAdapter = StickerAdapter(viewModel.getStickerList(), contacts, viewModel)
         binding.rvStickerList.adapter =stickerAdapter
         binding.rvStickerList.layoutManager = LinearLayoutManager( requireContext() )
 
@@ -75,7 +74,7 @@ class StickerListFragment : Fragment() {
             override fun onClick(view: View, position: Int) {
                 // StickerDetailFragment로 넘어가야합니다
 
-                if (StickerManager.stickers[position].isDelete==true){
+                if (viewModel.getStickerList()[position].isDelete==true){
                         val fragment = NewStickerDialogueFragment.newInstance(position)
                         requireActivity().supportFragmentManager.beginTransaction()
                             .replace(R.id.cv_popup_container, fragment)
@@ -90,8 +89,11 @@ class StickerListFragment : Fragment() {
                         .addToBackStack(null)
                         .commit()
                 }
+//                viewModel.stickers.observe(requireActivity(), Observer {
+//                    stickerAdapter.updateData(viewModel.getStickerList())
+//                })
                 setFragmentResultListener("dataSend") { key, bundle ->
-                    stickerAdapter.updateData(StickerManager.stickers)
+                    stickerAdapter.updateData(viewModel.getStickerList())
                 }
             }
         }

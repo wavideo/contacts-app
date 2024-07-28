@@ -7,9 +7,11 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.core.os.bundleOf
 import androidx.fragment.app.DialogFragment
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.setFragmentResult
 import androidx.recyclerview.widget.GridLayoutManager
 import com.example.nugo.GridItemAdapter
+import com.example.nugo.SharedViewModel
 import com.example.nugo.databinding.FragmentNewStickerDialogueBinding
 
 // TODO: Rename parameter arguments, choose names that match
@@ -19,7 +21,7 @@ private const val ARG_STICKER_INDEX = "stickerIndex"
 class NewStickerDialogueFragment() : DialogFragment() {
     private var stickerIndex: Int? = null
     private val binding by lazy { FragmentNewStickerDialogueBinding.inflate(layoutInflater) }
-
+    private val viewModel by activityViewModels<SharedViewModel>()
     data class IconPicker(val index: Int, var isSelected: Boolean)
     val iconPickers:MutableList<IconPicker> = mutableListOf<IconPicker>()
 
@@ -54,19 +56,19 @@ class NewStickerDialogueFragment() : DialogFragment() {
 
         val stickerIndex = stickerIndex?.toInt() ?: -1 // 널체크
 
-        if (StickerManager.stickers[stickerIndex].isDelete == false) {
-            binding.etStickerName.setText(StickerManager.stickers[stickerIndex].name)
+        if (viewModel.getStickerList()[stickerIndex].isDelete == false) {
+            binding.etStickerName.setText(viewModel.getStickerList()[stickerIndex].name)
         } else {
             binding.etStickerName.setText("")
         }
-        val recentIconImg = StickerManager.stickers[stickerIndex].icon
+        val recentIconImg = viewModel.getStickerList()[stickerIndex].icon
 
         iconPickersadd()
         val adapter = GridItemAdapter(iconPickers, recentIconImg)
         binding.rvStickerList.adapter = adapter
         binding.rvStickerList.layoutManager = GridLayoutManager(requireContext(), 5)
 
-        var sellectName: String = StickerManager.stickers[stickerIndex].name
+        var sellectName: String = viewModel.getStickerList()[stickerIndex].name
         var sellectIconImg: Int = recentIconImg
 
         adapter.itemClick = object : GridItemAdapter.ItemClick {
@@ -89,9 +91,9 @@ class NewStickerDialogueFragment() : DialogFragment() {
             }
 
             sellectName = binding.etStickerName.text.toString()
-            StickerManager.stickers[stickerIndex].name = sellectName
-            StickerManager.stickers[stickerIndex].icon = sellectIconImg
-            StickerManager.stickers[stickerIndex].isDelete = false
+            viewModel.getStickerList()[stickerIndex].name = sellectName
+            viewModel.getStickerList()[stickerIndex].icon = sellectIconImg
+            viewModel.getStickerList()[stickerIndex].isDelete = false
 
             val resultBundle = bundleOf("dataSend" to "dataSend")
             setFragmentResult("dataSend", resultBundle)

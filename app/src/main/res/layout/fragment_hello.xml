@@ -28,8 +28,7 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="@dimen/horizontal_margin_big"
             android:paddingHorizontal="@dimen/horizontal_margin_big"
-            android:text="어떤 스티커로 \n
-세팅해드릴까요?"
+            android:text="스티커를 골라주세요!"
             android:textSize="@dimen/title"
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"
