@@ -1,20 +1,18 @@
-package com.example.nugo
+package com.example.nugo.sticker
 
-import android.content.res.ColorStateList
-import android.graphics.Color
 import android.os.Bundle
-import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.core.os.bundleOf
 import androidx.fragment.app.DialogFragment
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.setFragmentResult
+import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
+import com.example.nugo.GridItemAdapter
+import com.example.nugo.SharedViewModel
 import com.example.nugo.databinding.FragmentNewStickerDialogueBinding
 
 // TODO: Rename parameter arguments, choose names that match
@@ -24,11 +22,13 @@ private const val ARG_STICKER_INDEX = "stickerIndex"
 class NewStickerDialogueFragment() : DialogFragment() {
     private var stickerIndex: Int? = null
     private val binding by lazy { FragmentNewStickerDialogueBinding.inflate(layoutInflater) }
+    private val viewModel by activityViewModels<SharedViewModel>()
 
     data class IconPicker(val index: Int, var isSelected: Boolean)
-    val iconPickers:MutableList<IconPicker> = mutableListOf<IconPicker>()
 
-    private fun iconPickersadd(){
+    val iconPickers: MutableList<IconPicker> = mutableListOf<IconPicker>()
+
+    private fun iconPickersadd() {
         for (i in 0..34) {
             iconPickers.add(IconPicker(i, false))
         }
@@ -59,19 +59,19 @@ class NewStickerDialogueFragment() : DialogFragment() {
 
         val stickerIndex = stickerIndex?.toInt() ?: -1 // 널체크
 
-        if (StickerManager.stickers[stickerIndex].isDelete == false) {
-            binding.etStickerName.setText(StickerManager.stickers[stickerIndex].name)
+        if (viewModel.getStickerList()[stickerIndex].isDelete == false) {
+            binding.etStickerName.setText(viewModel.getStickerList()[stickerIndex].name)
         } else {
             binding.etStickerName.setText("")
         }
-        val recentIconImg = StickerManager.stickers[stickerIndex].icon
+        val recentIconImg = viewModel.getStickerList()[stickerIndex].icon
 
         iconPickersadd()
         val adapter = GridItemAdapter(iconPickers, recentIconImg)
         binding.rvStickerList.adapter = adapter
         binding.rvStickerList.layoutManager = GridLayoutManager(requireContext(), 5)
 
-        var sellectName: String = StickerManager.stickers[stickerIndex].name
+        var sellectName: String = viewModel.getStickerList()[stickerIndex].name
         var sellectIconImg: Int = recentIconImg
 
         adapter.itemClick = object : GridItemAdapter.ItemClick {
@@ -82,21 +82,24 @@ class NewStickerDialogueFragment() : DialogFragment() {
 
         binding.btnEdit.setOnClickListener {
 
-            if (binding.etStickerName.text.isEmpty()){
+            if (binding.etStickerName.text.isEmpty()) {
                 Toast.makeText(requireContext(), "스티커 이름을 입력하세요", Toast.LENGTH_SHORT).show();
                 return@setOnClickListener;
-            } else if (binding.etStickerName.text.toString().length > 9){
+            } else if (binding.etStickerName.text.toString().length > 9) {
                 Toast.makeText(requireContext(), "최대 8글자 까지 입력할 수 있습니다", Toast.LENGTH_SHORT).show();
                 return@setOnClickListener;
-            } else if (sellectIconImg == 0){
+            } else if (sellectIconImg == 0) {
                 Toast.makeText(requireContext(), "스티커 아이콘을 선택하세요", Toast.LENGTH_SHORT).show()
                 return@setOnClickListener;
             }
 
             sellectName = binding.etStickerName.text.toString()
-            StickerManager.stickers[stickerIndex].name = sellectName
-            StickerManager.stickers[stickerIndex].icon = sellectIconImg
-            StickerManager.stickers[stickerIndex].isDelete = false
+            viewModel.stickers.observe(viewLifecycleOwner, Observer { stickers ->
+                stickers[stickerIndex].name = sellectName
+                stickers[stickerIndex].icon = sellectIconImg
+                stickers[stickerIndex].isDelete = false
+            })
+            viewModel.updateStickers()
 
             val resultBundle = bundleOf("dataSend" to "dataSend")
             setFragmentResult("dataSend", resultBundle)
@@ -104,7 +107,7 @@ class NewStickerDialogueFragment() : DialogFragment() {
             requireActivity().onBackPressed()
         }
 
-        binding.ivIcClose.setOnClickListener{
+        binding.ivIcClose.setOnClickListener {
             requireActivity().onBackPressed()
         }
 

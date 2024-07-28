@@ -18,10 +18,10 @@
             android:name=".AddFriendActivity"
             android:exported="false" />
         <activity
-            android:name=".ContactListItem"
+            android:name=".contact.ContactListItem"
             android:exported="false" />
         <activity
-            android:name=".ContactListAdapter"
+            android:name=".contact.ContactListAdapter"
             android:exported="false" />
         <activity
             android:name=".MainActivity"

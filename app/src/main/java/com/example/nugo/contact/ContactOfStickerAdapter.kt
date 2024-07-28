@@ -1,16 +1,19 @@
-package com.example.nugo
+package com.example.nugo.contact
 
 import android.annotation.SuppressLint
-import android.view.GestureDetector
 import android.view.LayoutInflater
-import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.example.nugo.SharedViewModel
+import com.example.nugo.sticker.StickerDetailFragment
+import com.example.nugo.sticker.StickerManager
 import com.example.nugo.databinding.ItemContactWithStickerBinding
+import com.example.nugo.sticker.StickerDetailFragment.Companion.ContactOfStickers
 
-class ContactOfStickerAdapter(val items:MutableList<ContactData>):RecyclerView.Adapter<ContactOfStickerAdapter.Holder>() {
-    inner class Holder(val binding : ItemContactWithStickerBinding) :RecyclerView.ViewHolder(binding.root){
+class ContactOfStickerAdapter(private val items:MutableList<ContactData>, private val viewModel: SharedViewModel):
+    RecyclerView.Adapter<ContactOfStickerAdapter.Holder>() {
+    inner class Holder(val binding : ItemContactWithStickerBinding) : RecyclerView.ViewHolder(binding.root){
         val tvName = binding.tvName
         val ivProfile = binding.ivProfile
         val ivStickerIcon = binding.ivStickerIcon
@@ -19,7 +22,11 @@ class ContactOfStickerAdapter(val items:MutableList<ContactData>):RecyclerView.A
         val ivIcClose = binding.ivIcClose
     }
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): Holder {
-        var binding = ItemContactWithStickerBinding.inflate(LayoutInflater.from(parent.context),parent,false)
+        var binding = ItemContactWithStickerBinding.inflate(
+            LayoutInflater.from(parent.context),
+            parent,
+            false
+        )
         return Holder(binding)
     }
 
@@ -56,6 +63,7 @@ class ContactOfStickerAdapter(val items:MutableList<ContactData>):RecyclerView.A
                 else -> StickerDetailFragment.ContactOfStickers[position].sticker4 = 0
             }
             StickerDetailFragment.ContactOfStickers.removeAt(position)
+            viewModel.updateContactList()
             notifyDataSetChanged()
         }
 
@@ -70,6 +78,8 @@ class ContactOfStickerAdapter(val items:MutableList<ContactData>):RecyclerView.A
                 else -> (++StickerDetailFragment.ContactOfStickers[position].sticker4).toString()
             }
             myContact.recentSticker = StickerManager.detailPicker
+
+            viewModel.editContactData(ContactOfStickers[position])
         }
 
 
@@ -86,11 +96,11 @@ class ContactOfStickerAdapter(val items:MutableList<ContactData>):RecyclerView.A
             // position 말고 다른 거 넣어야됨
         }
         holder.ivStickerIcon.setImageResource(when (StickerManager.detailPicker){
-            0 -> StickerManager.stickers[0].findDrawable()
-            1 -> StickerManager.stickers[1].findDrawable()
-            2 -> StickerManager.stickers[2].findDrawable()
-            3 -> StickerManager.stickers[3].findDrawable()
-            else -> StickerManager.stickers[4].findDrawable()
+            0 -> viewModel.getStickerList()[0].findDrawable()
+            1 -> viewModel.getStickerList()[1].findDrawable()
+            2 -> viewModel.getStickerList()[2].findDrawable()
+            3 -> viewModel.getStickerList()[3].findDrawable()
+            else -> viewModel.getStickerList()[4].findDrawable()
         })
     }
 
