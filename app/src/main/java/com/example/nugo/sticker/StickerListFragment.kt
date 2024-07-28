@@ -15,7 +15,9 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.setFragmentResultListener
+import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModel
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.nugo.R
 import com.example.nugo.SharedViewModel
@@ -33,7 +35,7 @@ import com.example.nugo.databinding.FragmentStickerListBinding
  */
 class StickerListFragment : Fragment() {
 
-//    // TODO: Rename and change types of parameters
+    //    // TODO: Rename and change types of parameters
 //    private var param1: String? = null
 //    private var param2: String? = null
     private val binding by lazy { FragmentStickerListBinding.inflate(layoutInflater) }
@@ -59,45 +61,40 @@ class StickerListFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-//        viewModel.stickers.observe(viewLifecycleOwner){
-//            binding.tvTitle.text = it.toString()
-//        }
 
 
-        val contacts = viewModel.getContactList()
-        val stickerAdapter = StickerAdapter(viewModel.getStickerList(), contacts, viewModel)
-        binding.rvStickerList.adapter =stickerAdapter
-        binding.rvStickerList.layoutManager = LinearLayoutManager( requireContext() )
 
-        // itemClick.onClick 추상메서드 정의
-        stickerAdapter.itemClick = object : StickerAdapter.ItemClick {
-            override fun onClick(view: View, position: Int) {
-                // StickerDetailFragment로 넘어가야합니다
 
-                if (viewModel.getStickerList()[position].isDelete==true){
-                        val fragment = NewStickerDialogueFragment.newInstance(position)
-                        requireActivity().supportFragmentManager.beginTransaction()
-                            .replace(R.id.cv_popup_container, fragment)
-                            .addToBackStack(null)
-                            .commit()
+            val contacts = viewModel.getContactList()
+            val stickerAdapter = StickerAdapter(viewModel.getStickerList(), contacts, viewModel, viewLifecycleOwner)
+            binding.rvStickerList.adapter = stickerAdapter
+            binding.rvStickerList.layoutManager = LinearLayoutManager(requireContext())
 
-                } else {
-                    val fragment = StickerDetailFragment.newInstance(position)
+            // itemClick.onClick 추상메서드 정의
+            stickerAdapter.itemClick = object : StickerAdapter.ItemClick {
+                override fun onClick(view: View, position: Int) {
+                    // StickerDetailFragment로 넘어가야합니다
 
-                    requireActivity().supportFragmentManager.beginTransaction()
-                        .replace(R.id.frameLayout, fragment)
-                        .addToBackStack(null)
-                        .commit()
-                }
-//                viewModel.stickers.observe(requireActivity(), Observer {
-//                    stickerAdapter.updateData(viewModel.getStickerList())
-//                })
-                setFragmentResultListener("dataSend") { key, bundle ->
-                    stickerAdapter.updateData(viewModel.getStickerList())
+                        if (viewModel.getStickerList()[position].isDelete == true) {
+                            val fragment = NewStickerDialogueFragment.newInstance(position)
+                            requireActivity().supportFragmentManager.beginTransaction()
+                                .replace(R.id.cv_popup_container, fragment)
+                                .addToBackStack(null)
+                                .commit()
+
+                        } else {
+                            val fragment = StickerDetailFragment.newInstance(position)
+
+                            requireActivity().supportFragmentManager.beginTransaction()
+                                .replace(R.id.frameLayout, fragment)
+                                .addToBackStack(null)
+                                .commit()
+                        }
+                        setFragmentResultListener("dataSend") { key, bundle ->
+                            stickerAdapter.updateData(viewModel.getStickerList())
+                        }
                 }
             }
-        }
-
     }
 
     companion object {

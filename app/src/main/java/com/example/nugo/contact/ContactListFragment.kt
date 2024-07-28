@@ -16,6 +16,8 @@ import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.setFragmentResult
+import androidx.lifecycle.LifecycleOwner
+import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.nugo.AddFriendActivity
 import com.example.nugo.EXTRA_NEW_USER_NAME
@@ -29,7 +31,7 @@ import com.example.nugo.sticker.StickerAdapter
 
 class ContactListFragment : Fragment() {
     private val binding by lazy { FragmentContactListBinding.inflate(layoutInflater) }
-    private val contactAdapter by lazy { ContactListAdapter(mutableListOf<ContactData>(), viewModel) }
+    private val contactAdapter by lazy { ContactListAdapter(mutableListOf<ContactData>(), viewModel, viewLifecycleOwner) }
     private val PICK_IMAGE_REQUEST = 1 // 추가된 부분: 이미지 선택 요청 코드
     private val viewModel by activityViewModels<SharedViewModel>()
     private lateinit var addFriendLauncher: ActivityResultLauncher<Intent>
@@ -42,6 +44,9 @@ class ContactListFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         initView()
         initViewModel()
+        viewModel.contacts.observe(viewLifecycleOwner, Observer { newData ->
+            contactAdapter.updateData(newData)
+        })
     }
 
     private fun initView() = with(binding) {

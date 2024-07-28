@@ -9,7 +9,7 @@ import com.example.nugo.sticker.StickerData
 class SharedViewModel : ViewModel() {
     private val contactList = mutableListOf<ContactData>()
     private val _contacts = MutableLiveData<List<ContactData>>()
-    val contacts: LiveData<List<ContactData>> = _contacts
+    var contacts: LiveData<List<ContactData>> = _contacts
 
     private val stickerList = mutableListOf<StickerData>()
     private val _stickers = MutableLiveData<List<StickerData>>()
@@ -60,6 +60,10 @@ class SharedViewModel : ViewModel() {
         _contacts.value = contactList.toList()
     }
 
+
+    fun updateStickers() {
+        _stickers.value = stickerList.toList()
+    }
 
     fun editStickerDataByIndex(index: Int, data: StickerData) {
         stickerList[index] = data

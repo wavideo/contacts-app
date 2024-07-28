@@ -11,6 +11,7 @@ import androidx.core.os.bundleOf
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.setFragmentResult
 import androidx.fragment.app.setFragmentResultListener
+import androidx.lifecycle.Observer
 import com.example.nugo.contact.ContactData
 import com.example.nugo.contact.ContactListFragment
 import com.example.nugo.contact.ContactManager
@@ -45,124 +46,140 @@ class ListAddFirstStickerFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+
+
         // 닫기 버튼
         binding.ivCancel.setOnClickListener {
             parentFragmentManager.popBackStack()
         }
 
         fun update() {
-            binding.ivListAddFirstSticker1.setImageResource(StickerManager.icons[viewModel.getStickerList()[0].icon])
-            binding.ivListAddFirstSticker2.setImageResource(StickerManager.icons[viewModel.getStickerList()[1].icon])
-            binding.ivListAddFirstSticker3.setImageResource(StickerManager.icons[viewModel.getStickerList()[2].icon])
-            binding.ivListAddFirstSticker4.setImageResource(StickerManager.icons[viewModel.getStickerList()[3].icon])
-            binding.ivListAddFirstSticker5.setImageResource(StickerManager.icons[viewModel.getStickerList()[4].icon])
+            viewModel.stickers.observe(viewLifecycleOwner, Observer { stickers ->
 
-            binding.tvListAddFirstSticker1Name.text = viewModel.getStickerList()[0].name
-            binding.tvListAddFirstSticker2Name.text = viewModel.getStickerList()[1].name
-            binding.tvListAddFirstSticker3Name.text = viewModel.getStickerList()[2].name
-            binding.tvListAddFirstSticker4Name.text = viewModel.getStickerList()[3].name
-            binding.tvListAddFirstSticker5Name.text = viewModel.getStickerList()[4].name
+            binding.ivListAddFirstSticker1.setImageResource(StickerManager.icons[stickers[0].icon])
+            binding.ivListAddFirstSticker2.setImageResource(StickerManager.icons[stickers[1].icon])
+            binding.ivListAddFirstSticker3.setImageResource(StickerManager.icons[stickers[2].icon])
+            binding.ivListAddFirstSticker4.setImageResource(StickerManager.icons[stickers[3].icon])
+            binding.ivListAddFirstSticker5.setImageResource(StickerManager.icons[stickers[4].icon])
+
+            binding.tvListAddFirstSticker1Name.text = stickers[0].name
+            binding.tvListAddFirstSticker2Name.text = stickers[1].name
+            binding.tvListAddFirstSticker3Name.text = stickers[2].name
+            binding.tvListAddFirstSticker4Name.text = stickers[3].name
+            binding.tvListAddFirstSticker5Name.text = stickers[4].name
+            })
         }
         update()
 
         binding.ivListAddFirstSticker1.setOnClickListener {
-            if (viewModel.getStickerList()[0].isDelete == true) {
-                val fragment = NewStickerDialogueFragment.newInstance(0)
-                requireActivity().supportFragmentManager.beginTransaction()
-                    .replace(R.id.cv_popup_container, fragment)
-                    .addToBackStack(null)
-                    .commit()
-                setFragmentResultListener("dataSend") { key, bundle ->
-                    update()
-                }
-            } else {
-                contact.recentSticker = 0
-                contact.sticker0 += 1
-                viewModel.editContactData(contact)
-                Toast.makeText(binding.root.context, "스티커가 추가되었습니다", Toast.LENGTH_SHORT).show()
-                parentFragmentManager.popBackStack()
+            viewModel.stickers.observe(viewLifecycleOwner, Observer { stickers ->
 
-            }
+                if (stickers[0].isDelete) {
+                    val fragment = NewStickerDialogueFragment.newInstance(0)
+                    requireActivity().supportFragmentManager.beginTransaction()
+                        .replace(R.id.cv_popup_container, fragment)
+                        .addToBackStack(null)
+                        .commit()
+                    setFragmentResultListener("dataSend") { key, bundle ->
+                        update()
+                    }
+                } else {
+                    contact.recentSticker = 0
+                    contact.sticker0 += 1
+                    viewModel.editContactData(contact)
+                    Toast.makeText(binding.root.context, "스티커가 추가되었습니다", Toast.LENGTH_SHORT).show()
+                    parentFragmentManager.popBackStack()
+                }
+            })
+
         }
 
         binding.ivListAddFirstSticker2.setOnClickListener {
-            if (viewModel.getStickerList()[1].isDelete == true) {
-                val fragment = NewStickerDialogueFragment.newInstance(1)
-                requireActivity().supportFragmentManager.beginTransaction()
-                    .replace(R.id.cv_popup_container, fragment)
-                    .addToBackStack(null)
-                    .commit()
-                setFragmentResultListener("dataSend") { key, bundle ->
-                    update()
-                    requireActivity().onBackPressed()
-                }
-            } else {
-                contact.recentSticker = 1
-                contact.sticker1 += 1
-                viewModel.editContactData(contact)
-                Toast.makeText(binding.root.context, "스티커가 추가되었습니다", Toast.LENGTH_SHORT).show()
-                parentFragmentManager.popBackStack()
+            viewModel.stickers.observe(viewLifecycleOwner, Observer { stickers ->
+                if (stickers[1].isDelete) {
+                    val fragment = NewStickerDialogueFragment.newInstance(1)
+                    requireActivity().supportFragmentManager.beginTransaction()
+                        .replace(R.id.cv_popup_container, fragment)
+                        .addToBackStack(null)
+                        .commit()
+                    setFragmentResultListener("dataSend") { key, bundle ->
+                        update()
+                    }
+                } else {
+                    contact.recentSticker = 1
+                    contact.sticker1 += 1
+                    viewModel.editContactData(contact)
+                    Toast.makeText(binding.root.context, "스티커가 추가되었습니다", Toast.LENGTH_SHORT).show()
+                    parentFragmentManager.popBackStack()
 
-            }
+                }
+            })
         }
 
         binding.ivListAddFirstSticker3.setOnClickListener {
-            if (viewModel.getStickerList()[2].isDelete == true) {
-                val fragment = NewStickerDialogueFragment.newInstance(2)
-                requireActivity().supportFragmentManager.beginTransaction()
-                    .replace(R.id.cv_popup_container, fragment)
-                    .addToBackStack(null)
-                    .commit()
-                setFragmentResultListener("dataSend") { key, bundle ->
-                    update()
-                }
-            } else {
-                contact.recentSticker = 2
-                contact.sticker2 += 1
-                viewModel.editContactData(contact)
-                Toast.makeText(binding.root.context, "스티커가 추가되었습니다", Toast.LENGTH_SHORT).show()
-                parentFragmentManager.popBackStack()
+            viewModel.stickers.observe(viewLifecycleOwner, Observer { stickers ->
+                if (stickers[2].isDelete) {
+                    val fragment = NewStickerDialogueFragment.newInstance(2)
+                    requireActivity().supportFragmentManager.beginTransaction()
+                        .replace(R.id.cv_popup_container, fragment)
+                        .addToBackStack(null)
+                        .commit()
+                    setFragmentResultListener("dataSend") { key, bundle ->
+                        update()
+                    }
+                } else {
+                    contact.recentSticker = 2
+                    contact.sticker2 += 1
+                    viewModel.editContactData(contact)
+                    Toast.makeText(binding.root.context, "스티커가 추가되었습니다", Toast.LENGTH_SHORT).show()
+                    parentFragmentManager.popBackStack()
 
-            }
+                }
+            })
         }
 
         binding.ivListAddFirstSticker4.setOnClickListener {
-            if (viewModel.getStickerList()[3].isDelete == true) {
-                val fragment = NewStickerDialogueFragment.newInstance(3)
-                requireActivity().supportFragmentManager.beginTransaction()
-                    .replace(R.id.cv_popup_container, fragment)
-                    .addToBackStack(null)
-                    .commit()
-                setFragmentResultListener("dataSend") { key, bundle ->
-                    update()
-                }
-            } else {
-                contact.recentSticker = 3
-                contact.sticker3 += 1
-                viewModel.editContactData(contact)
-                Toast.makeText(binding.root.context, "스티커가 추가되었습니다", Toast.LENGTH_SHORT).show()
-                parentFragmentManager.popBackStack()
+            viewModel.stickers.observe(viewLifecycleOwner, Observer { stickers ->
+                if (stickers[3].isDelete) {
+                    val fragment = NewStickerDialogueFragment.newInstance(3)
+                    requireActivity().supportFragmentManager.beginTransaction()
+                        .replace(R.id.cv_popup_container, fragment)
+                        .addToBackStack(null)
+                        .commit()
+                    setFragmentResultListener("dataSend") { key, bundle ->
+                        update()
+                    }
+                } else {
+                    contact.recentSticker = 3
+                    contact.sticker3 += 1
+                    viewModel.editContactData(contact)
+                    Toast.makeText(binding.root.context, "스티커가 추가되었습니다", Toast.LENGTH_SHORT).show()
+                    parentFragmentManager.popBackStack()
 
-            }
+                }
+            })
         }
 
         binding.ivListAddFirstSticker5.setOnClickListener {
-            if (viewModel.getStickerList()[4].isDelete == true) {
-                val fragment = NewStickerDialogueFragment.newInstance(4)
-                requireActivity().supportFragmentManager.beginTransaction()
-                    .replace(R.id.cv_popup_container, fragment)
-                    .addToBackStack(null)
-                    .commit()
-                setFragmentResultListener("dataSend") { key, bundle ->
-                    update()
+            viewModel.stickers.observe(viewLifecycleOwner, Observer { stickers ->
+                if (stickers[4].isDelete) {
+                    val fragment = NewStickerDialogueFragment.newInstance(4)
+                    requireActivity().supportFragmentManager.beginTransaction()
+                        .replace(R.id.cv_popup_container, fragment)
+                        .addToBackStack(null)
+                        .commit()
+                    setFragmentResultListener("dataSend") { key, bundle ->
+                        update()
+                    }
+                } else {
+                    contact.recentSticker = 4
+                    contact.sticker4 += 1
+                    viewModel.editContactData(contact)
+                    Toast.makeText(binding.root.context, "스티커가 추가되었습니다", Toast.LENGTH_SHORT).show()
+                    parentFragmentManager.popBackStack()
                 }
-            } else {
-                contact.recentSticker = 4
-                contact.sticker4 += 1
-                viewModel.editContactData(contact)
-                Toast.makeText(binding.root.context, "스티커가 추가되었습니다", Toast.LENGTH_SHORT).show()
-                parentFragmentManager.popBackStack()
-            }
+            })
         }
 
     }
@@ -176,4 +193,6 @@ class ListAddFirstStickerFragment : Fragment() {
                 arguments = bundleOf(ARG_CONTACT_DATA to data)
             }
     }
+
+
 }

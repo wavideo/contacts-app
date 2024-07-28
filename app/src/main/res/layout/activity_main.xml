@@ -25,10 +25,13 @@
         android:layout_height="wrap_content"
         android:background="@color/white"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:tabIndicatorColor="@color/design_default_color_primary"
-        app:tabRippleColor="@color/design_default_color_primary"
-        app:tabSelectedTextColor="@color/design_default_color_primary"
-        app:tabTextColor="@color/black" />
+        app:tabIndicatorGravity="top"
+        app:tabPadding="20dp"
+        app:tabIndicatorHeight="4dp"
+        app:tabIndicatorColor="@color/gray_b"
+        app:tabRippleColor="@color/background_basic"
+        app:tabSelectedTextColor="@color/black"
+        app:tabTextColor="@color/gray_a" />
 
 <!--    <com.google.android.material.appbar.AppBarLayout-->
 <!--        android:id="@+id/appBarLayout"-->

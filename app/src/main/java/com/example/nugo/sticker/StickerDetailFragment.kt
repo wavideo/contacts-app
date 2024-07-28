@@ -16,6 +16,7 @@ import android.view.ViewGroup
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.setFragmentResultListener
+import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.nugo.contact.ContactData
 import com.example.nugo.contact.ContactManager
@@ -57,112 +58,117 @@ class StickerDetailFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        ContactOfStickers.clear()
+        viewModel.stickers.observe(viewLifecycleOwner, Observer { stickers ->
 
-        var stickerIndex: Int = 0
-        paramSticker?.let { stickerIndex = it }
+            ContactOfStickers.clear()
 
-        val contacts = viewModel.getContactList()
-        when (stickerIndex) {
-            0 -> {
-                ContactOfStickers.addAll(contacts.filter { it.sticker0 != 0 })
-                ContactOfStickers.sortByDescending { it.sticker0 }
+            var stickerIndex: Int = 0
+            paramSticker?.let { stickerIndex = it }
+
+            val contacts = viewModel.getContactList()
+            when (stickerIndex) {
+                0 -> {
+                    ContactOfStickers.addAll(contacts.filter { it.sticker0 != 0 })
+                    ContactOfStickers.sortByDescending { it.sticker0 }
+                }
+
+                1 -> {
+                    ContactOfStickers.addAll(contacts.filter { it.sticker1 != 0 })
+                    ContactOfStickers.sortByDescending { it.sticker1 }
+                }
+
+                2 -> {
+                    ContactOfStickers.addAll(contacts.filter { it.sticker2 != 0 })
+                    ContactOfStickers.sortByDescending { it.sticker2 }
+                }
+
+                3 -> {
+                    ContactOfStickers.addAll(contacts.filter { it.sticker3 != 0 })
+                    ContactOfStickers.sortByDescending { it.sticker3 }
+                }
+
+                else -> {
+                    ContactOfStickers.addAll(contacts.filter { it.sticker4 != 0 })
+                    ContactOfStickers.sortByDescending { it.sticker4 }
+                }
             }
 
-            1 -> {
-                ContactOfStickers.addAll(contacts.filter { it.sticker1 != 0 })
-                ContactOfStickers.sortByDescending { it.sticker1 }
+
+            val adapter = ContactOfStickerAdapter(ContactOfStickers, viewModel)
+            binding.rvStickerList.adapter = adapter
+            binding.rvStickerList.layoutManager = LinearLayoutManager(requireContext())
+
+            adapter.itemClick = object : ContactOfStickerAdapter.ItemClick {
+                override fun onClick(view: View, position: Int) {
+
+                    val myIndex = contacts.indexOf(ContactOfStickers[position])
+
+                    val fragment = ContactDetailFragment.newInstance(contacts[myIndex])
+                    requireActivity().supportFragmentManager.beginTransaction()
+                        .replace(R.id.frameLayout, fragment).addToBackStack(null).commit()
+                }
             }
 
-            2 -> {
-                ContactOfStickers.addAll(contacts.filter { it.sticker2 != 0 })
-                ContactOfStickers.sortByDescending { it.sticker2 }
+            binding.ivBtnBack.setOnClickListener {
+                requireActivity().onBackPressed()
             }
 
-            3 -> {
-                ContactOfStickers.addAll(contacts.filter { it.sticker3 != 0 })
-                ContactOfStickers.sortByDescending { it.sticker3 }
-            }
-
-            else -> {
-                ContactOfStickers.addAll(contacts.filter { it.sticker4 != 0 })
-                ContactOfStickers.sortByDescending { it.sticker4 }
-            }
-        }
-
-
-        val adapter = ContactOfStickerAdapter(ContactOfStickers, viewModel)
-        binding.rvStickerList.adapter = adapter
-        binding.rvStickerList.layoutManager = LinearLayoutManager(requireContext())
-
-        adapter.itemClick = object : ContactOfStickerAdapter.ItemClick {
-            override fun onClick(view: View, position: Int) {
-
-                val myIndex = contacts.indexOf(ContactOfStickers[position])
-
-                val fragment = ContactDetailFragment.newInstance(contacts[myIndex])
+            binding.tvBtnEdit.setOnClickListener {
+                val fragment = NewStickerDialogueFragment.newInstance(stickerIndex)
                 requireActivity().supportFragmentManager.beginTransaction()
-                    .replace(R.id.frameLayout, fragment).addToBackStack(null).commit()
+                    .replace(R.id.cv_popup_container, fragment).addToBackStack(null).commit()
             }
-        }
 
-        binding.ivBtnBack.setOnClickListener {
-            requireActivity().onBackPressed()
-        }
-
-        binding.tvBtnEdit.setOnClickListener {
-            val fragment = NewStickerDialogueFragment.newInstance(stickerIndex)
-            requireActivity().supportFragmentManager.beginTransaction()
-                .replace(R.id.cv_popup_container, fragment).addToBackStack(null).commit()
-        }
-
-        setFragmentResultListener("dataSend") { key, bundle ->
-            binding.tvTitle.text = viewModel.getStickerList()[stickerIndex].name
-            binding.ivStickerIcon.setImageResource(viewModel.getStickerList()[stickerIndex].findDrawable())
-            adapter.updateData(ContactOfStickers)
-        }
+            setFragmentResultListener("dataSend") { key, bundle ->
+                binding.tvTitle.text = stickers[stickerIndex].name
+                binding.ivStickerIcon.setImageResource(stickers[stickerIndex].findDrawable())
+                adapter.updateData(ContactOfStickers)
+            }
 
 
-        binding.tvBtnDelete.setOnClickListener {
+            binding.tvBtnDelete.setOnClickListener {
 
-            AlertDialog.Builder(this.requireContext()).setMessage("스티커를 삭제하시겠습니까?")
-                .setPositiveButton("확인") { dialog, which ->
-                    viewModel.getStickerList()[stickerIndex].delete()
-                    when (stickerIndex) {
-                        0 -> {
-                            ContactOfStickers.forEach { it.sticker0 = 0 }
+                AlertDialog.Builder(this.requireContext()).setMessage("스티커를 삭제하시겠습니까?")
+                    .setPositiveButton("확인") { dialog, which ->
+                        stickers[stickerIndex].delete()
+                        when (stickerIndex) {
+                            0 -> {
+                                ContactOfStickers.forEach { it.sticker0 = 0 }
+                            }
+
+                            1 -> ContactOfStickers.forEach {
+                                it.sticker1 = 0
+                            }
+
+                            2 -> ContactOfStickers.forEach {
+                                it.sticker2 = 0
+                            }
+
+                            3 -> ContactOfStickers.forEach {
+                                it.sticker3 = 0
+                            }
+
+                            else -> ContactOfStickers.forEach {
+                                it.sticker4 = 0
+                            }
                         }
+                        stickers[stickerIndex].delete()
+                        viewModel.updateContactList()
 
-                        1 -> ContactOfStickers.forEach {
-                            it.sticker1 = 0
-                        }
+                        requireActivity().onBackPressed()
+                    }.setNegativeButton("취소") { dialog, which ->
+                    }.show()
+            }
 
-                        2 -> ContactOfStickers.forEach { it.sticker2 = 0
-                        }
+            setFragmentResultListener("dataSend") { key, bundle ->
+                adapter.updateData(ContactOfStickers)
+            }
 
-                        3 -> ContactOfStickers.forEach { it.sticker3 = 0
-                        }
+            StickerManager.detailPicker = stickerIndex
 
-                        else -> ContactOfStickers.forEach { it.sticker4 = 0
-                        }
-                    }
-                    viewModel.getStickerList()[stickerIndex].delete()
-                    viewModel.updateContactList()
-
-                    requireActivity().onBackPressed()
-                }.setNegativeButton("취소") { dialog, which ->
-                }.show()
-        }
-
-        setFragmentResultListener("dataSend") { key, bundle ->
-            adapter.updateData(ContactOfStickers)
-        }
-
-        StickerManager.detailPicker = stickerIndex
-        val mySticker = viewModel.getStickerList()[stickerIndex]
-
-        binding.tvTitle.text = mySticker.name
-        binding.ivStickerIcon.setImageResource(mySticker.findDrawable())
+            binding.tvTitle.text = stickers[stickerIndex].name
+            binding.ivStickerIcon.setImageResource(stickers[stickerIndex].findDrawable())
+        })
     }
 
     companion object {

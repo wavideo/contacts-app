@@ -411,6 +411,7 @@ class ContactDetailFragment : Fragment() {
                 3 -> contact.sticker3++
                 else -> contact.sticker4++
             }
+            viewModel.updateContactList()
         }
 
         val mySticker = viewModel.getStickerList()[i]

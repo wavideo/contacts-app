@@ -9,6 +9,7 @@ import com.example.nugo.SharedViewModel
 import com.example.nugo.sticker.StickerDetailFragment
 import com.example.nugo.sticker.StickerManager
 import com.example.nugo.databinding.ItemContactWithStickerBinding
+import com.example.nugo.sticker.StickerDetailFragment.Companion.ContactOfStickers
 
 class ContactOfStickerAdapter(private val items:MutableList<ContactData>, private val viewModel: SharedViewModel):
     RecyclerView.Adapter<ContactOfStickerAdapter.Holder>() {
@@ -62,6 +63,7 @@ class ContactOfStickerAdapter(private val items:MutableList<ContactData>, privat
                 else -> StickerDetailFragment.ContactOfStickers[position].sticker4 = 0
             }
             StickerDetailFragment.ContactOfStickers.removeAt(position)
+            viewModel.updateContactList()
             notifyDataSetChanged()
         }
 
@@ -76,6 +78,8 @@ class ContactOfStickerAdapter(private val items:MutableList<ContactData>, privat
                 else -> (++StickerDetailFragment.ContactOfStickers[position].sticker4).toString()
             }
             myContact.recentSticker = StickerManager.detailPicker
+
+            viewModel.editContactData(ContactOfStickers[position])
         }
 
 

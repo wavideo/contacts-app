@@ -3,6 +3,8 @@ package com.example.nugo.contact
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.lifecycle.LifecycleOwner
+import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.RecyclerView
 import com.example.nugo.SharedViewModel
 import com.example.nugo.sticker.StickerData
@@ -11,7 +13,8 @@ import com.example.nugo.databinding.ItemStickerForContactListMiniBinding
 
 class ContactListStickerMiniAdapter(
     private val items: MutableList<StickerData>,
-    private val contactData: ContactData, private val viewModel: SharedViewModel
+    private val contactData: ContactData, private val viewModel: SharedViewModel,
+    private val lifecycleOwner: LifecycleOwner
 ) :
     RecyclerView.Adapter<ContactListStickerMiniAdapter.Holder>() {
     inner class Holder(val binding: ItemStickerForContactListMiniBinding) :
@@ -40,7 +43,9 @@ class ContactListStickerMiniAdapter(
 
     override fun onBindViewHolder(holder: Holder, position: Int) {
 
-        holder.img.setImageResource(viewModel.getStickerList()[position].findDrawable())
+        viewModel.stickers.observe( lifecycleOwner, Observer { stickers ->
+            holder.img.setImageResource(stickers[position].findDrawable())
+        })
 
         val myContact = contactData
         val mySticker = viewModel.getStickerList()[position]

@@ -12,6 +12,7 @@ import com.example.nugo.contact.ContactManager
 import com.example.nugo.databinding.ActivityMainBinding
 import com.example.nugo.sticker.StickerManager
 import com.google.android.material.tabs.TabLayoutMediator
+
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
 
@@ -31,18 +32,22 @@ class MainActivity : AppCompatActivity() {
                     1 -> "스티커" // 두 번째 탭 텍스트
                     else -> null
                 }
-                when (position) {
-                    0 -> tab.setIcon(R.drawable.ic_launcher_background)
-                    1 -> tab.setIcon(R.drawable.ic_launcher_background)
-                    2 -> tab.setIcon(R.drawable.ic_launcher_background)
-                }
+//                when (position) {
+//                    0 -> {
+//                        tab.setIcon("안녕")
+//                    }
+//
+//                    1 -> {
+//                        tab.setIcon(R.drawable.ic_groups)
+//                    }
+//                }
             }.attach()
 
-            registerOnPageChangeCallback(object:ViewPager2.OnPageChangeCallback(){
+            registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
                 override fun onPageSelected(position: Int) {
                     super.onPageSelected(position)
-                    Log.i ("포지션","포지션 $position")
-                    if (position == 0){
+                    Log.i("포지션", "포지션 $position")
+                    if (position == 0) {
 
                     } else {
 
