@@ -19,6 +19,7 @@ import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModel
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.nugo.HelloFragment
 import com.example.nugo.R
 import com.example.nugo.SharedViewModel
 import com.example.nugo.databinding.FragmentStickerListBinding
@@ -70,7 +71,15 @@ class StickerListFragment : Fragment() {
             binding.rvStickerList.adapter = stickerAdapter
             binding.rvStickerList.layoutManager = LinearLayoutManager(requireContext())
 
-            // itemClick.onClick 추상메서드 정의
+            binding.tvBtnReset.setOnClickListener{
+                val fragmentHello = HelloFragment.newInstance()
+                requireActivity().supportFragmentManager.beginTransaction()
+                    .replace(R.id.frameLayout, fragmentHello)
+                    .addToBackStack(null)
+                    .commit()
+            }
+
+        // itemClick.onClick 추상메서드 정의
             stickerAdapter.itemClick = object : StickerAdapter.ItemClick {
                 override fun onClick(view: View, position: Int) {
                     // StickerDetailFragment로 넘어가야합니다

@@ -36,103 +36,482 @@
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/rv_sticker_list"
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginHorizontal="@dimen/horizontal_margin"
-        android:background="@drawable/shape_rectangle_radius_12"
-        android:backgroundTint="@color/white"
-        android:padding="20dp"
+        android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/cl_top_bar">
 
-        <TextView
-            android:id="@+id/tv_text1"
-            android:layout_width="wrap_content"
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="누군가의 고마움을 기억하기"
-            android:textSize="20dp"
-            android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
-
-        <ImageView
-            android:id="@+id/ic_icon1"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:background="@drawable/shape_circle_background"
-            android:backgroundTint="@color/background_basic"
-            android:padding="10dp"
-            android:src="@drawable/imoge01_thumbsup"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/ic_icon2"
-            app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toBottomOf="@+id/cl_top_bar">
 
-        <ImageView
-            android:id="@+id/ic_icon2"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:background="@drawable/shape_circle_background"
-            android:backgroundTint="@color/background_basic"
-            android:padding="10dp"
-            android:src="@drawable/imoge01_thumbsup"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/ic_icon3"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toEndOf="@+id/ic_icon1"
-            app:layout_constraintTop_toTopOf="parent" />
+            <TextView
+                android:id="@+id/tv_text1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingHorizontal="@dimen/horizontal_margin_big"
+                android:text="누군가의 고마움"
+                android:textSize="20dp"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/cl_top_bar" />
 
-        <ImageView
-            android:id="@+id/ic_icon3"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:background="@drawable/shape_circle_background"
-            android:backgroundTint="@color/background_basic"
-            android:padding="10dp"
-            android:src="@drawable/imoge01_thumbsup"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/ic_icon4"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toEndOf="@+id/ic_icon2"
-            app:layout_constraintTop_toTopOf="parent" />
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/rv_sticker_list"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/horizontal_margin"
+                android:layout_marginTop="8dp"
+                android:background="@drawable/shape_rectangle_radius_12"
+                android:backgroundTint="@color/white"
+                android:padding="20dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.057"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tv_text1">
 
-        <ImageView
-            android:id="@+id/ic_icon4"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:background="@drawable/shape_circle_background"
-            android:backgroundTint="@color/background_basic"
-            android:padding="10dp"
-            android:src="@drawable/imoge01_thumbsup"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/ic_icon5"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toEndOf="@+id/ic_icon3"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+                <ImageView
+                    android:id="@+id/ic_icon1"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:background="@drawable/shape_circle_background"
+                    android:backgroundTint="@color/background_basic"
+                    android:padding="10dp"
+                    android:src="@drawable/imoge01_thumbsup"
+                    app:layout_constraintEnd_toStartOf="@+id/ic_icon2"
+                    app:layout_constraintHorizontal_bias="0.5"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
 
-        <ImageView
-            android:id="@+id/ic_icon5"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:background="@drawable/shape_circle_background"
-            android:backgroundTint="@color/background_basic"
-            android:padding="10dp"
-            android:src="@drawable/imoge01_thumbsup"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toEndOf="@+id/ic_icon4"
-            app:layout_constraintTop_toTopOf="parent" />
+                <TextView
+                    android:id="@+id/tv_detail_sticker1_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:elevation="2dp"
+                    android:maxEms="4"
+                    android:maxLength="8"
+                    android:maxLines="2"
+                    android:text="고마워"
+                    android:textAlignment="center"
+                    android:textColor="@color/black"
+                    android:textSize="12sp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="@+id/ic_icon1"
+                    app:layout_constraintStart_toStartOf="@+id/ic_icon1"
+                    app:layout_constraintTop_toBottomOf="@+id/ic_icon1" />
+
+                <ImageView
+                    android:id="@+id/ic_icon2"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:background="@drawable/shape_circle_background"
+                    android:backgroundTint="@color/background_basic"
+                    android:padding="10dp"
+                    android:src="@drawable/imoge16_cookedrice"
+                    app:layout_constraintEnd_toStartOf="@+id/ic_icon3"
+                    app:layout_constraintHorizontal_bias="0.5"
+                    app:layout_constraintStart_toEndOf="@+id/ic_icon1"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/tv_detail_sticker2_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:elevation="2dp"
+                    android:maxEms="4"
+                    android:maxLength="8"
+                    android:maxLines="2"
+                    android:text="밥 사주신 분들"
+                    android:textAlignment="center"
+                    android:textColor="@color/black"
+                    android:textSize="12sp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="@+id/ic_icon2"
+                    app:layout_constraintStart_toStartOf="@+id/ic_icon2"
+                    app:layout_constraintTop_toBottomOf="@+id/ic_icon1" />
+
+                <ImageView
+                    android:id="@+id/ic_icon3"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:background="@drawable/shape_circle_background"
+                    android:backgroundTint="@color/background_basic"
+                    android:padding="10dp"
+                    android:src="@drawable/imoge19_partypopper"
+                    app:layout_constraintEnd_toStartOf="@+id/ic_icon4"
+                    app:layout_constraintHorizontal_bias="0.5"
+                    app:layout_constraintStart_toEndOf="@+id/ic_icon2"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/tv_detail_sticker3_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:elevation="2dp"
+                    android:maxEms="4"
+                    android:maxLength="8"
+                    android:maxLines="2"
+                    android:text="생일 챙겨주신분"
+                    android:textAlignment="center"
+                    android:textColor="@color/black"
+                    android:textSize="12sp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="@+id/ic_icon3"
+                    app:layout_constraintStart_toStartOf="@+id/ic_icon3"
+                    app:layout_constraintTop_toBottomOf="@+id/ic_icon1" />
+
+                <ImageView
+                    android:id="@+id/ic_icon4"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:background="@drawable/shape_circle_background"
+                    android:backgroundTint="@color/background_basic"
+                    android:padding="10dp"
+                    android:src="@drawable/imoge20_foldedhands"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.5"
+                    app:layout_constraintStart_toEndOf="@+id/ic_icon3"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/tv_detail_sticker4_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:elevation="2dp"
+                    android:maxEms="4"
+                    android:maxLength="8"
+                    android:maxLines="2"
+                    android:text="도움을 준 은인"
+                    android:textAlignment="center"
+                    android:textColor="@color/black"
+                    android:textSize="12sp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="@+id/ic_icon4"
+                    app:layout_constraintStart_toStartOf="@+id/ic_icon4"
+                    app:layout_constraintTop_toBottomOf="@+id/ic_icon1" />
 
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
+            <TextView
+                android:id="@+id/tv_text2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:paddingHorizontal="@dimen/horizontal_margin_big"
+                android:text="인간관계 데스노트"
+                android:textSize="20dp"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/rv_sticker_list" />
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/rv_sticker_list2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/horizontal_margin"
+                android:layout_marginTop="8dp"
+                android:background="@drawable/shape_rectangle_radius_12"
+                android:backgroundTint="@color/white"
+                android:padding="20dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tv_text2">
+
+                <ImageView
+                    android:id="@+id/ic_icon5"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:background="@drawable/shape_circle_background"
+                    android:backgroundTint="@color/background_basic"
+                    android:padding="10dp"
+                    android:src="@drawable/imoge33_policecarlight"
+                    app:layout_constraintEnd_toStartOf="@+id/ic_icon6"
+                    app:layout_constraintHorizontal_bias="0.5"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/tv_detail_sticker5_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:elevation="2dp"
+                    android:maxEms="4"
+                    android:maxLength="8"
+                    android:maxLines="2"
+                    android:text="경고"
+                    android:textAlignment="center"
+                    android:textColor="@color/black"
+                    android:textSize="12sp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="@+id/ic_icon5"
+                    app:layout_constraintStart_toStartOf="@+id/ic_icon5"
+                    app:layout_constraintTop_toBottomOf="@+id/ic_icon5" />
+
+                <ImageView
+                    android:id="@+id/ic_icon6"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:background="@drawable/shape_circle_background"
+                    android:backgroundTint="@color/background_basic"
+                    android:padding="10dp"
+                    android:src="@drawable/imoge13_alarmclock"
+                    app:layout_constraintEnd_toStartOf="@+id/ic_icon7"
+                    app:layout_constraintHorizontal_bias="0.5"
+                    app:layout_constraintStart_toEndOf="@+id/ic_icon5"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/tv_detail_sticker6_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:elevation="2dp"
+                    android:maxEms="4"
+                    android:maxLength="8"
+                    android:maxLines="2"
+                    android:text="지각한\n사람"
+                    android:textAlignment="center"
+                    android:textColor="@color/black"
+                    android:textSize="12sp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="@+id/ic_icon6"
+                    app:layout_constraintStart_toStartOf="@+id/ic_icon6"
+                    app:layout_constraintTop_toBottomOf="@+id/ic_icon6" />
+
+                <ImageView
+                    android:id="@+id/ic_icon7"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:background="@drawable/shape_circle_background"
+                    android:backgroundTint="@color/background_basic"
+                    android:padding="10dp"
+                    android:src="@drawable/imoge07_confusedface"
+                    app:layout_constraintEnd_toStartOf="@+id/ic_icon8"
+                    app:layout_constraintHorizontal_bias="0.5"
+                    app:layout_constraintStart_toEndOf="@+id/ic_icon6"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/tv_detail_sticker7_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:elevation="2dp"
+                    android:maxEms="4"
+                    android:maxLength="8"
+                    android:maxLines="2"
+                    android:text="기분 나쁜 말투"
+                    android:textAlignment="center"
+                    android:textColor="@color/black"
+                    android:textSize="12sp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="@+id/ic_icon7"
+                    app:layout_constraintStart_toStartOf="@+id/ic_icon7"
+                    app:layout_constraintTop_toBottomOf="@+id/ic_icon7" />
+
+                <ImageView
+                    android:id="@+id/ic_icon8"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:background="@drawable/shape_circle_background"
+                    android:backgroundTint="@color/background_basic"
+                    android:padding="10dp"
+                    android:src="@drawable/imoge34_pileofpoo"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.5"
+                    app:layout_constraintStart_toEndOf="@+id/ic_icon7"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/tv_detail_sticker8_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:elevation="2dp"
+                    android:maxEms="4"
+                    android:maxLength="8"
+                    android:maxLines="2"
+                    android:text="스타일이 별로야"
+                    android:textAlignment="center"
+                    android:textColor="@color/black"
+                    android:textSize="12sp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="@+id/ic_icon8"
+                    app:layout_constraintStart_toStartOf="@+id/ic_icon8"
+                    app:layout_constraintTop_toBottomOf="@+id/ic_icon8" />
+
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+            <TextView
+                android:id="@+id/tv_text3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingHorizontal="@dimen/horizontal_margin_big"
+                android:layout_marginTop="24dp"
+                android:text="적당히 섞어서 담을래요"
+                android:textSize="20dp"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/rv_sticker_list2" />
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/rv_sticker_list3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/horizontal_margin"
+                android:layout_marginTop="8dp"
+                android:background="@drawable/shape_rectangle_radius_12"
+                android:backgroundTint="@color/white"
+                android:padding="20dp"
+                android:layout_marginBottom="70dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tv_text3">
+
+                <ImageView
+                    android:id="@+id/ic_icon9"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:background="@drawable/shape_circle_background"
+                    android:backgroundTint="@color/background_basic"
+                    android:padding="10dp"
+                    android:src="@drawable/imoge01_thumbsup"
+                    app:layout_constraintEnd_toStartOf="@+id/ic_icon10"
+                    app:layout_constraintHorizontal_bias="0.5"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/tv_detail_sticker9_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:elevation="2dp"
+                    android:maxEms="4"
+                    android:maxLength="8"
+                    android:maxLines="2"
+                    android:text="고마워"
+                    android:textAlignment="center"
+                    android:textColor="@color/black"
+                    android:textSize="12sp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="@+id/ic_icon9"
+                    app:layout_constraintStart_toStartOf="@+id/ic_icon9"
+                    app:layout_constraintTop_toBottomOf="@+id/ic_icon9" />
+
+                <ImageView
+                    android:id="@+id/ic_icon10"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:background="@drawable/shape_circle_background"
+                    android:backgroundTint="@color/background_basic"
+                    android:padding="10dp"
+                    android:src="@drawable/imoge33_policecarlight"
+                    app:layout_constraintEnd_toStartOf="@+id/ic_icon11"
+                    app:layout_constraintHorizontal_bias="0.5"
+                    app:layout_constraintStart_toEndOf="@+id/ic_icon9"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/tv_detail_sticker10_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:elevation="2dp"
+                    android:maxEms="4"
+                    android:maxLength="8"
+                    android:maxLines="2"
+                    android:text="경고"
+                    android:textAlignment="center"
+                    android:textColor="@color/black"
+                    android:textSize="12sp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="@+id/ic_icon10"
+                    app:layout_constraintStart_toStartOf="@+id/ic_icon10"
+                    app:layout_constraintTop_toBottomOf="@+id/ic_icon10" />
+
+                <ImageView
+                    android:id="@+id/ic_icon11"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:background="@drawable/shape_circle_background"
+                    android:backgroundTint="@color/background_basic"
+                    android:padding="10dp"
+                    android:src="@drawable/imoge16_cookedrice"
+                    app:layout_constraintEnd_toStartOf="@+id/ic_icon12"
+                    app:layout_constraintHorizontal_bias="0.5"
+                    app:layout_constraintStart_toEndOf="@+id/ic_icon10"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/tv_detail_sticker11_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:elevation="2dp"
+                    android:maxEms="4"
+                    android:maxLength="8"
+                    android:maxLines="2"
+                    android:text="밥 사주신 분들"
+                    android:textAlignment="center"
+                    android:textColor="@color/black"
+                    android:textSize="12sp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="@+id/ic_icon11"
+                    app:layout_constraintStart_toStartOf="@+id/ic_icon11"
+                    app:layout_constraintTop_toBottomOf="@+id/ic_icon11" />
+
+                <ImageView
+                    android:id="@+id/ic_icon12"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:background="@drawable/shape_circle_background"
+                    android:backgroundTint="@color/background_basic"
+                    android:padding="10dp"
+                    android:src="@drawable/imoge13_alarmclock"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.5"
+                    app:layout_constraintStart_toEndOf="@+id/ic_icon11"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/tv_detail_sticker12_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:elevation="2dp"
+                    android:maxEms="4"
+                    android:maxLength="8"
+                    android:maxLines="2"
+                    android:text="지각한\n사람"
+                    android:textAlignment="center"
+                    android:textColor="@color/black"
+                    android:textSize="12sp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="@+id/ic_icon12"
+                    app:layout_constraintStart_toStartOf="@+id/ic_icon12"
+                    app:layout_constraintTop_toBottomOf="@+id/ic_icon12" />
+
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
 </androidx.constraintlayout.widget.ConstraintLayout>

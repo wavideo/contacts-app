@@ -18,6 +18,7 @@ import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.setFragmentResultListener
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.nugo.HelloFragment
 import com.example.nugo.contact.ContactData
 import com.example.nugo.contact.ContactManager
 import com.example.nugo.R

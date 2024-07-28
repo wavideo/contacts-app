@@ -23,6 +23,7 @@ import com.example.nugo.AddFriendActivity
 import com.example.nugo.EXTRA_NEW_USER_NAME
 import com.example.nugo.EXTRA_NEW_USER_NUMBER
 import com.example.nugo.EXTRA_NUMBER_LIST
+import com.example.nugo.HelloFragment
 import com.example.nugo.ListAddFirstStickerFragment
 import com.example.nugo.R
 import com.example.nugo.SharedViewModel
@@ -52,6 +53,12 @@ class ContactListFragment : Fragment() {
     private fun initView() = with(binding) {
         recycleListView.adapter = contactAdapter
         recycleListView.layoutManager = LinearLayoutManager(requireContext())
+
+        val fragmentHello = HelloFragment.newInstance()
+        requireActivity().supportFragmentManager.beginTransaction()
+            .replace(R.id.frameLayout, fragmentHello)
+            .addToBackStack(null)
+            .commit()
 
         contactAdapter.itemClick = object : ContactListAdapter.ItemClick {
             override fun onClick(position: Int, contact: ContactData) {
