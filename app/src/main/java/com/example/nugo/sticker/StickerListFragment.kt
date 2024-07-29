@@ -41,6 +41,7 @@ class StickerListFragment : Fragment() {
 //    private var param2: String? = null
     private val binding by lazy { FragmentStickerListBinding.inflate(layoutInflater) }
     private val viewModel by activityViewModels<SharedViewModel>()
+    private val stickerAdapter by lazy { StickerAdapter(viewModel.getStickerList()) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -63,47 +64,51 @@ class StickerListFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-
-
-
-            val contacts = viewModel.getContactList()
-            val stickerAdapter = StickerAdapter(viewModel.getStickerList(), contacts, viewModel, viewLifecycleOwner)
-            binding.rvStickerList.adapter = stickerAdapter
-            binding.rvStickerList.layoutManager = LinearLayoutManager(requireContext())
-
-            binding.tvBtnReset.setOnClickListener{
-                val fragmentHello = HelloFragment.newInstance()
-                requireActivity().supportFragmentManager.beginTransaction()
-                    .replace(R.id.frameLayout, fragmentHello)
-                    .addToBackStack(null)
-                    .commit()
-            }
+        binding.rvStickerList.adapter = stickerAdapter
+        binding.rvStickerList.layoutManager = LinearLayoutManager(requireContext())
+        binding.tvBtnReset.setOnClickListener {
+            val fragmentHello = HelloFragment.newInstance()
+            requireActivity().supportFragmentManager.beginTransaction()
+                .replace(R.id.frameLayout, fragmentHello)
+                .addToBackStack(null)
+                .commit()
+        }
 
         // itemClick.onClick 추상메서드 정의
-            stickerAdapter.itemClick = object : StickerAdapter.ItemClick {
-                override fun onClick(view: View, position: Int) {
-                    // StickerDetailFragment로 넘어가야합니다
+        stickerAdapter.itemClick = object : StickerAdapter.ItemClick {
+            override fun onClick(view: View, position: Int) {
+                // StickerDetailFragment로 넘어가야합니다
 
-                        if (viewModel.getStickerList()[position].isDelete == true) {
-                            val fragment = NewStickerDialogueFragment.newInstance(position)
-                            requireActivity().supportFragmentManager.beginTransaction()
-                                .replace(R.id.cv_popup_container, fragment)
-                                .addToBackStack(null)
-                                .commit()
+                if (viewModel.getStickerList()[position].isDelete == true) {
+                    val fragment = NewStickerDialogueFragment.newInstance(position)
+                    requireActivity().supportFragmentManager.beginTransaction()
+                        .replace(R.id.cv_popup_container, fragment)
+                        .addToBackStack(null)
+                        .commit()
 
-                        } else {
-                            val fragment = StickerDetailFragment.newInstance(position)
+                } else {
+                    val fragment = StickerDetailFragment.newInstance(position)
 
-                            requireActivity().supportFragmentManager.beginTransaction()
-                                .replace(R.id.frameLayout, fragment)
-                                .addToBackStack(null)
-                                .commit()
-                        }
-                        setFragmentResultListener("dataSend") { key, bundle ->
-                            stickerAdapter.updateData(viewModel.getStickerList())
-                        }
+                    requireActivity().supportFragmentManager.beginTransaction()
+                        .replace(R.id.frameLayout, fragment)
+                        .addToBackStack(null)
+                        .commit()
+                }
+                setFragmentResultListener("dataSend") { key, bundle ->
+                    stickerAdapter.updateData(viewModel.getStickerList())
                 }
             }
+        }
+
+        initViewModel()
+
+
+    }
+
+    private fun initViewModel() {
+        viewModel.stickers.observe(viewLifecycleOwner) { stickers ->
+            stickerAdapter.updateData(stickers)
+        }
     }
 
     companion object {
