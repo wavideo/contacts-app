@@ -18,9 +18,7 @@ import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.setFragmentResultListener
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.nugo.HelloFragment
 import com.example.nugo.contact.ContactData
-import com.example.nugo.contact.ContactManager
 import com.example.nugo.R
 import com.example.nugo.SharedViewModel
 import com.example.nugo.contact.ContactDetailFragment
@@ -122,10 +120,9 @@ class StickerDetailFragment : Fragment() {
 
             setFragmentResultListener("dataSend") { key, bundle ->
                 binding.tvTitle.text = stickers[stickerIndex].name
-                binding.ivStickerIcon.setImageResource(stickers[stickerIndex].findDrawable())
+                binding.ivStickerIcon.setImageResource(stickers[stickerIndex].findResId())
                 adapter.updateData(ContactOfStickers)
             }
-
 
             binding.tvBtnDelete.setOnClickListener {
 
@@ -168,7 +165,7 @@ class StickerDetailFragment : Fragment() {
             StickerManager.detailPicker = stickerIndex
 
             binding.tvTitle.text = stickers[stickerIndex].name
-            binding.ivStickerIcon.setImageResource(stickers[stickerIndex].findDrawable())
+            binding.ivStickerIcon.setImageResource(stickers[stickerIndex].findResId())
         })
     }
 

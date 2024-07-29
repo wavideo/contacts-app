@@ -3,6 +3,7 @@ package com.example.nugo
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.distinctUntilChanged
 import androidx.lifecycle.map
 import androidx.lifecycle.switchMap
 import com.example.nugo.contact.ContactData
@@ -16,6 +17,14 @@ class SharedViewModel : ViewModel() {
     private val stickerList = mutableListOf<StickerData>()
     private val _stickers = MutableLiveData<List<StickerData>>()
     val stickers: LiveData<List<StickerData>> = _stickers
+
+    val stickersWithContacts: LiveData<List<StickerData>> = _stickers.switchMap { s ->
+        _contacts.map { c ->
+            s.mapIndexed { index, stickerData ->
+                stickerData.copy(contactSize = getContactSize(index))
+            }
+        }
+    }.distinctUntilChanged()
 
 //    stickers[position].contactSize = getContactSize(position)
 
@@ -139,13 +148,13 @@ class SharedViewModel : ViewModel() {
 
 
 
-//    private fun getContactSize(index: Int): Int = when (index) {
-//        0 -> (contacts.filter { it.sticker0 != 0 }).size
-//        1 -> (contacts.filter { it.sticker1 != 0 }).size
-//        2 -> (contacts.filter { it.sticker2 != 0 }).size
-//        3 -> (contacts.filter { it.sticker3 != 0 }).size
-//        else -> (contacts.filter { it.sticker4 != 0 }).size
-//    }
+    private fun getContactSize(index: Int): Int = when (index) {
+        0 -> (contactList.filter { it.sticker0 != 0 }).size
+        1 -> (contactList.filter { it.sticker1 != 0 }).size
+        2 -> (contactList.filter { it.sticker2 != 0 }).size
+        3 -> (contactList.filter { it.sticker3 != 0 }).size
+        else -> (contactList.filter { it.sticker4 != 0 }).size
+    }
 
 
 }

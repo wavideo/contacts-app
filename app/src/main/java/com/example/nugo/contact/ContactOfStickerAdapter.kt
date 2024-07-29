@@ -9,6 +9,7 @@ import com.example.nugo.SharedViewModel
 import com.example.nugo.sticker.StickerDetailFragment
 import com.example.nugo.sticker.StickerManager
 import com.example.nugo.databinding.ItemContactWithStickerBinding
+import com.example.nugo.sticker.StickerData
 import com.example.nugo.sticker.StickerDetailFragment.Companion.ContactOfStickers
 
 class ContactOfStickerAdapter(private val items:MutableList<ContactData>, private val viewModel: SharedViewModel):
@@ -87,21 +88,19 @@ class ContactOfStickerAdapter(private val items:MutableList<ContactData>, privat
 
         holder.tvName.text = myContact.name
         holder.ivProfile.setImageBitmap(myContact.photo)
-        holder.tvStickerNum.text = when (StickerManager.detailPicker){
-            0 -> myContact.sticker0.toString()
-            1 -> myContact.sticker1.toString()
-            2 -> myContact.sticker2.toString()
-            3 -> myContact.sticker3.toString()
-            else -> myContact.sticker4.toString()
-            // position 말고 다른 거 넣어야됨
-        }
-        holder.ivStickerIcon.setImageResource(when (StickerManager.detailPicker){
-            0 -> viewModel.getStickerList()[0].findDrawable()
-            1 -> viewModel.getStickerList()[1].findDrawable()
-            2 -> viewModel.getStickerList()[2].findDrawable()
-            3 -> viewModel.getStickerList()[3].findDrawable()
-            else -> viewModel.getStickerList()[4].findDrawable()
-        })
+        holder.tvStickerNum.text = myContact.getStickerCount(StickerManager.detailPicker).toString()
+
+        val stickers = viewModel.getStickerList()
+        holder.ivStickerIcon.setImageResource(stickers[StickerManager.detailPicker].findResId())
     }
 
+}
+fun ContactData.getStickerCount(index:Int):Int{
+    return when (index){
+        0 -> sticker0
+        1 -> sticker1
+        2 -> sticker2
+        3 -> sticker3
+        else -> sticker4
+    }
 }

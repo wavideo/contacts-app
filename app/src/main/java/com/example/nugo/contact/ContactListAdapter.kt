@@ -1,13 +1,10 @@
 package com.example.nugo.contact
 
-import android.content.Context
 import android.content.Intent
 import android.net.Uri
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.ImageView
-import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.core.view.isVisible
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.Observer
@@ -111,7 +108,7 @@ class ContactListAdapter(
                 }
             } else {
                 viewModel.stickers.observe(lifecycleOwner, Observer { stickers ->
-                    holder.ivStickerRecently.setImageResource(stickers[recentIndex].findDrawable())
+                    holder.ivStickerRecently.setImageResource(stickers[recentIndex].findResId())
                 })
                 holder.tvStickerRecently.isVisible = true
 

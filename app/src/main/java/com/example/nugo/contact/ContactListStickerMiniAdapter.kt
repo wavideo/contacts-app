@@ -8,7 +8,6 @@ import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.RecyclerView
 import com.example.nugo.SharedViewModel
 import com.example.nugo.sticker.StickerData
-import com.example.nugo.sticker.StickerManager
 import com.example.nugo.databinding.ItemStickerForContactListMiniBinding
 
 class ContactListStickerMiniAdapter(
@@ -44,7 +43,7 @@ class ContactListStickerMiniAdapter(
     override fun onBindViewHolder(holder: Holder, position: Int) {
 
         viewModel.stickers.observe( lifecycleOwner, Observer { stickers ->
-            holder.img.setImageResource(stickers[position].findDrawable())
+            holder.img.setImageResource(stickers[position].findResId())
         })
 
         val myContact = contactData

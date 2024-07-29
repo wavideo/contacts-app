@@ -4,11 +4,10 @@ import com.example.nugo.R
 
 /* [ 김은택 파트 ]
 스티커에 대한 data class 입니다*/
-data class StickerData(var name: String, var icon: Int, var isDelete: Boolean) {
-    var contactSize = 0 // 등록된 연락처 수
+data class StickerData(var name: String, var icon: Int, var isDelete: Boolean, var contactSize:Int = 0) {
 
     // .findDrawable() 으로 icon에 들어갈 drawable 이미지를 찾을 수 있습니다
-    fun findDrawable(): Int {
+    fun findResId(): Int {
         return StickerManager.icons[icon]
     }
 

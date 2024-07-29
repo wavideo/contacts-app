@@ -7,7 +7,6 @@ import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
 import com.example.nugo.R
-import com.example.nugo.contact.ContactData
 import com.example.nugo.databinding.ItemStickerBinding
 
 class StickerAdapter( private var stickers: List<StickerData>) :
@@ -49,7 +48,7 @@ class StickerAdapter( private var stickers: List<StickerData>) :
             clStickerBackground.setOnClickListener() {
                 itemClick?.onClick(it, position)
             }
-            ivStickerIcon.setImageResource(mySticker.findDrawable())
+            ivStickerIcon.setImageResource(mySticker.findResId())
             tvStickerName.text = mySticker.name
             tvContactSizeNum.text = mySticker.contactSize.toString()
 

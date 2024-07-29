@@ -26,7 +26,6 @@ import androidx.fragment.app.setFragmentResultListener
 import com.example.nugo.sticker.NewStickerDialogueFragment
 import com.example.nugo.R
 import com.example.nugo.SharedViewModel
-import com.example.nugo.sticker.StickerManager
 import com.example.nugo.databinding.FragmentContactDetailBinding
 
 class ContactDetailFragment : Fragment() {
@@ -234,11 +233,11 @@ class ContactDetailFragment : Fragment() {
 
         // 다이얼로그의 스티커 아이콘 설정
         when (editStickerCountNumber) {
-            0 -> ivStickerIcon.setImageResource(viewModel.getStickerList()[0].findDrawable())
-            1 -> ivStickerIcon.setImageResource(viewModel.getStickerList()[1].findDrawable())
-            2 -> ivStickerIcon.setImageResource(viewModel.getStickerList()[2].findDrawable())
-            3 -> ivStickerIcon.setImageResource(viewModel.getStickerList()[3].findDrawable())
-            4 -> ivStickerIcon.setImageResource(viewModel.getStickerList()[4].findDrawable())
+            0 -> ivStickerIcon.setImageResource(viewModel.getStickerList()[0].findResId())
+            1 -> ivStickerIcon.setImageResource(viewModel.getStickerList()[1].findResId())
+            2 -> ivStickerIcon.setImageResource(viewModel.getStickerList()[2].findResId())
+            3 -> ivStickerIcon.setImageResource(viewModel.getStickerList()[3].findResId())
+            4 -> ivStickerIcon.setImageResource(viewModel.getStickerList()[4].findResId())
         }
 
         // 다이얼로그의 초기 카운트 값 설정
@@ -311,27 +310,27 @@ class ContactDetailFragment : Fragment() {
     fun updateStickerNum(index: Int) {
         when (index) {
             0 -> {
-                binding.ivDetailSticker1.setImageResource(viewModel.getStickerList()[0].findDrawable())
+                binding.ivDetailSticker1.setImageResource(viewModel.getStickerList()[0].findResId())
                 binding.tvDetailSticker1Name.setText(viewModel.getStickerList()[0].name)
             }
 
             1 -> {
-                binding.ivDetailSticker2.setImageResource(viewModel.getStickerList()[1].findDrawable())
+                binding.ivDetailSticker2.setImageResource(viewModel.getStickerList()[1].findResId())
                 binding.tvDetailSticker2Name.setText(viewModel.getStickerList()[1].name)
             }
 
             2 -> {
-                binding.ivDetailSticker3.setImageResource(viewModel.getStickerList()[2].findDrawable())
+                binding.ivDetailSticker3.setImageResource(viewModel.getStickerList()[2].findResId())
                 binding.tvDetailSticker3Name.setText(viewModel.getStickerList()[2].name)
             }
 
             3 -> {
-                binding.ivDetailSticker4.setImageResource(viewModel.getStickerList()[3].findDrawable())
+                binding.ivDetailSticker4.setImageResource(viewModel.getStickerList()[3].findResId())
                 binding.tvDetailSticker4Name.setText(viewModel.getStickerList()[3].name)
             }
 
             else -> {
-                binding.ivDetailSticker5.setImageResource(viewModel.getStickerList()[4].findDrawable())
+                binding.ivDetailSticker5.setImageResource(viewModel.getStickerList()[4].findResId())
                 binding.tvDetailSticker5Name.setText(viewModel.getStickerList()[4].name)
             }
         }

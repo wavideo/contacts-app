@@ -18,6 +18,7 @@ import androidx.fragment.app.setFragmentResultListener
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.distinctUntilChanged
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.nugo.HelloFragment
 import com.example.nugo.R
@@ -94,9 +95,9 @@ class StickerListFragment : Fragment() {
                         .addToBackStack(null)
                         .commit()
                 }
-                setFragmentResultListener("dataSend") { key, bundle ->
-                    stickerAdapter.updateData(viewModel.getStickerList())
-                }
+//                setFragmentResultListener("dataSend") { key, bundle ->
+//                    stickerAdapter.updateData(viewModel.getStickerList())
+//                }
             }
         }
 
@@ -106,7 +107,7 @@ class StickerListFragment : Fragment() {
     }
 
     private fun initViewModel() {
-        viewModel.stickers.observe(viewLifecycleOwner) { stickers ->
+        viewModel.stickersWithContacts.observe(viewLifecycleOwner) { stickers ->
             stickerAdapter.updateData(stickers)
         }
     }
